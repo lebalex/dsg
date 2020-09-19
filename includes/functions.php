@@ -1,5 +1,6 @@
 <?php
 include_once 'psl-config.php';
+include_once 'db_connect.php';
 
 function getParam($name, $default)
 {

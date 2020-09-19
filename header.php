@@ -1,3 +1,10 @@
+<?php
+include_once 'includes/functions.php';
+sec_session_start();
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +13,9 @@
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="news_keywords" content="">
     <title>DSG Комплект</title>
+
 
 
     <link rel="icon" href="/img/core-img/favicon.ico">
@@ -15,7 +23,20 @@
 
     <link rel="stylesheet" href="/css/core-style.css">
     <link rel="stylesheet" href="/style.css">
-
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    
+    <!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+    <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+    <script lang="JavaScript">
+        $.getJSON('/includes/get_data.php?x=get_keywords', function(data) {
+            var txt = '';
+            data.forEach(function(obj) {
+                txt += obj.name.replace(' ', ',')+','
+            });
+            document.querySelector('meta[name="news_keywords"]').setAttribute("content", txt);
+        });
+    </script>
 </head>
 
 <body>
@@ -37,15 +58,38 @@
                         <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                     </div>
                     <!-- Nav Start -->
+                    <script lang="JavaScript">
+                        $.getJSON('/includes/get_data.php?x=get_categ', function(data) {
+                            var txt = '';
+                            data.forEach(function(obj) {
+                                txt += '<li><a href="/catalog/' + obj.id + '">' + obj.name + '</a></li>';
+                            });
+                            document.getElementById("menu_categ").innerHTML = txt;
+                        });
+
+                        /*xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var myObj = JSON.parse(this.responseText);
+                                var txt='';
+                                myObj.forEach(function(obj) { 
+                                    txt += '<li><a href="/catalog/'+obj.id+'">'+obj.name+'</a></li>';
+                                    });
+                                document.getElementById("menu_categ").innerHTML = txt;
+                            }
+                        };
+                        xmlhttp.open("GET", "/includes/get_data.php?x=get_categ", true);
+                        xmlhttp.send();*/
+                    </script>
                     <div class="classynav">
                         <ul>
                             <li><a href="/about">О нас</a></li>
                             <li><a href="/catalog">Каталог</a>
-                                <ul class="dropdown">
-                                    <li><a href="/catalog/1">DQ200</a></li>
+                                <ul class="dropdown" id="menu_categ">
+                                    <!--li><a href="/catalog/1">DQ200</a></li>
                                     <li><a href="/catalog/2">DQ250</a></li>
                                     <li><a href="/catalog/3">DL501</a></li>
-                                    <li><a href="/catalog/4">DQ500</a></li>
+                                    <li><a href="/catalog/4">DQ500</a></li-->
                                 </ul>
                             </li>
                             <li><a href="/sale">Доставка</a></li>

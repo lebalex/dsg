@@ -1,0 +1,20 @@
+<?php
+include_once 'header.php';
+?>
+<div class="container" style="border: solid 0px;min-width: 800px">
+    <div class="row" style="border: solid 0px">
+
+        <div class="col-sm-12" style="border: solid 0px">
+            <h3 align="center" style="margin: 20px;">
+                <span class="strongtext">Произошла ошибка</span>
+            </h3>
+            <p class="error"><?php echo $error; ?></p>
+        </div>
+    </div>
+
+</div>
+<!--для div class="container-->
+
+<?php
+include_once 'footer.php';
+?>
