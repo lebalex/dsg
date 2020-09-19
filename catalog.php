@@ -1,29 +1,13 @@
 <?php
 include_once 'header.php';
+
+
+$title_page="Каталог";
+$video_file="vag2";
+include_once 'video_baner.php';
+
 ?>
-<section class="welcome_area">
-    <div class="fullscreen-bg">
-        <div class="overlay">
 
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
-                    <div class="col-12">
-                        <div class="hero-content">
-                            <h3>DSG Комплект</h3>
-                            <h6>Каталог</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <video loop="" muted="" autoplay="" poster="/bg/vag2.jpg" class="fullscreen-bg__video">
-            <source src="/bg/vag2.mp4" type="video/mp4">
-            <source src="/bg/vag2.webm" type="video/webm">
-        </video>
-    </div>
-</section>
 
 <section class="shop_grid_area section-padding-0-80">
     <div class="overlay3 container">

@@ -29,14 +29,14 @@ include_once 'header.php';
                                 <!-- Hover Thumb -->
                                 <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
-                                    <a href="#">DQ 200</a>
+                                    <span>DQ 200</span>
                                 </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
                                 <div class="hover-content">
                                     <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В каталог</a>
+                                        <a href="/catalog/1" class="btn essence-btn">В каталог</a>
                                     </div>
                                 </div>
                             </div>
@@ -51,14 +51,14 @@ include_once 'header.php';
                                 <!-- Hover Thumb -->
                                 <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
-                                    <a href="#">DQ 250</a>
+                                    <span>DQ 250</span>
                                 </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
                                 <div class="hover-content">
                                     <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В каталог</a>
+                                        <a href="/catalog/2" class="btn essence-btn">В каталог</a>
                                     </div>
                                 </div>
                             </div>
@@ -73,14 +73,14 @@ include_once 'header.php';
                                 <!-- Hover Thumb -->
                                 <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
-                                    <a href="#">DL 501</a>
+                                    <span>DL 501</span>
                                 </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
                                 <div class="hover-content">
                                     <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В каталог</a>
+                                        <a href="/catalog/3" class="btn essence-btn">В каталог</a>
                                     </div>
                                 </div>
                             </div>
@@ -95,14 +95,14 @@ include_once 'header.php';
                                 <!-- Hover Thumb -->
                                 <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
-                                    <a href="#">DQ 500</a>
+                                    <span>DQ 500</span>
                                 </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
                                 <div class="hover-content">
                                     <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В каталог</a>
+                                        <a href="/catalog/4" class="btn essence-btn">В каталог</a>
                                     </div>
                                 </div>
                             </div>
@@ -117,14 +117,14 @@ include_once 'header.php';
                                 <!-- Hover Thumb -->
                                 <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
-                                    <a href="#">Весь каталог</a>
+                                    <span>Весь каталог</span>
                                 </div>
                             </div>
                             <!-- Product Description -->
                             <div class="product-description">
                                 <div class="hover-content">
                                     <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">В каталог</a>
+                                        <a href="/catalog" class="btn essence-btn">В каталог</a>
                                     </div>
                                 </div>
                             </div>
