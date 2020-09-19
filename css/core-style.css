@@ -240,7 +240,7 @@ img {
   text-transform: uppercase;
   font-size: 12px;
   line-height: 50px;
-  background-color: #0315ff;
+  background-color: #4685d4;
   letter-spacing: 1.5px;
   font-weight: 600; }
   .essence-btn:hover, .essence-btn:focus {
@@ -809,11 +809,12 @@ img {
   margin-bottom: 50px;
   overflow: hidden;
   background-color: #ffffff; 
-  border: 1px solid #ccc;}
+  }
   .single-product-wrapper .product-img {
     position: relative;
     z-index: 1;
-    overflow: hidden; }
+    overflow: hidden; 
+    border: 1px solid #ccc;}
     .single-product-wrapper .product-img img {
       width: 100%;
       -webkit-transition-duration: 500ms;
@@ -1385,7 +1386,7 @@ img {
     text-transform: uppercase;
     letter-spacing: 0.75px; }
     .product-topbar .total-products p span {
-      color: #0315ff; }
+      color: #4685d4; }
   .product-topbar .product-sorting p {
     margin-bottom: 0;
     font-size: 12px;

@@ -18,9 +18,9 @@ include_once 'header.php';
 
         </div>
 
-        <video loop="" muted="" autoplay="" poster="bg/vag1.jpg" class="fullscreen-bg__video">
-            <source src="bg/vag1.mp4" type="video/mp4">
-            <source src="bg/vag1.webm" type="video/webm">
+        <video loop="" muted="" autoplay="" poster="/bg/vag1.jpg" class="fullscreen-bg__video">
+            <source src="/bg/vag1.mp4" type="video/mp4">
+            <source src="/bg/vag1.webm" type="video/webm">
         </video>
     </div>
 </section>
@@ -30,30 +30,6 @@ include_once 'header.php';
 <section class="shop_grid_area section-padding-0-80">
     <div class="overlay3 container">
         <div class="row">
-            <!--div class="col-12 col-md-4 col-lg-3">
-                <div class="shop_sidebar_area">
-
-                    <div class="widget catagory mb-50">
-
-    
-                        <div class="catagories-menu">
-                            <ul id="menu-content2" class="menu-content collapse show">
-               
-                                <li data-toggle="collapse" data-target="#clothing">
-
-                                    <ul class="sub-menu collapse show" id="clothing">
-                                        <li><a href="#">О магазине</a></li>
-                                        <li><a href="#">Обратная связь</a></li>
-
-                                    </ul>
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div-->
 
             <div class="col-12 col-sm-6 col-md-12">
                             <h6>Мы рады приветствовать вас на сайте нашей компании.</h6>
@@ -112,7 +88,7 @@ include_once 'header.php';
                 </div>
                 </div>
             </div>
-
+</section>
             <?php
             include_once 'footer.php';
             ?>

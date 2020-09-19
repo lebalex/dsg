@@ -2,38 +2,14 @@
 include_once 'header.php';
 ?>
 
-
-
-<!--div class="fullscreen-bg">
-    <div class="overlay">
-        
-    <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-12">
-                    <div class="hero-content">
-                        <h6 style="color: red">vagon</h6>
-                        <h2>DSG Комплект</h2>
-                        <a href="#" class="btn essence-btn">view collection</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <video loop="" muted="" autoplay="" poster="video/plane.jpg" class="fullscreen-bg__video">
-        <source src="bg/MercedesGlk1406.mp4" type="video/mp4">
-        <source src="bg/MercedesGlk1406.webm" type="video/webm">
-    </video>
-</div-->
-
     <!-- ##### Welcome Area Start ##### -->
-    <section class="welcome_area bg-img background-overlay" style="background-image: url(img/bg-img/bg-1a.jpg);">
+    <section class="welcome_area bg-img background-overlay" style="background-image: url(/img/bg-img/bg-1a.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="hero-content">
                         <h2>DSG Комплект</h2>
-                        <a href="#" class="btn essence-btn">Посмотреть каталог</a>
+                        <a href="catalog" class="btn essence-btn">Посмотреть каталог</a>
                     </div>
                 </div>
             </div>
@@ -45,13 +21,13 @@ include_once 'header.php';
         <div class="container">
             <div class="row justify-content-center">
                 <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4 section-padding-10">
+                <div class="col-12 col-sm-6 col-md-4">
                 <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/dq200.jpg" alt="">
+                                <img src="/img/categ-img/dq200.jpg" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/categ-img/black_gr.jpg" alt="">
+                                <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
                                     <a href="#">DQ 200</a>
                                 </div>
@@ -67,13 +43,13 @@ include_once 'header.php';
                         </div>
                 </div>
                 <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4 section-padding-10">
+                <div class="col-12 col-sm-6 col-md-4">
                 <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/dq250.jpg" alt="">
+                                <img src="/img/categ-img/dq250.jpg" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/categ-img/black_gr.jpg" alt="">
+                                <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
                                     <a href="#">DQ 250</a>
                                 </div>
@@ -89,13 +65,13 @@ include_once 'header.php';
                         </div>
                 </div>
                 <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4 section-padding-10">
+                <div class="col-12 col-sm-6 col-md-4">
                 <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/dl501.jpg" alt="">
+                                <img src="/img/categ-img/dl501.jpg" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/categ-img/black_gr.jpg" alt="">
+                                <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
                                     <a href="#">DL 501</a>
                                 </div>
@@ -111,13 +87,13 @@ include_once 'header.php';
                         </div>
                 </div>
                 <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4 section-padding-10">
+                <div class="col-12 col-sm-6 col-md-4">
                 <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/dq500.jpg" alt="">
+                                <img src="/img/categ-img/dq500.jpg" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/categ-img/black_gr.jpg" alt="">
+                                <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
                                     <a href="#">DQ 500</a>
                                 </div>
@@ -133,13 +109,13 @@ include_once 'header.php';
                         </div>
                 </div>
                 <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4 section-padding-10">
+                <div class="col-12 col-sm-6 col-md-4">
                 <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/other.jpg" alt="">
+                                <img src="/img/categ-img/other.jpg" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/categ-img/black_gr.jpg" alt="">
+                                <img class="hover-img" src="/img/categ-img/black_gr.jpg" alt="">
                                 <div class="catagory-content">
                                     <a href="#">Весь каталог</a>
                                 </div>
@@ -181,7 +157,7 @@ include_once 'header.php';
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/dq200.jpg" alt="">
+                                <img src="/img/categ-img/dq200.jpg" alt="">
                                 <!-- Hover Thumb -->
                                 <!--img class="hover-img" src="img/product-img/product-2.jpg" alt=""-->
                                 <!-- Favourite -->
@@ -210,7 +186,7 @@ include_once 'header.php';
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/dq250.jpg" alt="">
+                                <img src="/img/categ-img/dq250.jpg" alt="">
                                 <!-- Hover Thumb -->
                                 <!--img class="hover-img" src="img/product-img/product-3.jpg" alt=""-->
                                 <!-- Favourite -->
@@ -239,7 +215,7 @@ include_once 'header.php';
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/dl501.jpg" alt="">
+                                <img src="/img/categ-img/dl501.jpg" alt="">
                                 <!-- Hover Thumb -->
                                 <!--img class="hover-img" src="img/product-img/product-4.jpg" alt=""-->
 
@@ -274,7 +250,7 @@ include_once 'header.php';
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/categ-img/other.jpg" alt="">
+                                <img src="/img/categ-img/other.jpg" alt="">
                                 <!-- Hover Thumb -->
                                 <!--img class="hover-img" src="img/product-img/product-5.jpg" alt=""-->
 

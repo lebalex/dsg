@@ -5,8 +5,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
 RewriteRule ^catalog/?$ catalog.php [L,QSA]
-RewriteRule ^([0-9]+)/?$ catalog.php?categ_id=$1 [L,QSA]
-RewriteRule ^([0-9]+)/([0-9]+)/?$ catalog.php?categ_id=$1&product=$2 [L,QSA]
+RewriteRule ^catalog/([0-9]+)/?$ catalog.php?categ_id=$1 [L,QSA]
+RewriteRule ^catalog/([0-9]+)/([0-9]+)/?$ catalog.php?categ_id=$1&product=$2 [L,QSA]
 
 
 RewriteRule ^contact/?$ contact.php [L,QSA]

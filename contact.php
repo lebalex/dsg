@@ -18,9 +18,9 @@ include_once 'header.php';
 
         </div>
 
-        <video loop="" muted="" autoplay="" poster="bg/vag6.jpg" class="fullscreen-bg__video">
-            <source src="bg/vag6.mp4" type="video/mp4">
-            <source src="bg/vag6.webm" type="video/webm">
+        <video loop="" muted="" autoplay="" poster="/bg/vag6.jpg" class="fullscreen-bg__video">
+            <source src="/bg/vag6.mp4" type="video/mp4">
+            <source src="/bg/vag6.webm" type="video/webm">
         </video>
     </div>
 </section>
