@@ -24,15 +24,29 @@ sec_session_start();
     <link rel="stylesheet" href="/css/core-style.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/css/owl.carousel.min.css">
-    
-    <!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script-->
+
+
+        <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="/js/jquery/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+
+
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!--script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script-->
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    
+
     <script lang="JavaScript">
         $.getJSON('/includes/get_data.php?x=get_keywords', function(data) {
             var txt = '';
             data.forEach(function(obj) {
-                txt += obj.name.replace(' ', ',')+','
+                txt += obj.name.replace(' ', ',') + ','
             });
             document.querySelector('meta[name="news_keywords"]').setAttribute("content", txt);
         });
@@ -58,38 +72,13 @@ sec_session_start();
                         <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                     </div>
                     <!-- Nav Start -->
-                    <script lang="JavaScript">
-                        $.getJSON('/includes/get_data.php?x=get_categ', function(data) {
-                            var txt = '';
-                            data.forEach(function(obj) {
-                                txt += '<li><a href="/catalog/' + obj.id + '">' + obj.name + '</a></li>';
-                            });
-                            document.getElementById("menu_categ").innerHTML = txt;
-                        });
 
-                        /*xmlhttp = new XMLHttpRequest();
-                        xmlhttp.onreadystatechange = function() {
-                            if (this.readyState == 4 && this.status == 200) {
-                                var myObj = JSON.parse(this.responseText);
-                                var txt='';
-                                myObj.forEach(function(obj) { 
-                                    txt += '<li><a href="/catalog/'+obj.id+'">'+obj.name+'</a></li>';
-                                    });
-                                document.getElementById("menu_categ").innerHTML = txt;
-                            }
-                        };
-                        xmlhttp.open("GET", "/includes/get_data.php?x=get_categ", true);
-                        xmlhttp.send();*/
-                    </script>
                     <div class="classynav">
                         <ul>
                             <li><a href="/about">О нас</a></li>
                             <li><a href="/catalog">Каталог</a>
                                 <ul class="dropdown" id="menu_categ">
-                                    <!--li><a href="/catalog/1">DQ200</a></li>
-                                    <li><a href="/catalog/2">DQ250</a></li>
-                                    <li><a href="/catalog/3">DL501</a></li>
-                                    <li><a href="/catalog/4">DQ500</a></li-->
+
                                 </ul>
                             </li>
                             <li><a href="/sale">Доставка</a></li>
@@ -119,9 +108,97 @@ sec_session_start();
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span>2</span></a>
+                    <a href="#" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span id="count_in_chart"><?=getCartDataCount()?></span></a>
                 </div>
             </div>
 
         </div>
+
     </header>
+
+
+
+    <!--script lang="JavaScript">
+        $(document).ready(function() {
+            $.getJSON('/includes/get_data.php?x=get_categ', function(data) {
+                /*var txt = '';
+                data.forEach(function(obj) {
+                    txt += '<li><a href="/catalog/' + obj.id + '">' + obj.name + '</a></li>';
+                });
+                $('#menu_categ').html(txt);*/
+
+                /*var m = '<li><a href="/catalog/${id}">${name}</a></li>';
+                $.template("movieTemplate", m);
+                data.forEach(function(obj) {
+                    $.tmpl("movieTemplate", obj).appendTo("#menu_categ");
+                });*/
+
+            });
+        });
+    </script-->
+
+
+  
+
+
+
+
+    <script type="text/babel">
+class CategListSimple extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
+  }
+    componentDidMount() {
+    fetch("/includes/get_data.php?x=get_categ")
+      .then(res => res.json())
+      .then(
+        (result) => {
+            //console.log(result);
+          this.setState({
+            isLoaded: true,
+            items: result
+          });
+        },
+        // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+        // чтобы не перехватывать исключения из ошибок в самих компонентах.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  }
+  render() {
+    const { error, isLoaded, items } = this.state;
+    if (error) {
+      return <div>Ошибка: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Загрузка...</div>;
+    } else {
+      return (
+
+          items.map(item => (
+            <li key={item.id}><a href={`/catalog/${item.id}`}>{item.name}</a>
+            </li>
+          ))
+
+      );
+    }
+}
+
+}
+
+ReactDOM.render(
+  <CategListSimple toWhat="мир" />,
+  document.getElementById('menu_categ')
+);
+
+
+
+    </script>

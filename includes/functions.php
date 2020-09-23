@@ -9,6 +9,10 @@ function getParam($name, $default)
     if($res==NULL) $res=$default;
     return $res;
 }
+function getChartCount()
+{
+    if (!isset($_SESSION['chart'])) return ''; else return $_SESSION['chart'];
+}
 function sec_session_start() {
     $session_name = 'sec_session_id';   // Set a custom session name
     $secure = SECURE;
@@ -165,7 +169,7 @@ function  getCartDataCount() //Получает данные из БД (цены
 					$countAll+= $count;	 
 				}
     }
-    return $countAll;
+    return ($countAll===0)?'':$countAll;
 }
 
 

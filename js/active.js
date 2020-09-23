@@ -117,6 +117,7 @@
     var favme = $(".favme");
 
     favme.on('click', function () {
+        console.log('click');
         $(this).toggleClass('active');
     });
 

@@ -1,5 +1,8 @@
 <?php
+
 include_once 'header.php';
+$categ_id = getParam('categ_id', -1);
+$product_id= getParam('product', -1);
 
 
 $title_page="Каталог";
@@ -10,7 +13,7 @@ include_once 'video_baner.php';
 
 
 <section class="shop_grid_area section-padding-0-80">
-    <div class="overlay3 container">
+    <div class="overlay3 container" id="categ_page">
         <div class="row">
             <div class="col-lg-3 ">
                 <div class="sidemenu-container">
@@ -18,24 +21,8 @@ include_once 'video_baner.php';
                         <div class="selector-fixedSrollBlock menu-navigation" id='navigation'>
                             <div class="selector-fixedSrollBlock-real-heigh">
                                 <div class="row">
-                                    <ul class='nav'>
-                                        <li class='col-12  on-ic '>
-                                            <a href="/catalog/1" class='nav-link scroll'>
-
-                                                <span class="text">DQ200</span>
-                                            </a></li>
-                                        <li class='col-12  on-ic '>
-                                            <a href="/catalog/2" class='nav-link scroll'>
-                                                <span class="text">DQ250</span>
-                                            </a></li>
-                                        <li class='col-12  on-ic '>
-                                            <a href="/catalog/3" class='nav-link scroll'>
-                                                <span class="text">DL501</span>
-                                            </a></li>
-                                        <li class='col-12  on-ic '>
-                                            <a href="/catalog/4" class='nav-link scroll'>
-                                                <span class="text">DQ500</span>
-                                            </a></li>
+                                    <ul class='nav' id="menu_categ_left">
+                                        <!--меню категорий слева-->
                                     </ul>
                                 </div>
                             </div>
@@ -51,151 +38,19 @@ include_once 'video_baner.php';
                             <div class="product-topbar d-flex align-items-center justify-content-between">
                                 <!-- Total Products -->
                                 <div class="total-products">
-                                    <p><span>15</span> товаров</p>
+                                    <!--p><span>0</span> товаров</p-->
                                 </div>
 
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" id="products_list">
 
                         <!-- Single Product -->
-                        <div class="col-12 col-sm-6 col-lg-4">
-                            <div class="single-product-wrapper">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="/img/categ-img/dq200.jpg" alt="">
-                                    <!-- Hover Thumb -->
-                                    <!--img class="hover-img" src="img/product-img/product-2.jpg" alt=""-->
-                                    <!-- Favourite -->
-                                    <div class="product-favourite">
-                                        <a href="#" class="favme fa fa-heart"></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <a href="single-product-details.html">
-                                        <h6>Коробка DQ200</h6>
-                                    </a>
-                                    <p class="product-price">$8000.00</p>
 
-                                    <!-- Hover Content -->
-                                    <div class="hover-content">
-                                        <!-- Add to Cart -->
-                                        <div class="add-to-cart-btn">
-                                            <a href="#" class="btn essence-btn">В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Single Product -->
-                        <div class="col-12 col-sm-6 col-lg-4">
-                            <div class="single-product-wrapper">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="/img/categ-img/dq250.jpg" alt="">
-                                    <!-- Hover Thumb -->
-                                    <!--img class="hover-img" src="img/product-img/product-3.jpg" alt=""-->
-                                    <!-- Favourite -->
-                                    <div class="product-favourite">
-                                        <a href="#" class="favme fa fa-heart"></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <a href="single-product-details.html">
-                                        <h6>Коробка DQ250</h6>
-                                    </a>
-                                    <p class="product-price">$8000.00</p>
-
-                                    <!-- Hover Content -->
-                                    <div class="hover-content">
-                                        <!-- Add to Cart -->
-                                        <div class="add-to-cart-btn">
-                                            <a href="#" class="btn essence-btn">В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="col-12 col-sm-6 col-lg-4">
-                            <div class="single-product-wrapper">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="/img/categ-img/dl501.jpg" alt="">
-                                    <!-- Hover Thumb -->
-                                    <!--img class="hover-img" src="img/product-img/product-4.jpg" alt=""-->
-
-                                    <!-- Product Badge -->
-                                    <!--div class="product-badge offer-badge">
-                                    <span>-30%</span>
-                                </div-->
-
-                                    <!-- Favourite -->
-                                    <div class="product-favourite">
-                                        <a href="#" class="favme fa fa-heart"></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <a href="single-product-details.html">
-                                        <h6>Коробка DL501</h6>
-                                    </a>
-                                    <p class="product-price"><span class="old-price">$7500.00</span> $5500.00</p>
-
-                                    <!-- Hover Content -->
-                                    <div class="hover-content">
-                                        <!-- Add to Cart -->
-                                        <div class="add-to-cart-btn">
-                                            <a href="#" class="btn essence-btn">В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Single Product -->
-                        <div class="col-12 col-sm-6 col-lg-4">
-                            <div class="single-product-wrapper">
-                                <!-- Product Image -->
-                                <div class="product-img">
-                                    <img src="/img/categ-img/other.jpg" alt="">
-                                    <!-- Hover Thumb -->
-                                    <!--img class="hover-img" src="img/product-img/product-5.jpg" alt=""-->
-
-                                    <!-- Product Badge -->
-                                    <!--div class="product-badge new-badge">
-                                    <span>New</span>
-                                </div-->
-
-                                    <!-- Favourite -->
-                                    <div class="product-favourite">
-                                        <a href="#" class="favme fa fa-heart"></a>
-                                    </div>
-                                </div>
-                                <!-- Product Description -->
-                                <div class="product-description">
-                                    <a href="single-product-details.html">
-                                        <h6>Фильтр акпп с прокладкой</h6>
-                                    </a>
-                                    <p class="product-price">$80.00</p>
-
-                                    <!-- Hover Content -->
-                                    <div class="hover-content">
-                                        <!-- Add to Cart -->
-                                        <div class="add-to-cart-btn">
-                                            <a href="#" class="btn essence-btn">В корзину</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                                    <!--p class="product-price"><span class="old-price">$7500.00</span> $5500.00</p-->
 
 
 
@@ -208,6 +63,244 @@ include_once 'video_baner.php';
         </div>
     </div>
 </section>
+
+<script type="text/babel">
+
+class CategListSimpleLeft extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoadedP: false,
+      items: [],
+      itemsProduct:[],
+      categ_id:<?=$categ_id?>,
+      product_id:<?=$product_id?>
+    };
+  }
+    componentDidMount() {
+    fetch("/includes/get_data.php?x=get_categ")
+      .then(res => res.json())
+      .then(
+        (result) => {
+            //console.log(result);
+          this.setState({
+            items: result
+          });
+        },
+        // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+        // чтобы не перехватывать исключения из ошибок в самих компонентах.
+        (error) => {
+          this.setState({
+            error
+          });
+        }
+      )
+      this.ProductLists(this.state.categ_id,this.state.product_id)
+  }
+
+  ProductLists(c,p) {
+    fetch(`/includes/get_data.php?x=get_all_products&categ_id=${c}&product=${p}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+            //console.log(result);
+          this.setState({
+            categ_id: c, 
+            product_id: p,
+            isLoadedP: true,
+            itemsProduct: result
+          });
+          //$('.total-products').html('<p><span>'+result.length+'</span> товаров</p>');
+          //console.log(totalproducts);
+        },
+        // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+        // чтобы не перехватывать исключения из ошибок в самих компонентах.
+        (error) => {
+          this.setState({
+            isLoadedP: true,
+            error
+          });
+        }
+      )
+  }
+  AddChart(product_id) {
+
+    const requestOptions = {
+        method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded'}, 
+    body: 'x=addchart&product='+product_id
+    };
+    fetch('/includes/set_data.php', requestOptions)
+    .then(function(response) {
+    return response.json();
+  }).then(function(data) {
+    //console.log('Created Gist:', data);
+    $('#count_in_chart').text(data);
+  });
+  
+      
+  }
+
+  ChangCateg(c) {
+    this.ProductLists(c,-1)
+  }
+  ChangProduct(p) {
+    this.ProductLists(this.state.categ_id, p)
+  }
+  MenuLeft(items)
+  {
+      return <div className="col-lg-3 ">
+                <div className="sidemenu-container">
+                    <div className="wrapperWidthFixedSrollBlock">
+                        <div className="selector-fixedSrollBlock menu-navigation" id='navigation'>
+                            <div className="selector-fixedSrollBlock-real-heigh">
+                                <div className="row">
+                                    <ul className='nav' id="menu_categ_left">
+                                   { items.map(item => (
+            <li className='col-12  on-ic' key={item.id}><a href='#' onClick={() => this.ChangCateg(item.id)} className='nav-link scroll'><span className="text">{item.name}</span></a></li>
+          ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  }
+  getCategName(categ_id)
+  {
+      let d="Все товары";
+      this.state.items.forEach(function(item, i, arr) {
+          if(item.id===categ_id) d = item.name;
+        });
+        return d;
+  }
+  render() {
+    //console.log(this.state.categ_id,this.state.product_id);
+    //this.ProductLists(this.state.categ_id,this.state.product_id)
+    const { error, isLoadedP, items, itemsProduct } = this.state;
+
+    if (error) {
+      return <div>Ошибка: {error.message}</div>;
+    } else if (!isLoadedP) {
+      return <div className="row">Загрузка...</div>
+    } else if (this.state.product_id!=-1) {
+      return <div className="row">
+                {this.MenuLeft(items)}
+                <ProductOne items={itemsProduct}/>
+                </div>
+    }else {
+      return (
+        <div className="row">
+        {this.MenuLeft(items)}
+
+            <div className="col-12 col-md-8 col-lg-9">
+                <div className="shop_grid_product_area">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="product-topbar d-flex align-items-center justify-content-between">
+                                <div className="total-products">
+                                <p><span>{itemsProduct.length}</span> товаров</p>
+                                </div>
+                                <div className="product-sorting d-flex">
+                                        <p>{this.getCategName(this.state.categ_id)}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row" id="products_list">
+
+
+                    {itemsProduct.map(item => (
+            <div className="col-12 col-sm-6 col-lg-4" key={item.id}>
+                            <div className="single-product-wrapper">
+                                <div className="product-img">
+
+                                    <img src={getImage(item.img)} alt=""/>
+                                    <div className="product-favourite">
+                                        <a href="#" className={`favme ${item.active} fa fa-heart`}></a>
+                                    </div>
+                                </div>
+                                <div className="product-description">
+                                    <a href="#"  onClick={() => this.ChangProduct(item.id)}>
+                                        <h6>{item.name}</h6>
+                                    </a>
+                                    <p className="product-price">{item.coast}</p>
+                                    <div className="hover-content">
+                                        <div className="add-to-cart-btn">
+                                        <button onClick={() => this.AddChart( item.id )}className="btn essence-btn">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    
+
+                    </div>
+
+                </div>
+            </div>
+</div>
+          
+          
+      );
+    }
+}
+}
+ReactDOM.render(
+  <CategListSimpleLeft />,
+  document.getElementById('categ_page')
+);
+class ProductOne extends React.Component {
+    constructor(props) {
+    super(props);
+  }
+
+  
+  render() {
+
+    let items = this.props.items
+
+
+      return (
+          items.map(item => (
+            <div className="col-12 col-sm-6 col-lg-4">
+                            <div className="single-product-wrapper">
+                                <div className="product-img">
+                                    <img src={getImage(item.img)} alt=""/>
+                                    <div className="product-favourite">
+                                        <a href="#" className="favme fa fa-heart"></a>
+                                    </div>
+                                </div>
+                                <div className="product-description">
+
+                                        <h6>{item.name}</h6>
+
+                                    <p className="product-price">{item.coast}</p>
+                                    <div className="hover-content">
+                                        <div className="add-to-cart-btn">
+                                          <button onClick={() => this.AddChart( item.id )}className="btn essence-btn">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+          ))
+
+      );
+    }
+
+}
+
+function getImage(img)
+{
+if(img===null) return '/img/product-img/noPhoto.png';
+else return img;
+}
+</script>
 
 <?php
 include_once 'footer.php';
