@@ -248,7 +248,7 @@ ReactDOM.render(
 
         $.getJSON('/includes/get_data.php?x=get_top_products', function(data) {
             var context = '';
-            console.log(data);
+            //console.log(data);
             data.forEach(function(obj) {
                 context += createDivTopProduct(obj.name, obj.id, obj.img, obj.coast, obj.id_categ, obj.active);
 

@@ -124,23 +124,8 @@ class CategListSimpleLeft extends React.Component {
         }
       )
   }
-  AddChart(product_id) {
-
-    const requestOptions = {
-        method: 'POST',
-    headers: {'Content-Type':'application/x-www-form-urlencoded'}, 
-    body: 'x=addchart&product='+product_id
-    };
-    fetch('/includes/set_data.php', requestOptions)
-    .then(function(response) {
-    return response.json();
-  }).then(function(data) {
-    //console.log('Created Gist:', data);
-    $('#count_in_chart').text(data);
-  });
   
-      
-  }
+
 
   ChangCateg(c) {
     this.ProductLists(c,-1)
@@ -214,28 +199,7 @@ class CategListSimpleLeft extends React.Component {
 
 
                     {itemsProduct.map(item => (
-            <div className="col-12 col-sm-6 col-lg-4" key={item.id}>
-                            <div className="single-product-wrapper">
-                                <div className="product-img">
-
-                                    <img src={getImage(item.img)} alt=""/>
-                                    <div className="product-favourite">
-                                        <a href="#" className={`favme ${item.active} fa fa-heart`}></a>
-                                    </div>
-                                </div>
-                                <div className="product-description">
-                                    <a href="#"  onClick={() => this.ChangProduct(item.id)}>
-                                        <h6>{item.name}</h6>
-                                    </a>
-                                    <p className="product-price">{item.coast}</p>
-                                    <div className="hover-content">
-                                        <div className="add-to-cart-btn">
-                                        <button onClick={() => this.AddChart( item.id )}className="btn essence-btn">В корзину</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      <ProductOne  key={item.id} items={item}/>
                     ))}
                     
 
@@ -257,38 +221,79 @@ ReactDOM.render(
 class ProductOne extends React.Component {
     constructor(props) {
     super(props);
+    this.state = {
+      isFavouritet: this.props.items.active
+    };
   }
+
+AddChart(product_id) {
+
+      const requestOptions = {
+          method: 'POST',
+          headers: {'Content-Type':'application/x-www-form-urlencoded'}, 
+          body: 'x=addchart&product='+product_id
+        };
+    fetch('/includes/set_data.php', requestOptions)
+      .then(function(response) {
+      return response.json();
+      }).then(function(data) {
+        //console.log('Created Gist:', data);
+        $('#count_in_chart').text(data);
+      });
+}
+
+addFavouritet(product_id) {
+
+    const requestOptions = {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded'}, 
+    body: 'x=addFavouritet&product='+product_id
+    };
+  fetch('/includes/set_data.php', requestOptions)
+  .then(res => res.json())
+      .then(
+        (result) => {
+            //console.log(result);
+            this.setState({isFavouritet:(result==='-1')?'active':''});
+
+        },
+        (error) => {
+
+        }
+      )
+}
 
   
   render() {
 
-    let items = this.props.items
+    let item = this.props.items
 
 
       return (
-          items.map(item => (
-            <div className="col-12 col-sm-6 col-lg-4">
+
+            <div className="col-12 col-sm-6 col-lg-4" key={item.id}>
                             <div className="single-product-wrapper">
                                 <div className="product-img">
+
                                     <img src={getImage(item.img)} alt=""/>
                                     <div className="product-favourite">
-                                        <a href="#" className="favme fa fa-heart"></a>
+                                        <a onClick={() => this.addFavouritet( item.id )}  className={`favme ${this.state.isFavouritet} fa fa-heart`}></a>
                                     </div>
                                 </div>
                                 <div className="product-description">
-
+                                    <a href="#"  onClick={() => this.ChangProduct(item.id)}>
                                         <h6>{item.name}</h6>
-
+                                    </a>
                                     <p className="product-price">{item.coast}</p>
                                     <div className="hover-content">
                                         <div className="add-to-cart-btn">
-                                          <button onClick={() => this.AddChart( item.id )}className="btn essence-btn">В корзину</button>
+                                        <button onClick={() => this.AddChart( item.id )} className="btn essence-btn">В корзину</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-          ))
+
 
       );
     }
