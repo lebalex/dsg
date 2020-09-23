@@ -40,6 +40,7 @@ $product = getParam('product', '-1');
             $add=-1;
         }
 
-        
-     echo json_encode($add);
+        //$res[] = array('add'=>$add, 'count'=>getFavouritetDataCount());
+        $array = ['add' => $add, 'count'=>getFavouritetDataCount()];
+     echo json_encode($array);
  }

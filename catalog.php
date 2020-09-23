@@ -237,7 +237,7 @@ AddChart(product_id) {
       .then(function(response) {
       return response.json();
       }).then(function(data) {
-        console.log('AddChart:', data);
+        //console.log('AddChart:', data);
         $('#count_in_chart').text(data);
       });
 }
@@ -253,8 +253,10 @@ addFavouritet(product_id) {
   .then(res => res.json())
       .then(
         (result) => {
-          console.log('addFavouritet:', result);
-            this.setState({isFavouritet:(result===-1)?false:true});
+          //console.log(result.add);
+          //console.log(result.count);
+          $('#count_in_favouritet').text(result.count);
+          this.setState({isFavouritet:(result.add===-1)?false:true});
 
         },
         (error) => {

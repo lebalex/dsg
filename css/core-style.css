@@ -406,7 +406,15 @@ img {
     .header_area .user-login-info a img,
     .header_area .cart-area a img {
       max-width: 20px; }
-    .header_area .favourite-area a span,
+    .header_area .favourite-area a span
+    {
+      font-family: "Ubuntu", sans-serif;
+      font-size: 18px;
+      color: #dc0345;
+      font-weight: 700;
+      position: absolute;
+      top: -10px; 
+    }
     .header_area .user-login-info a span,
     .header_area .cart-area a span {
       font-family: "Ubuntu", sans-serif;

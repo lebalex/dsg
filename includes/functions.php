@@ -171,6 +171,15 @@ function  getCartDataCount() //Получает данные из БД (цены
     }
     return ($countAll===0)?'':$countAll;
 }
+function  getFavouritetDataCount() {
+    $countAll=0;
+    if (!empty($_SESSION['favouritet'])) {
+    foreach ($_SESSION['favouritet'] as $id=>$count){ // пробегаем по содержимому, вычилсяя сумму и количество
+					$countAll+= $count;	 
+				}
+    }
+    return ($countAll===0)?'':$countAll;
+}
 
 
 

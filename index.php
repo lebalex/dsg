@@ -187,6 +187,8 @@ ReactDOM.render(
             //alert(result)
             $(e).toggleClass('active');
             
+            $('#count_in_favouritet').text(result.count);
+            
         }
     });
     }

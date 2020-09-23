@@ -100,7 +100,7 @@ sec_session_start();
                 </div>
                 <!-- Favourite Area -->
                 <div class="favourite-area">
-                    <a href="#"><img src="/img/core-img/heart.svg" alt=""></a>
+                    <a href="#"><img src="/img/core-img/heart.svg" alt=""><span id="count_in_favouritet"><?=getFavouritetDataCount()?></span></a>
                 </div>
                 <!-- User Login Info -->
                 <div class="user-login-info">
