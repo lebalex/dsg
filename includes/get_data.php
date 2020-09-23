@@ -1,5 +1,4 @@
 <?php
-include_once 'db_connect.php';
 include_once 'functions.php';
 sec_session_start();
 header("Content-Type: application/json; charset=UTF-8");

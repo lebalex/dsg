@@ -222,7 +222,7 @@ class ProductOne extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-      isFavouritet: this.props.items.active
+      isFavouritet: (this.props.items.active==='active')?true:false
     };
   }
 
@@ -254,7 +254,7 @@ addFavouritet(product_id) {
       .then(
         (result) => {
           console.log('addFavouritet:', result);
-            this.setState({isFavouritet:(result==='-1')?'active':''});
+            this.setState({isFavouritet:(result===-1)?false:true});
 
         },
         (error) => {
@@ -277,7 +277,7 @@ addFavouritet(product_id) {
 
                                     <img src={getImage(item.img)} alt=""/>
                                     <div className="product-favourite">
-                                        <a onClick={() => this.addFavouritet( item.id )}  className={`favme ${this.state.isFavouritet} fa fa-heart`}></a>
+                                        <a onClick={() => this.addFavouritet( item.id )}  className={`favme ${(this.state.isFavouritet)?'active':''} fa fa-heart`}></a>
                                     </div>
                                 </div>
                                 <div className="product-description">
