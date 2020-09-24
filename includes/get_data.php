@@ -21,6 +21,15 @@ if ($obj == "get_categ") {
     }
     echo  json_encode($_SESSION['categories']);
 }
+else if ($obj == "get_categ_db") {
+        $stmt = $mysqli->prepare("select id, name, img from dsg_categ where active=1 order by id");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $_SESSION['categories'] = $outp;
+        echo json_encode($outp);
+
+}
 else if ($obj == "get_keywords") {
     if (!isset($_SESSION['keywords'])) {
         $stmt = $mysqli->prepare("select name from dsg_products where active=1 order by id");
@@ -64,7 +73,7 @@ else if($obj =="get_all_products")
     $product_predicat="";
     if($product!='-1') $product_predicat=" and id=".$product;
 
-    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast from dsg_products where active=1 ".$categ_predicat.$product_predicat);
+    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem from dsg_products where active=1 ".$categ_predicat.$product_predicat);
     
         $stmt->execute();
         $result = $stmt->get_result();
@@ -79,11 +88,25 @@ else if($obj =="get_all_products")
             //file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
             }
         }
-            $out2[] = array('id_categ'=>$value[0], 'id'=>$value[1], 'name'=>$value[2], 'img'=>$value[3], 'coast'=>$value[4], 'active'=>$active);
+            $out2[] = array('id_categ'=>$value[0], 'id'=>$value[1], 'name'=>$value[2], 'img'=>$value[3], 'coast'=>$value[4], 
+            'count'=>$value[5], 'oem'=>$value[6], 
+            
+            'active'=>$active);
     }
         echo json_encode($out2);
 }
+else if($obj =="get_all_products_db")
+{
+    $categ_predicat="";
+    if($categ_id!='-1') $categ_predicat=" and id_categ=".$categ_id;
 
+    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem from dsg_products where active=1 ".$categ_predicat);
+    
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode($outp);
+}
 
 
     //$age = array("Peter"=>35, "Ben"=>37, "Joe"=>43);

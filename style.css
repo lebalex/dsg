@@ -130,6 +130,133 @@ div.menu-navigation ul.nav>li.on-ic span.text{
     padding-left: 30px;
 }
 
+.hidden
+{
+    display:none;
+}
 
 
-   
+
+
+
+.edit-btn-icon {
+    display: inline-block;
+    min-width: 40px;
+    height: 30px;
+    color: #ffffff;
+    border: none;
+    border-radius: 2;
+    padding: 0 10px;
+    margin-right: 10px;
+    font-size: 12px;
+    background-color: #4685d4;
+    font-weight: 100; }
+    .edit-btn-icon-red {
+        display: inline-block;
+        min-width: 40px;
+        height: 30px;
+        color: #ffffff;
+        border: none;
+        border-radius: 2;
+        padding: 0 10px;
+        margin-right: 10px;
+        font-size: 12px;
+        background-color: #d44646;
+        font-weight: 100; }
+
+.edit-btn {
+    display: inline-block;
+    min-width: 70px;
+    height: 30px;
+    color: #ffffff;
+    border: none;
+    border-radius: 2;
+    padding: 0 10px;
+    margin-right: 10px;
+    font-size: 12px;
+    background-color: #4685d4;
+    font-weight: 100; }
+
+    .edit-btn-yes {
+        display: inline-block;
+        min-width: 70px;
+        height: 30px;
+        color: #ffffff;
+        border: none;
+        border-radius: 2;
+        padding: 0 10px;
+        margin-right: 10px;
+        /*text-transform: uppercase;*/
+        font-size: 12px;
+        /*line-height: 50px;*/
+        background-color: #d44646;
+        /*letter-spacing: 1.5px;*/
+        font-weight: 100; }
+
+
+.popup{
+    position: fixed ;
+    top: 40%;
+    left: 50%;
+    margin: -215px 0 0 -210px;
+    z-index:10000;
+    min-width:420px;
+    width:420px;
+    display: inline-block;
+    
+    padding:.1em .1em .1em .1em;
+    -webkit-box-shadow:3px 5px 33px rgba(0,0,0,0.15);
+    -moz-box-shadow:3px 5px 33px rgba(0,0,0,0.15);
+    box-shadow:3px 5px 33px rgba(0,0,0,0.15)
+}
+.popup_max{
+    position: fixed ;
+    top: 40%;
+    left: 50%;
+    margin: -300px 0 0 -400px;
+    z-index:10000;
+    min-width:800px;
+    width:800px;
+    display: inline-block;
+    
+    padding:.1em .1em .1em .1em;
+    -webkit-box-shadow:3px 5px 33px rgba(0,0,0,0.15);
+    -moz-box-shadow:3px 5px 33px rgba(0,0,0,0.15);
+    box-shadow:3px 5px 33px rgba(0,0,0,0.15)
+}
+.addProduct{background-color:#abdffe;}
+
+  .modal2 {
+    background-color:#abdffe;
+    border-radius: 5;
+    max-width: 600;
+    min-height: 300;
+
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    
+  }
+  .footerModal2
+  {
+    padding: 10px;
+      text-align: center;
+  }
+
+
+.close_btn{position:relative;right:-20px;top:-20px;cursor:pointer;color:#0379c0;font-size:1.5em;width:100%; text-align: right;}
+.close_btn:hover i{color:#2daefc}
+
+.form-horizontal .form-group{display:block;padding:0;margin:0;clear:both}
+.form-horizontal .formCaption{font-size:1.3em;margin:-40px 0 0 0;color:#02598e;max-width:95%}
+.form-horizontal i{color:#02598e;font-weight:600;font-size:1.3em;margin:1px 5px 0 0;float:left}
+.form-horizontal label{font-weight:700;display:block;color:#333}
+.form-horizontal label.error{background-color:#ff6262;color:#fff;font-weight:400;padding:.2em 1em;font-size:.8em;margin:5px 0 0 0;display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;-webkit-animation-duration:.5s;animation-duration:.5s;-webkit-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-name:shake;animation-name:shake}.form-horizontal label.error[for=realperson]{left:2.4em}.form-horizontal label.error:before{position:absolute;left:1em;top:-5px;content:'';width:0;height:0;border-style:solid;border-width:0 5.5px 5px 5.5px;border-color:transparent transparent #ff6262 transparent}.form-horizontal label.forCheckbox{display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;vertical-align:middle;margin:0;padding:0}.form-horizontal input,.form-horizontal textarea{padding:.3em .5em;border:1px solid rgba(3,121,192,0.4)}.form-horizontal input:hover,.form-horizontal textarea:hover{border:1px solid rgba(3,121,192,0.6)}.form-horizontal input:focus,.form-horizontal textarea:focus{border:1px solid #0379c0;-webkit-animation-duration:.5s;animation-duration:.5s;-webkit-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-name:pulse;animation-name:pulse}.form-horizontal input[type=text],.form-horizontal textarea[type=text]{display:block}.form-horizontal input[type=submit],.form-horizontal textarea[type=submit]{color:#fff;padding:1px 1.5em}.form-horizontal input[type=submit]:hover,.form-horizontal textarea[type=submit]:hover{background-color:rgba(3,121,192,0.6)}.form-horizontal input.error,.form-horizontal textarea.error{border-color:#ff6262}.form-horizontal input[type=checkbox],.form-horizontal textarea[type=checkbox],.form-horizontal input[type=radio],.form-horizontal textarea[type=radio]{display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;margin:0 5px 0 0;padding:0;height:auto;vertical-align:middle;outline:none}.form-horizontal textarea{width:100%}form{position:relative;z-index:2}form input.valid{border:1px solid #55a980}form input.valid:focus,form input.valid:hover{border:1px solid #55a980}form input.error{border:1px solid #ff6262}form input.error:focus,form input.error:hover{border:1px solid #ff6262}label{font-weight:700;display:block;color:#333}label.error{background-color:#ff6262;color:#fff;font-weight:400;padding:.2em 1em;font-size:.8em;display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;-webkit-animation-duration:.5s;animation-duration:.5s;-webkit-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-name:shake;animation-name:shake}label.error[for=realperson]{left:2.4em}label.error:before{position:absolute;left:1em;top:-5px;content:'';width:0;height:0;border-style:solid;border-width:0 5.5px 5px 5.5px;border-color:transparent transparent #ff6262 transparent}label.forCheckbox{display:-moz-inline-stack;display:inline-block;vertical-align:top;zoom:1;*display:inline;vertical-align:middle;margin:0;padding:0}
+
+.select-categ {
+    width: 200px;
+}
+.textFieldName{
+    width: 750px;
+}

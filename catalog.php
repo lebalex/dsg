@@ -152,6 +152,7 @@ class CategListSimpleLeft extends React.Component {
                     </div>
                 </div>
             </div>
+            
   }
   getCategName(categ_id)
   {

@@ -14,6 +14,13 @@ RewriteRule ^index/?$ index.php [L,QSA]
 RewriteRule ^sale/?$ sale.php [L,QSA]
 RewriteRule ^about/?$ about.php [L,QSA]
 
+RewriteRule ^/manager/?$ /manager/categs.php [L,QSA]
+RewriteRule ^/manager/orders/?$ /manager/orders.php [L,QSA]
+RewriteRule ^/manager/products/?$ /manager/products.php [L,QSA]
+RewriteRule ^/manager/categs/?$ /manager/categs.php [L,QSA]
+RewriteRule ^/manager/users/?$ /manager/users.php [L,QSA]
+
+
 RewriteRule ^admin/?$ admin/index.php [L,QSA]
 RewriteRule ^admin/groups/?$ admin/groups.php [L,QSA]
 RewriteRule ^admin/managers/?$ admin/managers.php [L,QSA]

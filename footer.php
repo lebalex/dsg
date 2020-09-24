@@ -7,7 +7,7 @@
                     <div class="single_widget_area d-flex">
                         <!-- Logo -->
                         <div class="footer-logo">
-                            <a href="index"><img src="/img/core-img/logo2_dsg.png" alt=""></a>
+                            <a href="/index"><img src="/img/core-img/logo2_dsg.png" alt=""></a>
                         </div>
 
                     </div>
