@@ -2,7 +2,7 @@
 include_once '../includes/functions.php';
 sec_session_start();
 
-
+include_once 'auth.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +69,16 @@ sec_session_start();
                     <!-- Nav End -->
                 </div>
             </nav>
-
+            <div class="header-meta d-flex clearfix justify-content-end">
+                <div class="cart-area">
+                <a class="exit_btn"><img src="/img/core-img/exit-svgrepo-com.svg" alt="Выход" title="Выход"></a>
+                <script>
+                    $('.exit_btn').click(function(e){
+                        $.ajax({url: "/manager/logout.php",context: document.body, error: function(a){ window.location.href = "/index";}});  
+                    })
+                </script>
+                </div>
+            </div>
 
 
         </div>

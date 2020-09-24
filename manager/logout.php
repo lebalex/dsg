@@ -1,5 +1,5 @@
 <?php
-include_once 'functions.php';
+include_once '../includes/functions.php';
 sec_session_start();
  
 // Unset all session values 
@@ -16,7 +16,14 @@ setcookie(session_name(),
         $params["secure"], 
         $params["httponly"]);
  
+
+    unset($_COOKIE[session_name()]);
+
+
 // Destroy session 
 session_destroy();
-header('Location: /index');
+
+header('HTTP/1.1 401 Unauthorized');
+//header('Location: /index');
+
 ?>
