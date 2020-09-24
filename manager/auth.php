@@ -9,8 +9,11 @@ if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
     header('HTTP/1.1 401 Unauthorized');
     header('WWW-Authenticate: Digest realm="'.$realm.
            '",qop="auth",nonce="'.uniqid().'",opaque="'.md5($realm).'"');
-           //header('Location: /index');
-    die('Текст, отправляемый в том случае, если пользователь нажал кнопку Cancel');
+
+    //die('Текст, отправляемый в том случае, если пользователь нажал кнопку Cancel');
+    die('<html><meta http-equiv="refresh" content="0;url=/index"></html>');
+
+
 }
 
 

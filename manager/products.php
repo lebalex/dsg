@@ -228,7 +228,7 @@ include_once 'header_manager.php';
       <td className="border-right border-bottom-0">{item.oem}</td>
       <td className="border-right border-bottom-0">{item.count}</td>
       <td className="border-right border-bottom-0">{item.coast}</td>
-      <td className="border-right border-bottom-0"><img width="100px" src={(item.img!=null)?`/img/product-img/${item.img}`:''}  alt=""/></td>
+      <td className="border-right border-bottom-0"><img width="100px" src={(item.img!=null)?`/img/product-img/${item.img}`:'/img/product-img/noPhoto.png'}  alt=""/></td>
       <td className="border-right border-bottom-0 border-right-0">
         <button onClick={() => this.edit( index )} className="btn edit-btn-icon"><i className="icon-pencil"/></button>
         <button onClick={() => this.toggleModalDel( item.id )} className="btn edit-btn-icon-red"><i className="icon-trash-empty"/></button>

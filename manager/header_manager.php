@@ -74,7 +74,7 @@ include_once 'auth.php';
                 <a class="exit_btn"><img src="/img/core-img/exit-svgrepo-com.svg" alt="Выход" title="Выход"></a>
                 <script>
                     $('.exit_btn').click(function(e){
-                        $.ajax({url: "/manager/logout.php",context: document.body, error: function(a){ window.location.href = "/index";}});  
+                        $.ajax({url: "/logout",context: document.body, error: function(a){ window.location.href = "/index";}});  
                     })
                 </script>
                 </div>
