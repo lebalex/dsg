@@ -23,7 +23,9 @@ setcookie(session_name(),
 // Destroy session 
 session_destroy();
 
-header('HTTP/1.1 401 Unauthorized');
+//header('HTTP/1.1 401 Unauthorized');
+header("Status:401 Logout");
+header("WWW-Authenticate: Invalidate, Basic realm=logout")
 //header('Location: /index');
 
 ?>
