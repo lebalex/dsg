@@ -72,7 +72,7 @@ else if($obj =="get_all_products")
     if($categ_id!='-1') $categ_predicat=" and id_categ=".$categ_id;
     $product_predicat="";
     if($product!='-1') $product_predicat=" and id=".$product;
-
+    $out2 = array();
     $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem from dsg_products where active=1 ".$categ_predicat.$product_predicat);
     
         $stmt->execute();
@@ -106,6 +106,31 @@ else if($obj =="get_all_products_db")
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
         echo json_encode($outp);
+}else if($obj =="get_favor_products")
+{
+    $user_id = getParam('user_id', -1);
+
+    if (!empty($_SESSION['favouritet'])) {
+        $id_array = array();
+        
+        if($product!='-1'){
+            $id_array[] = $product;
+        }else{
+            foreach ($_SESSION['favouritet'] as $id=>$count){ // пробегаем по содержимому, вычилсяя сумму и количество
+                $id_array[] = $id;	 
+                    }
+            }
+
+                    $array = implode("','",$id_array);
+                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem, 'active' as active from dsg_products where active=1 and id IN ('".$array."') ");
+                    $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode($outp);
+
+}else
+    echo json_encode(-1);
+
 }
 
 

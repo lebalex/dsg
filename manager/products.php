@@ -243,11 +243,11 @@ include_once 'header_manager.php';
           </tbody>
 </table>
 
-<Modal show={this.state.isOpen}
+<ModalYesNo show={this.state.isOpen}
             onYes={this.toggleModalYes}
           onNo={this.toggleModalNo}>
           Вы желаете удалить товар?
-        </Modal>
+        </ModalYesNo>
 
 
         <div className={`${this.state.edit?'popup_max':'hidden'} `}>
@@ -319,7 +319,7 @@ class Product{
 
 
     </script>
-    <script type="text/babel" src="/js/Modal.js"></script>
+    <script type="text/babel" src="/js/ModalYesNo.js"></script>
     
 </body>
 

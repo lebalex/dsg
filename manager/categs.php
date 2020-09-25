@@ -171,11 +171,11 @@ include_once 'header_manager.php';
           </tbody>
 </table>
 
-<Modal show={this.state.isOpen}
+<ModalYesNo show={this.state.isOpen}
             onYes={this.toggleModalYes}
           onNo={this.toggleModalNo}>
           Вы желаете удалить категорию товаров?
-        </Modal>
+        </ModalYesNo>
 
 
         <div className={`${this.state.edit?'popup':'hidden'} `}>
@@ -217,7 +217,7 @@ include_once 'header_manager.php';
 
 
     </script>
-    <script type="text/babel" src="/js/Modal.js"></script>
+    <script type="text/babel" src="/js/ModalYesNo.js"></script>
 </body>
 
 </html>

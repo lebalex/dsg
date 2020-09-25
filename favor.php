@@ -5,7 +5,7 @@ $categ_id = getParam('categ_id', -1);
 $product_id= getParam('product', -1);
 
 
-$title_page="Каталог";
+$title_page="Избранное";
 $video_file="vag2";
 include_once 'video_baner.php';
 
@@ -14,8 +14,6 @@ include_once 'video_baner.php';
 
 <section class="shop_grid_area section-padding-0-80">
     <div class="overlay3 container" id="data_page">
-
-                                        <!--меню категорий и товаров-->
 
     </div>
 </section>
@@ -28,51 +26,52 @@ class CategListSimpleLeft extends React.Component {
     this.state = {
       error: null,
       isLoadedP: false,
-      items: [],
       itemsProduct:[],
-      categ_id:<?=$categ_id?>,
-      product_id:<?=$product_id?>
+      items:[],
+      product_id:-1,
+      user_id:-1/*<php=$user_id?>*/
     };
   }
     componentDidMount() {
-    fetch("/includes/get_data.php?x=get_categ")
+        fetch("/includes/get_data.php?x=get_categ")
       .then(res => res.json())
       .then(
         (result) => {
-            //console.log(result);
           this.setState({
             items: result
           });
         },
-        // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-        // чтобы не перехватывать исключения из ошибок в самих компонентах.
         (error) => {
           this.setState({
             error
           });
         }
       )
-      this.ProductLists(this.state.categ_id,this.state.product_id)
+      this.ProductLists(this.state.user_id, this.state.product_id)
   }
 
-  ProductLists(c,p) {
-    //console.log(c,p);
-    fetch(`/includes/get_data.php?x=get_all_products&categ_id=${c}&product=${p}`)
+  ProductLists(user_id, p) {
+    fetch(`/includes/get_data.php?x=get_favor_products&user_id=${user_id}&product=${p}`)
       .then(res => res.json())
       .then(
         (result) => {
             //console.log(result);
+            if(result===-1){
+                this.setState({
+            user_id: user_id, 
+            product_id: p,
+            isLoadedP: true,
+
+          });
+            }else{
           this.setState({
-            categ_id: c, 
+            user_id: user_id, 
             product_id: p,
             isLoadedP: true,
             itemsProduct: result
           });
-          //$('.total-products').html('<p><span>'+result.length+'</span> товаров</p>');
-          //console.log(totalproducts);
+        }
         },
-        // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-        // чтобы не перехватывать исключения из ошибок в самих компонентах.
         (error) => {
           this.setState({
             isLoadedP: true,
@@ -81,38 +80,16 @@ class CategListSimpleLeft extends React.Component {
         }
       )
   }
-  
 
-
-  ChangCateg(c) {
-    this.ProductLists(c,-1)
+  EmptyFavor() {
+      if(this.state.itemsProduct.length===0)
+        return (
+            <div><p>У Вас пока пусто</p></div>
+        );
   }
-
   clickProduct = (p) => {
     //console.log(p);
-    this.ProductLists(this.state.categ_id, p)
-  }
-  
-  MenuLeft(items)
-  {
-      return <div className="col-lg-3 ">
-                <div className="sidemenu-container">
-                    <div className="wrapperWidthFixedSrollBlock">
-                        <div className="selector-fixedSrollBlock menu-navigation" id='navigation'>
-                            <div className="selector-fixedSrollBlock-real-heigh">
-                                <div className="row">
-                                    <ul className='nav' id="menu_categ_left">
-                                   { items.map(item => (
-            <li className='col-12  on-ic' key={item.id}><a href='#' onClick={() => this.ChangCateg(item.id)} className='nav-link scroll'><span className="text">{item.name}</span></a></li>
-          ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+    this.ProductLists(this.state.user_id, p)
   }
   getCategName(categ_id)
   {
@@ -122,28 +99,27 @@ class CategListSimpleLeft extends React.Component {
         });
         return d;
   }
-  
+
   render() {
     //console.log(this.state.categ_id,this.state.product_id);
     //this.ProductLists(this.state.categ_id,this.state.product_id)
-    const { error, isLoadedP, items, itemsProduct } = this.state;
-//console.log('r: '+this.state.product_id+', '+itemsProduct);
+    const { error, isLoadedP, itemsProduct } = this.state;
+
     if (error) {
       return <div>Ошибка: {error.message}</div>;
     } else if (!isLoadedP) {
       return <div className="row">Загрузка...</div>
     } else if (this.state.product_id!=-1) {
       return <div className="row">
-              {
-                <ProductDetail  items={itemsProduct[0]} id_categ={itemsProduct[0].id_categ} categ_name={this.getCategName(itemsProduct[0].id_categ)}/>
-              }
-</div>
+                {
+                    <ProductDetail  items={itemsProduct[0]} id_categ={itemsProduct[0].id_categ} categ_name={this.getCategName(itemsProduct[0].id_categ)}/>
+                }
+            </div>
     }else {
       return (
         <div className="row">
-        {this.MenuLeft(items)}
 
-            <div className="col-12 col-md-8 col-lg-9">
+            <div className="col-12 col-md-4 col-lg-12">
                 <div className="shop_grid_product_area">
                     <div className="row">
                         <div className="col-12">
@@ -152,16 +128,23 @@ class CategListSimpleLeft extends React.Component {
                                 <p><span>{itemsProduct.length}</span> товаров</p>
                                 </div>
                                 <div className="product-sorting d-flex">
-                                        <p>{this.getCategName(this.state.categ_id)}</p>
+                                        <p>Избранное</p>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                     <div className="row" id="products_list">
+
+
                     {itemsProduct.map(item => (
-                      <ProductOne  key={item.id} items={item} onClickProduct={() => this.clickProduct(item.id)}/>
+                      <ProductOne  key={item.id} items={item} onClickProduct={() => this.clickProduct(item.id)} />
                     ))}
+                    {this.EmptyFavor()}
+                    
+
                     </div>
+
                 </div>
             </div>
 </div>
@@ -176,9 +159,12 @@ ReactDOM.render(
   document.getElementById('data_page')
 );
 
+
+
 </script>
 <script type="text/babel" src="/js/ProductOne.js"></script>
 <script type="text/babel" src="/js/ProductDetail.js"></script>
+
 <?php
 include_once 'footer.php';
 ?>

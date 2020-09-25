@@ -100,7 +100,7 @@ sec_session_start();
                 </div>
                 <!-- Favourite Area -->
                 <div class="favourite-area">
-                    <a href="#"><img src="/img/core-img/heart.svg" alt=""><span id="count_in_favouritet"><?=getFavouritetDataCount()?></span></a>
+                    <a href="/favor"><img src="/img/core-img/heart.svg" alt=""><span id="count_in_favouritet"><?=getFavouritetDataCount()?></span></a>
                 </div>
                 <!-- User Login Info -->
                 <div class="user-login-info">
@@ -108,7 +108,7 @@ sec_session_start();
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span id="count_in_chart"><?=getCartDataCount()?></span></a>
+                    <a href="/cart" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span id="count_in_chart"><?=getCartDataCount()?></span></a>
                 </div>
             </div>
 

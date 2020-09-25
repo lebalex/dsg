@@ -1,11 +1,8 @@
-class Modal extends React.Component {
+class ModalYesNo extends React.Component {
     render() {
-      // Render nothing if the "show" prop is false
       if(!this.props.show) {
         return null;
       }
-  
-  
       return (
           <div className="popup">
           <div className="modal2">
