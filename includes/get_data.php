@@ -149,7 +149,7 @@ else if($obj =="get_all_products_db")
             }
             
                     $array = implode("','",$id_array);
-                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, 12.5 as coast, count, oem from dsg_products where active=1 and id IN ('".$array."') ");
+                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem from dsg_products where active=1 and id IN ('".$array."') ");
                     $stmt->execute();
         $result = $stmt->get_result();
         while ($value = $result->fetch_row()) {

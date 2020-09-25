@@ -218,8 +218,8 @@ sum()
       <i className="icon-plus plus-minus" onClick={() => this.plusCount( index )}/>
       
       </td>
-      <td className="border-right border-bottom-0">{item.coast}</td>
-      <td className="border-right border-bottom-0">{item.coast*item.count}</td>
+      <td className="border-right border-bottom-0">{new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(item.coast)}</td>
+      <td className="border-right border-bottom-0">{new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(item.coast*item.count)}</td>
       <td className="border-right border-bottom-0 border-right-0">
         <button onClick={() => this.toggleModalDel( item.id )} className="btn edit-btn-icon-red"><i className="icon-trash-empty"/></button>
 

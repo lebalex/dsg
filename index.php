@@ -205,7 +205,7 @@ ReactDOM.render(
             <a href="/catalog/${id_categ}/${id}">
             <h6>${name}</h6>
             </a>
-            <p class="product-price">${coast}</p>
+            <p class="product-price">${new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(coast)}</p>
             <div class="hover-content">
             <div class="add-to-cart-btn"><button onclick=addChart(${id}) class="btn essence-btn">В корзину</button>
             </div>

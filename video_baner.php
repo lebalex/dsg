@@ -7,7 +7,7 @@
                     <div class="col-12">
                         <div class="hero-content">
                             <h3>DSG Комплект</h3>
-                            <h6><?=$title_page?></h6>
+                            <h6 id="title_page"><?=$title_page?></h6>
                         </div>
                     </div>
                 </div>

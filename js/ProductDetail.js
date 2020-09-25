@@ -55,7 +55,7 @@ else return img;
 
     let item = this.props.items
     //console.log(item);
-
+    $('#title_page').text(this.props.categ_name+'/'+item.name);
 
       return (
             <div className="col-12 col-md-4 col-lg-12">
@@ -76,7 +76,7 @@ else return img;
                         </div>
                     </div>
                     <div className="row" id="products_list">
-            <div className="col-12 col-sm-6 col-lg-4" key={item.id}>
+            <div className="col-12 col-sm-6 col-lg-4">
                             <div className="single-product-wrapper">
                                 <div className="product-img">
                                     <img src={this.getImage(item.img)} alt=""/>
@@ -85,8 +85,6 @@ else return img;
                                     </div>
                                 </div>
                                 <div className="product-description">
-                                        <h6>{item.name}</h6>
-                                    <p className="product-price">{item.coast}</p>
                                     <div className="hover-content">
                                         <div className="add-to-cart-btn">
                                         <button onClick={() => this.AddChart( item.id )} className="btn essence-btn">В корзину</button>
@@ -95,6 +93,19 @@ else return img;
                                 </div>
                             </div>
                         </div>
+
+                        <div className="col-12 col-sm-6 col-lg-4">
+                            <div className="single-product-wrapper">
+
+                                <div className="product-description">
+                                <h6>{item.name}</h6>
+                                тут может быть описание товара
+                                    <p className="color">Остаток: {item.count}</p>
+                                    <p className="price">{new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(item.coast)}</p>
+                                </div>
+                            </div>
+                        </div>
+
             </div>
         </div>
     </div>

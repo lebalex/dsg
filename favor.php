@@ -28,7 +28,6 @@ class CategListSimpleLeft extends React.Component {
       isLoadedP: false,
       itemsProduct:[],
       items:[],
-      product_id:-1,
       user_id:-1/*<php=$user_id?>*/
     };
   }
@@ -47,11 +46,11 @@ class CategListSimpleLeft extends React.Component {
           });
         }
       )
-      this.ProductLists(this.state.user_id, this.state.product_id)
+      this.ProductLists(this.state.user_id)
   }
 
-  ProductLists(user_id, p) {
-    fetch(`/includes/get_data.php?x=get_favor_products&user_id=${user_id}&product=${p}`)
+  ProductLists(user_id) {
+    fetch(`/includes/get_data.php?x=get_favor_products&user_id=${user_id}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -59,14 +58,12 @@ class CategListSimpleLeft extends React.Component {
             if(result===-1){
                 this.setState({
             user_id: user_id, 
-            product_id: p,
             isLoadedP: true,
 
           });
             }else{
           this.setState({
             user_id: user_id, 
-            product_id: p,
             isLoadedP: true,
             itemsProduct: result
           });
@@ -87,10 +84,6 @@ class CategListSimpleLeft extends React.Component {
             <div><p>У Вас пока пусто</p></div>
         );
   }
-  clickProduct = (p) => {
-    //console.log(p);
-    this.ProductLists(this.state.user_id, p)
-  }
   getCategName(categ_id)
   {
       let d="Все товары";
@@ -109,13 +102,7 @@ class CategListSimpleLeft extends React.Component {
       return <div>Ошибка: {error.message}</div>;
     } else if (!isLoadedP) {
       return <div className="row">Загрузка...</div>
-    } else if (this.state.product_id!=-1) {
-      return <div className="row">
-                {
-                    <ProductDetail  items={itemsProduct[0]} id_categ={itemsProduct[0].id_categ} categ_name={this.getCategName(itemsProduct[0].id_categ)}/>
-                }
-            </div>
-    }else {
+    } else {
       return (
         <div className="row">
 
@@ -138,7 +125,7 @@ class CategListSimpleLeft extends React.Component {
 
 
                     {itemsProduct.map(item => (
-                      <ProductOne  key={item.id} items={item} onClickProduct={() => this.clickProduct(item.id)} />
+                      <ProductOne  key={item.id} items={item} url={`/catalog/${item.id_categ}/${item.id}`} />
                     ))}
                     {this.EmptyFavor()}
                     
@@ -163,7 +150,7 @@ ReactDOM.render(
 
 </script>
 <script type="text/babel" src="/js/ProductOne.js"></script>
-<script type="text/babel" src="/js/ProductDetail.js"></script>
+
 
 <?php
 include_once 'footer.php';

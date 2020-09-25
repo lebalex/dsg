@@ -69,7 +69,7 @@ else return img;
                                     </div>
                                 </div>
                                 <div className="product-description">
-                                    <a href="#"  onClick={this.props.onClickProduct}  >
+                                    <a href={this.props.url}  onClick={this.props.onClickProduct}  >
                                         <h6>{item.name}</h6>
                                     </a>
                                     <p className="product-price">{item.coast}</p>
