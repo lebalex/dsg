@@ -131,6 +131,48 @@ else if($obj =="get_all_products_db")
 }else
     echo json_encode(-1);
 
+}else if($obj =="get_cart_products")
+{
+    $user_id = getParam('user_id', -1);
+
+    if (!empty($_SESSION['cart'])) {
+        $out2 = array();
+        $id_array = array();
+        
+        if($product!='-1'){
+            $id_array[] = $product;
+        }else{
+            foreach ($_SESSION['cart'] as $id=>$count){ // пробегаем по содержимому, вычилсяя сумму и количество
+                $id_array[] = $id;	 
+
+                    }
+            }
+            
+                    $array = implode("','",$id_array);
+                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, 12.5 as coast, count, oem from dsg_products where active=1 and id IN ('".$array."') ");
+                    $stmt->execute();
+        $result = $stmt->get_result();
+        while ($value = $result->fetch_row()) {
+
+            if (isset($_SESSION['cart'][$value[1]])) {
+                $c=$_SESSION['cart'][$value[1]];
+                if($c>$value[5])
+                $c=$value[5];
+
+                $out2[] = array('id_categ'=>$value[0], 'id'=>$value[1], 'name'=>$value[2], 'img'=>$value[3], 'coast'=>$value[4], 
+            'balance'=>$value[5], 'oem'=>$value[6], 
+            
+            'count'=>$c);
+
+        }
+    }
+
+        //$outp = $result->fetch_all(MYSQLI_ASSOC);
+        echo json_encode($out2);
+
+}else
+    echo json_encode(-1);
+
 }
 
 

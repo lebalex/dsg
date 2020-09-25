@@ -25,6 +25,29 @@ if ($obj == 'addchart') {
 
     echo json_encode(getCartDataCount());
 }
+if ($obj == 'delchart') {
+
+    if (isset($_SESSION['cart'][$product])) {
+        $_SESSION['cart'][$product] = $_SESSION['cart'][$product] - 1;
+        if($_SESSION['cart'][$product]===0)
+                unset($_SESSION['cart'][$product]);
+    }
+    echo json_encode(getCartDataCount());
+}
+if ($obj == 'delchart_product') {
+
+    if (isset($_SESSION['cart'][$product])) {
+        $_SESSION['cart'][$product]=0;
+                
+
+             /*$log = date('Y-m-d H:i:s') .' '.$product.' '.$_SESSION['cart'][$product];
+            file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);*/
+
+            unset($_SESSION['cart'][$product]);
+
+    }
+    echo json_encode(getCartDataCount());
+}
 if ($obj == 'addFavouritet') {
     $add = 1;
     if (!isset($_SESSION['favouritet'][$product])) {
