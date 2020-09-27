@@ -149,10 +149,11 @@ if ($obj == 'delproduct') {
 if ($obj == 'editproduct') {
     $id_categ = getParam('id_categ', -1);
     $id = getParam('id', -1);
-    $name = getParam('name', '-1');
-    $oem = getParam('oem', '-1');
-    $count = getParam('count', '-1');
-    $coast = getParam('coast', '-1');
+    $name = getParam('name', '');
+    $oem = getParam('oem', '');
+    $count = getParam('count', '0');
+    $coast = getParam('coast', '0');
+    $description = getParam('description', '');
     
     $target_dir = TARGET_DIR_PRODUCT;
     if(substr_count(php_uname(), 'Win')>0)$target_dir = TARGET_DIR_PRODUCT_W;
@@ -181,13 +182,13 @@ if ($obj == 'editproduct') {
 
     if($fileName!=null)
     {
-        if($id>-1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=?, img=? where id=?");
+        if($id>-1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=?, img=?, description=? where id=?");
         else{
-            $update_stmt = $mysqli->prepare("insert into dsg_categ (name, oem, count, coast, img, id_categ) values (?,?,?,?,?,?)");
+            $update_stmt = $mysqli->prepare("insert into dsg_categ (name, oem, count, coast, img, description, id_categ) values (?,?,?,?,?,?,?)");
             $id=$id_categ;
         }
 
-            if (!$update_stmt->bind_param('ssidsi', $name,$oem,$count,$coast,$fileName,$id)) {
+            if (!$update_stmt->bind_param('ssidssi', $name,$oem,$count,$coast,$fileName,$description,$id)) {
                 $error="Не удалось привязать параметры: (" . $update_stmt->errno . ") " . $update_stmt->error;
             }
             if (!$update_stmt->execute()) {
@@ -195,12 +196,12 @@ if ($obj == 'editproduct') {
             }
     }else
     {
-        if($id>-1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=? where id=?");
+        if($id>-1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=?, description=? where id=?");
         else{
-            $update_stmt = $mysqli->prepare("insert into dsg_products (name, oem, count, coast, id_categ) values (?,?,?,?,?)");
+            $update_stmt = $mysqli->prepare("insert into dsg_products (name, oem, count, coast, description, id_categ) values (?,?,?,?,?,?)");
             $id=$id_categ;
         }
-        if (!$update_stmt->bind_param('ssidi', $name,$oem,$count,$coast,$id)) {
+        if (!$update_stmt->bind_param('ssidsi', $name,$oem,$count,$coast,$description,$id)) {
             $error="Не удалось привязать параметры: (" . $update_stmt->errno . ") " . $update_stmt->error;
         }
         if (!$update_stmt->execute()) {

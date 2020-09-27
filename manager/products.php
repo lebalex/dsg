@@ -24,12 +24,12 @@ include_once 'header_manager.php';
       items: [],
       itemsProduct: [],
       edit:false,
-      value_name:'',
+      /*value_name:'',*/
       value_id:-1,
       value_file:null,
-      value_oem:'',
+      /*value_oem:'',
       value_count:0,
-      value_coast:0,
+      value_coast:0,*/
       isOpen: false,
       categ_id:0,
       value_select:Product,
@@ -80,6 +80,9 @@ include_once 'header_manager.php';
     let tmp = new Product();
       if(index!=-1)
         tmp = this.state.itemsProduct[index];
+        if(tmp.description===null)
+          tmp.description='';
+        //console.log(tmp);
     this.setState({value_select:tmp, edit:true })
   }
   save() {
@@ -92,9 +95,10 @@ include_once 'header_manager.php';
             formData.append('oem', this.state.value_select.oem)
             formData.append('count', this.state.value_select.count)
             formData.append('coast', this.state.value_select.coast)
+            formData.append('description', this.state.value_select.description)
             if(fileField!=undefined) formData.append('img', fileField[0])
 
-            console.log(this.state.value_select);
+            //console.log(this.state.value_select);
   fetch('/includes/set_data.php', {
     method: 'POST',
     body: formData
@@ -163,6 +167,13 @@ include_once 'header_manager.php';
       let tmp = new Product();
       tmp = this.state.value_select;
       tmp.coast = e.target.value
+    this.setState({value_select:tmp})
+  }
+  changeDescription(e)
+  {
+      let tmp = new Product();
+      tmp = this.state.value_select;
+      tmp.description = e.target.value
     this.setState({value_select:tmp})
   }
   changeImg(e)
@@ -279,7 +290,8 @@ include_once 'header_manager.php';
                 <input type="text" className="textField" value={this.state.value_select.coast} onChange={(e) => this.changeCoast(e)} 
                     placeholder="цена" />
                 </div>
-
+                <label>Описание</label>
+                <textarea rows="10" cols="90"  className="textField" onChange={(e) => this.changeDescription(e)} value={this.state.value_select.description} ></textarea>
                 <div className="form-group"><label>Изображение</label><input type="file" className="textField"  onChange={(e) => this.changeImg(e)} 
                 placeholder="Изображение"/></div>
 				<div className="form-group">
@@ -304,8 +316,14 @@ class Product{
     static count;
     static coast;
     static img;
+    static description;
     constructor() {
         this.id = -1;
+        this.name='';
+        this.oem='';
+        this.description='';
+        this.count=0;
+        this.coast=0;
   }
 }
 

@@ -99,7 +99,7 @@ else return img;
 
                                 <div className="product-description">
                                 <h6>{item.name}</h6>
-                                тут может быть описание товара
+                                {item.description}
                                     <p className="color">Остаток: {item.count}</p>
                                     <p className="price">{new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(item.coast)}</p>
                                 </div>

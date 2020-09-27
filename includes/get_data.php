@@ -73,7 +73,7 @@ else if($obj =="get_all_products")
     $product_predicat="";
     if($product!='-1') $product_predicat=" and id=".$product;
     $out2 = array();
-    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem from dsg_products where active=1 ".$categ_predicat.$product_predicat);
+    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem, description from dsg_products where active=1 ".$categ_predicat.$product_predicat);
     
         $stmt->execute();
         $result = $stmt->get_result();
@@ -89,7 +89,7 @@ else if($obj =="get_all_products")
             }
         }
             $out2[] = array('id_categ'=>$value[0], 'id'=>$value[1], 'name'=>$value[2], 'img'=>$value[3], 'coast'=>$value[4], 
-            'count'=>$value[5], 'oem'=>$value[6], 
+            'count'=>$value[5], 'oem'=>$value[6], 'description'=>$value[7],
             
             'active'=>$active);
     }
@@ -100,7 +100,7 @@ else if($obj =="get_all_products_db")
     $categ_predicat="";
     if($categ_id!='-1') $categ_predicat=" and id_categ=".$categ_id;
 
-    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem from dsg_products where active=1 ".$categ_predicat);
+    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem, description from dsg_products where active=1 ".$categ_predicat);
     
         $stmt->execute();
         $result = $stmt->get_result();
