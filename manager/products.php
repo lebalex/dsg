@@ -319,8 +319,4 @@ class Product{
 
 
     </script>
-    <script type="text/babel" src="/js/ModalYesNo.js"></script>
-    
-</body>
-
-</html>
+<?php include_once 'footer_manager.php';?>

@@ -72,7 +72,7 @@ else return img;
                                     <a href={this.props.url}  onClick={this.props.onClickProduct}  >
                                         <h6>{item.name}</h6>
                                     </a>
-                                    <p className="product-price">{item.coast}</p>
+                                    <p className="price">{new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(item.coast)}</p>
                                     <div className="hover-content">
                                         <div className="add-to-cart-btn">
                                         <button onClick={() => this.AddChart( item.id )} className="btn essence-btn">В корзину</button>

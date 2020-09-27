@@ -217,7 +217,4 @@ include_once 'header_manager.php';
 
 
     </script>
-    <script type="text/babel" src="/js/ModalYesNo.js"></script>
-</body>
-
-</html>
+<?php include_once 'footer_manager.php';?>
