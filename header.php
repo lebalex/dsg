@@ -30,6 +30,7 @@ sec_session_start();
         <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="/js/jquery/jquery-2.2.4.min.js"></script>
     <script src="/js/jquery/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
 
         <script src="/js/react/react.development.js" crossorigin></script>

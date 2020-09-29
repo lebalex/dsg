@@ -1,7 +1,9 @@
 <?php
+include_once 'functions.php';
 require 'sendmessage.php';
-include_once 'psl-config.php';				
-$action= filter_input(INPUT_POST, 'action');				
+include_once 'psl-config.php';	
+
+$action = getParam('action', '');
 
 
 if($action=="message")
@@ -11,7 +13,14 @@ if($action=="message")
   $phone = '';
   $message = '';	
 
-  if (isset($_POST['token']) && isset($_POST['action'])) {
+  $name = getParam('name', '');
+  $email = getParam('email', '');
+  $phone = getParam('phone', '');
+  $message = getParam('message', '');
+  $captcha_token = getParam('token', '');
+
+
+  /*if (isset($_POST['token']) && isset($_POST['action'])) {
     $captcha_token = filter_input(INPUT_POST,'token');
     $captcha_action = filter_input(INPUT_POST,'action');
 
@@ -23,7 +32,7 @@ if($action=="message")
 
 } else {
     die('Капча работает некорректно. Обратитесь к администратору!');
-}
+}*/
  
 $url = 'https://www.google.com/recaptcha/api/siteverify';
 $params = [
@@ -46,7 +55,7 @@ $success = false;
  
 if ($decoded_response && $decoded_response->success && $decoded_response->action == $captcha_action && $decoded_response->score > 0) {
     $success = $decoded_response->success;
-    // обрабатываем данные формы, которая защищена капчей
+
     if(sendMessage('Сообщение с сайта DSG Комплект', "Имя: ".$name." <br/>  Email: ".$email." <br/> Тел: ".$phone." <br/> Сообщение: ".$message, null))
     {
       $cart = array(
@@ -61,67 +70,16 @@ if ($decoded_response && $decoded_response->success && $decoded_response->action
     }
     
   } else {
-    // прописываем действие, если пользователь оказался ботом
+    // 
     $cart = array(
-      "code" => 2
+      "code" => 2,"error"=>"прописываем действие, если пользователь оказался ботом"
     );
 }
- 
-//echo json_encode($success);
+
 
 
 echo json_encode( $cart );
-/*
-			
-$name = '';
-$mail = '';
-$phone = '';
-$message = '';	
-$name = filter_input(INPUT_POST, 'name');
-$mail = filter_input(INPUT_POST, 'mail');
-$phone = filter_input(INPUT_POST, 'phone');
-$message = filter_input(INPUT_POST, 'message');
 
-
-$to  = DEFAULT_EMAIL;
-
-
-
-$subject = "Сообщение с сайта"; 
-
-$message = ' 
-<html> 
-    <head> 
-        <title>Сообщение с сайта</title> 
-    </head> 
-    <body> 
-        <p>Имя:'. $name .'</p> 
-		<p>Почта:'.$mail .'</p> 
-		<p>Тел:'.$phone .'</p> 
-		<p>Сообщение:'. $message .'</p> 
-    </body> 
-</html>'; 
-
-$headers  = "Content-type: text/html; charset=UTF-8 \r\n"; 
-
-
-if(mail($to, $subject, $message, $headers))
-{
-$cart = array(
-  "code" => 1,
-  "shopperName" => "Ваня Иванов"
-);
-
-}else
-{
-$cart = array(
-  "code" => 0,
-  "shopperName" => "Ваня Иванов"
-);
-
-}
-
-echo json_encode( $cart );	*/
 }
 
 

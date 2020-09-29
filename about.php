@@ -35,26 +35,34 @@ include_once 'video_baner.php';
         <div class="row">
             <div class="col-12 col-sm-6 col-md-6">
                 <h6>Мы всегда рады вашим вопросам и предложениям!</h6>
-                <div class="messages"><div style="display: none;" class="thanks_form"><h4>Спасибо, ваше сообщение отправлено!</h4></div></div>
-                <div class="messages"><div style="display: none;" class="error_form"><h4>Заполните форму!</h4></div></div>
-                
-                <form id="message_form" name="message_form" method="post" accept-charset="utf-8"  class="form-horizontal" role="form">
+                <div class="messages">
+                    <div style="display: none;" class="thanks_form">
+                        <h4>Спасибо, ваше сообщение отправлено!</h4>
+                    </div>
+                </div>
+                <div class="messages">
+                    <div style="display: none;" class="error_form">
+                        <h4>Заполните форму!</h4>
+                    </div>
+                </div>
+
+                <form id="message_form" name="message_form" method="post"  accept-charset="utf-8" class="form-horizontal" role="form">
 
                     <div class="col-12 mb-3">
                         <label for="first_name">Имя <span>*</span></label>
-                        <input type="text" class="form-control" id="first_name" value="" required>
+                        <input type="text" class="form-control" id="first_name" name="first_name"  value="">
                     </div>
                     <div class="col-12 mb-3">
                         <label for="phone_number">Телефон</label>
-                        <input type="number" class="form-control" id="phone_number" min="0" value="">
+                        <input type="number" class="form-control" id="phone_number" name="phone_number" min="0" value="">
                     </div>
                     <div class="col-12 mb-3">
                         <label for="last_name">Email<span>*</span></label>
-                        <input type="text" class="form-control" id="email_address" value="" required>
+                        <input type="text" class="form-control" id="email_address" name="email_address" value="">
                     </div>
                     <div class="col-12 mb-3">
                         <label for="last_name">Коментарий<span>*</span></label>
-                        <textarea class='form-control' id="comments" required></textarea>
+                        <textarea class='form-control' id="comments" name="comments"></textarea>
                     </div>
                     <div class="col-12 mb-3">
                         <div class="custom-control custom-checkbox d-block mb-2">
@@ -62,6 +70,7 @@ include_once 'video_baner.php';
                             <label class="custom-control-label" for="customCheck1">Я согласен на обработку персональных данных! <a href="#">Правила обработки</a></label>
                         </div>
                     </div>
+                    <input type="hidden" name="action" value="message">
                     <input type="hidden" name="token" id="token">
                     <script src="https://www.google.com/recaptcha/api.js?render=6LfIitEZAAAAAJQRx8lSEiZJqeF56fvMlLBv4Exv"></script>
                     <script>
@@ -80,12 +89,13 @@ include_once 'video_baner.php';
 
 
                     <div class="col-12 mb-3">
+                        
                         <button disabled id="sendMassage" class="btn essence-btn">Отправить</button>
                     </div>
 
 
                 </form>
-                
+
                 <script lang="JavaScript">
                     $('#customCheck1').click(function() {
                         if ($('#customCheck1').is(':checked')) {
@@ -95,6 +105,8 @@ include_once 'video_baner.php';
                             $('#sendMassage').prop('disabled', true);
                         }
                     })
+                    
+
                     $('#sendMassage').click(function() {
                         if($('#first_name').val()!='' && $('#email_address').val()!='' && $('#comments').val()!=''){
                         $.ajax({
