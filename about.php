@@ -46,7 +46,7 @@ include_once 'video_baner.php';
                     </div>
                 </div>
 
-                <form id="message_form" name="message_form" method="post"  accept-charset="utf-8" class="form-horizontal" role="form">
+                <form id="message_form" name="message_form" method="post" action="/includes/action.php"  accept-charset="utf-8" class="form-horizontal" role="form">
 
                     <div class="col-12 mb-3">
                         <label for="first_name">Имя <span>*</span></label>
@@ -114,10 +114,10 @@ include_once 'video_baner.php';
                             data: {
                                 action: "message",
                                 token: $('#token').val(),
-                                name: $('#first_name').val(),
-                                mail: $('#email_address').val(),
-                                phone: $('#phone_number').val(),
-                                message: $('#comments').val(),
+                                first_name: $('#first_name').val(),
+                                email_address: $('#email_address').val(),
+                                phone_number: $('#phone_number').val(),
+                                comments: $('#comments').val(),
                             },
                             type: 'post',
                             success: function(result) {

@@ -13,12 +13,14 @@ if($action=="message")
   $phone = '';
   $message = '';	
 
-  $name = getParam('name', '');
-  $email = getParam('email', '');
-  $phone = getParam('phone', '');
-  $message = getParam('message', '');
+  $name = getParam('first_name', '');
+  $email = getParam('email_address', '');
+  $phone = getParam('phone_number', '');
+  $message = getParam('comments', '');
   $captcha_token = getParam('token', '');
-
+  $cart = array(
+    "code" => -1
+  );
 
   /*if (isset($_POST['token']) && isset($_POST['action'])) {
     $captcha_token = filter_input(INPUT_POST,'token');
