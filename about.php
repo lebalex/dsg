@@ -120,7 +120,7 @@ include_once 'video_baner.php';
                                 success: function(data) {
                                     $('#message_form').hide();
                                     $('.thanks_form').css("display", "block");
-                                    alert(result)
+                                    alert(data)
                                 }
                             });
                         } else {
