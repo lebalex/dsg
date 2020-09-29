@@ -2,6 +2,7 @@
 include_once 'functions.php';
 require 'sendmessage.php';
 include_once 'psl-config.php';	
+header("Content-Type: application/json; charset=UTF-8");
 
 $action = getParam('action', '');
 
@@ -44,7 +45,7 @@ $params = [
     'remoteip' => $_SERVER['REMOTE_ADDR']
 ];
  
-$ch = curl_init($url);
+/*$ch = curl_init($url);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
@@ -57,7 +58,7 @@ if(!empty($response)) $decoded_response = json_decode($response);
 $success = false;
  
 if ($decoded_response && $decoded_response->success && $decoded_response->action == $captcha_action && $decoded_response->score > 0) {
-    $success = $decoded_response->success;
+    $success = $decoded_response->success;*/
     $r = sendMessage('Сообщение с сайта DSG Комплект', "Имя: ".$name." <br/>  Email: ".$email." <br/> Тел: ".$phone." <br/> Сообщение: ".$message, null);
 
     $cart = array(

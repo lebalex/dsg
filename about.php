@@ -45,6 +45,10 @@ include_once 'video_baner.php';
                         <h4>Заполните форму!</h4>
                     </div>
                 </div>
+                <div class="messages">
+                    <div style="display: none;" class="error_form2">
+                    </div>
+                </div>
 
                 <form id="message_form" name="message_form" method="post" action="/includes/action.php" accept-charset="utf-8" class="form-horizontal" role="form">
 
@@ -121,10 +125,12 @@ include_once 'video_baner.php';
                                     $('#message_form').hide();
                                     $('.thanks_form').css("display", "block");
                                     alert(data);
+                                    alert(data.code);
+                                    alert(data.error);
                                     if(data.code!=1)
                                     {
-                                        $('.error_form').html(data.error);
-                                        $('.error_form').css("display", "block");
+                                        $('.error_form2').html(data.error);
+                                        $('.error_form2').css("display", "block");
                                     }
                                 }
                             });
