@@ -47,7 +47,7 @@ addFavouritet(product_id) {
 getImage(img)
 {
 if(img===null) return '/img/product-img/noPhoto.png';
-else return img;
+else return '/img/product-img/'+img;
 }
 
   
