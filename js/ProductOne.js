@@ -62,8 +62,8 @@ else return img;
             <div className="col-12 col-sm-6 col-lg-4" key={item.id}>
                             <div className="single-product-wrapper">
                                 <div className="product-img">
-
-                                    <img src={this.getImage(item.img)} alt=""/>
+                                <a href={this.props.url}  onClick={this.props.onClickProduct}  >
+                                    <img src={this.getImage(item.img)} alt=""/></a>
                                     <div className="product-favourite">
                                         <a onClick={() => this.addFavouritet( item.id )}  className={`favme ${(this.state.isFavouritet)?'active':''} fa fa-heart`}></a>
                                     </div>

@@ -88,10 +88,9 @@ a:active, a:hover, a:focus{
     outline: 0;
     outline-offset: 0;
     text-decoration: none;
-    color: inherit;
+    /*color: inherit;*/
+    color:red;
 }
-
-
 
 
 div.menu-navigation ul.nav{
@@ -265,3 +264,10 @@ div.menu-navigation ul.nav>li.on-ic span.text{
 {
     cursor: pointer;
 }
+
+
+
+.single-product-wrapper .product-description a:hover h6 {
+    color: #02598e;
+    text-decoration: none; 
+  }

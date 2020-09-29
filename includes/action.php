@@ -27,7 +27,7 @@ if($action=="message")
  
 $url = 'https://www.google.com/recaptcha/api/siteverify';
 $params = [
-    'secret' => '6LfVrp4UAAAAACMJXXdG1z4bdeEW5h8SqA1z1UZA',
+    'secret' => '6LfIitEZAAAAAMx_Ioc_aPqwW3roI6VNtNn42dzS',
     'response' => $captcha_token,
     'remoteip' => $_SERVER['REMOTE_ADDR']
 ];
@@ -47,7 +47,7 @@ $success = false;
 if ($decoded_response && $decoded_response->success && $decoded_response->action == $captcha_action && $decoded_response->score > 0) {
     $success = $decoded_response->success;
     // обрабатываем данные формы, которая защищена капчей
-    if(sendMessage('Сообщение с сайта ООО РУССКИЕ ТРАДИЦИИ', "Имя: ".$name." <br/>  Email: ".$email." <br/> Тел: ".$phone." <br/> Сообщение: ".$message, null))
+    if(sendMessage('Сообщение с сайта DSG Комплект', "Имя: ".$name." <br/>  Email: ".$email." <br/> Тел: ".$phone." <br/> Сообщение: ".$message, null))
     {
       $cart = array(
         "code" => 1

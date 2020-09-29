@@ -20,7 +20,7 @@ function sendMessage($subject, $message,$email_client){
       $mail->Port       = 587;                                    // TCP port to connect to
     
       $mail->CharSet = 'utf-8';
-      $mail->setFrom(DEFAULT_EMAIL, 'Сообщение с сайта ООО РУССКИЕ ТРАДИЦИИ');
+      $mail->setFrom(DEFAULT_EMAIL, 'Сообщение с сайта DSG Комплект');
       $mail->addAddress(DEFAULT_EMAIL);     // Add a recipient
       if($email_client!=null){
         $mail->AddBCC($email_client, "Копия");
