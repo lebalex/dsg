@@ -46,11 +46,11 @@ include_once 'video_baner.php';
                     </div>
                 </div>
 
-                <form id="message_form" name="message_form" method="post" action="/includes/action.php"  accept-charset="utf-8" class="form-horizontal" role="form">
+                <form id="message_form" name="message_form" method="post" action="/includes/action.php" accept-charset="utf-8" class="form-horizontal" role="form">
 
                     <div class="col-12 mb-3">
                         <label for="first_name">Имя <span>*</span></label>
-                        <input type="text" class="form-control" id="first_name" name="first_name"  value="">
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="">
                     </div>
                     <div class="col-12 mb-3">
                         <label for="phone_number">Телефон</label>
@@ -89,8 +89,8 @@ include_once 'video_baner.php';
 
 
                     <div class="col-12 mb-3">
-                        
-                        <button disabled id="sendMassage" class="btn essence-btn">Отправить</button>
+                        <input disabled id="sendMassage" type="submit" value="Отправить" class="btn essence-btn" />
+                        <!--button disabled id="sendMassage" class="btn essence-btn">Отправить</button-->
                     </div>
 
 
@@ -105,33 +105,55 @@ include_once 'video_baner.php';
                             $('#sendMassage').prop('disabled', true);
                         }
                     })
-                    
+                    $("#message_form").submit(function(e) {
 
-                    $('#sendMassage').click(function() {
-                        if($('#first_name').val()!='' && $('#email_address').val()!='' && $('#comments').val()!=''){
-                        $.ajax({
-                            url: '/includes/action.php',
-                            data: {
-                                action: "message",
-                                token: $('#token').val(),
-                                first_name: $('#first_name').val(),
-                                email_address: $('#email_address').val(),
-                                phone_number: $('#phone_number').val(),
-                                comments: $('#comments').val(),
-                            },
-                            type: 'post',
-                            success: function(result) {
-                                //if()
-                                $('#message_form').hide();
-                                $('.thanks_form').css("display", "block");
-                                alert(result)
-                            }
-                        });
-                    }
-                    else{
-                        $('.error_form').css("display", "block");
-                    }
-                    })
+                        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+                        var form = $(this);
+                        var url = form.attr('action');
+                        if ($('#first_name').val() != '' && $('#email_address').val() != '' && $('#comments').val() != '') {
+
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                data: form.serialize(),
+                                success: function(data) {
+                                    $('#message_form').hide();
+                                    $('.thanks_form').css("display", "block");
+                                    alert(result)
+                                }
+                            });
+                        } else {
+                            $('.error_form').css("display", "block");
+                        }
+
+                    });
+
+
+                    /*$('#sendMassage').click(function() {
+                        if ($('#first_name').val() != '' && $('#email_address').val() != '' && $('#comments').val() != '') {
+                            $.ajax({
+                                url: '/includes/action.php',
+                                data: {
+                                    action: "message",
+                                    token: $('#token').val(),
+                                    first_name: $('#first_name').val(),
+                                    email_address: $('#email_address').val(),
+                                    phone_number: $('#phone_number').val(),
+                                    comments: $('#comments').val(),
+                                },
+                                type: 'post',
+                                success: function(result) {
+                                    //if()
+                                    $('#message_form').hide();
+                                    $('.thanks_form').css("display", "block");
+                                    alert(result)
+                                }
+                            });
+                        } else {
+                            $('.error_form').css("display", "block");
+                        }
+                    })*/
                 </script>
             </div>
         </div>

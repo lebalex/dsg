@@ -18,6 +18,7 @@ if($action=="message")
   $phone = getParam('phone_number', '');
   $message = getParam('comments', '');
   $captcha_token = getParam('token', '');
+  $captcha_action=$action;
   $cart = array(
     "code" => -1
   );
