@@ -34,8 +34,8 @@ function sendMessage($subject, $message,$email_client){
 
 
         $mail->send();
-        return true;
+        return '';
     } catch (Exception $e) {
-      return false;
+      return $e->getMessage();
     };
 }

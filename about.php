@@ -120,7 +120,12 @@ include_once 'video_baner.php';
                                 success: function(data) {
                                     $('#message_form').hide();
                                     $('.thanks_form').css("display", "block");
-                                    alert(data)
+                                    alert(data);
+                                    if(data.code!=1)
+                                    {
+                                        $('.error_form').html(data.error);
+                                        $('.error_form').css("display", "block");
+                                    }
                                 }
                             });
                         } else {
@@ -130,30 +135,7 @@ include_once 'video_baner.php';
                     });
 
 
-                    /*$('#sendMassage').click(function() {
-                        if ($('#first_name').val() != '' && $('#email_address').val() != '' && $('#comments').val() != '') {
-                            $.ajax({
-                                url: '/includes/action.php',
-                                data: {
-                                    action: "message",
-                                    token: $('#token').val(),
-                                    first_name: $('#first_name').val(),
-                                    email_address: $('#email_address').val(),
-                                    phone_number: $('#phone_number').val(),
-                                    comments: $('#comments').val(),
-                                },
-                                type: 'post',
-                                success: function(result) {
-                                    //if()
-                                    $('#message_form').hide();
-                                    $('.thanks_form').css("display", "block");
-                                    alert(result)
-                                }
-                            });
-                        } else {
-                            $('.error_form').css("display", "block");
-                        }
-                    })*/
+                    
                 </script>
             </div>
         </div>
