@@ -11,7 +11,9 @@ include_once 'psl-config.php';
 function sendMessage($subject, $message,$email_client){
     $mail = new PHPMailer(true);
     try {
-      $mail->isSMTP();                                            // Set mailer to use SMTP
+      $mail->isSMTP();     
+      $mail->SMTPDebug =2;
+      $mail->Debugoutput= 'html';                                  // Set mailer to use SMTP
       $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
       $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
       $mail->Username   = 'lebalex.app@gmail.com';                     // SMTP username
@@ -33,8 +35,13 @@ function sendMessage($subject, $message,$email_client){
       $mail->Body = $message;
 
 
-        $mail->send();
-        return '';
+        //$mail->send();
+        if (!$mail->send()) {
+          return "Mailer Error: " . $mail->ErrorInfo;
+      } else {
+        return "Message sent!";
+      }
+        //return '';
     } catch (Exception $e) {
       return $e->getMessage();
     };

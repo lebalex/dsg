@@ -94,7 +94,10 @@ include_once 'video_baner.php';
 
                     <div class="col-12 mb-3">
                         <input disabled id="sendMassage" type="submit" value="Отправить" class="btn essence-btn" />
-                        <!--button disabled id="sendMassage" class="btn essence-btn">Отправить</button-->
+                        <div id="submit_img" style="display:none">
+                            <img src="/img/core-img/loading.gif" width="70" height="70">
+                        </div>
+
                     </div>
 
 
@@ -110,6 +113,9 @@ include_once 'video_baner.php';
                         }
                     })
                     $("#message_form").submit(function(e) {
+                        
+                        $('#sendMassage').hide();
+                        $('#submit_img').show();
 
                         e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -127,8 +133,8 @@ include_once 'video_baner.php';
                                     alert(data);
                                     alert(data.code);
                                     alert(data.error);
-                                    if(data.code!=1)
-                                    {
+                                    $('#submit_img').hide();
+                                    if (data.code != 1) {
                                         $('.error_form2').html(data.error);
                                         $('.error_form2').css("display", "block");
                                     }
@@ -139,9 +145,6 @@ include_once 'video_baner.php';
                         }
 
                     });
-
-
-                    
                 </script>
             </div>
         </div>
