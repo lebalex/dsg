@@ -12,17 +12,17 @@ function sendMessage($subject, $message,$email_client){
     $mail = new PHPMailer(true);
     try {
       $mail->isSMTP();     
-      $mail->SMTPDebug =2;
-      $mail->Debugoutput= 'html';                                  // Set mailer to use SMTP
-      $mail->Host       = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-      $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-      $mail->Username   = 'lebalex.app@gmail.com';                     // SMTP username
-      $mail->Password   = 'ySjdy27op';                               // SMTP password
-      $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
-      $mail->Port       = 587;                                    // TCP port to connect to
+      //$mail->SMTPDebug =2;
+      //$mail->Debugoutput= 'html';                                  // Set mailer to use SMTP
+      $mail->Host       = 'mail.lebalex.xyz';  // Specify main and backup SMTP servers
+      //$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+      //$mail->Username   = 'lebalex.app@gmail.com';                     // SMTP username
+      //$mail->Password   = '';                               // SMTP password
+      //$mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+      $mail->Port       = 25;                                    // TCP port to connect to
     
       $mail->CharSet = 'utf-8';
-      $mail->setFrom(DEFAULT_EMAIL, 'Сообщение с сайта DSG Комплект');
+      $mail->setFrom("noreplay@lebalex.xyz", 'Сообщение с сайта DSG Комплект');
       $mail->addAddress(DEFAULT_EMAIL);     // Add a recipient
       if($email_client!=null){
         $mail->AddBCC($email_client, "Копия");

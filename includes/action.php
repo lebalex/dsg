@@ -45,7 +45,7 @@ $params = [
     'remoteip' => $_SERVER['REMOTE_ADDR']
 ];
  
-/*$ch = curl_init($url);
+$ch = curl_init($url);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
@@ -58,44 +58,14 @@ if(!empty($response)) $decoded_response = json_decode($response);
 $success = false;
  
 if ($decoded_response && $decoded_response->success && $decoded_response->action == $captcha_action && $decoded_response->score > 0) {
-    $success = $decoded_response->success;*/
+    $success = $decoded_response->success;
     $r = sendMessage('Сообщение с сайта DSG Комплект', "Имя: ".$name." <br/>  Email: ".$email." <br/> Тел: ".$phone." <br/> Сообщение: ".$message, null);
 
     $cart = array(
       "code" => 0,"error" => $r
     );
-   /* if()
-    {
-      $cart = array(
-        "code" => 1,"error" => ""
-      );
-    }else
-    {
-      $cart = array(
-        "code" => 0,
-        "error" => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"
-      );
-    }
-    
-  } else {
-    // 
-    $cart = array(
-      "code" => 2,"error"=>"прописываем действие, если пользователь оказался ботом"
-    );
-}*/
-
-
 
 echo json_encode( $cart );
 
 }
-
-
-
-
-?>
-
-
-
-
 
