@@ -130,12 +130,12 @@ include_once 'video_baner.php';
                                 success: function(data) {
                                     $('#message_form').hide();
                                     $('.thanks_form').css("display", "block");
-                                    alert(data);
-                                    alert(data.code);
-                                    alert(data.error);
+                                    //alert(data);
+                                    //alert(data.code);
+                                    //alert(data.error);
                                     $('#submit_img').hide();
                                     if (data.code != 1) {
-                                        $('.error_form2').html(data.error);
+                                        //$('.error_form2').html(data.error);
                                         $('.error_form2').css("display", "block");
                                     }
                                 }

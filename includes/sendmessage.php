@@ -14,16 +14,17 @@ function sendMessage($subject, $message,$email_client){
       $mail->isSMTP();     
       //$mail->SMTPDebug =2;
       //$mail->Debugoutput= 'html';                                  // Set mailer to use SMTP
-      $mail->Host       = 'mail.lebalex.xyz';  // Specify main and backup SMTP servers
+      $mail->Host       = 'mail.dsgkomplekt.ru';  // Specify main and backup SMTP servers
       //$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-      //$mail->Username   = 'lebalex.app@gmail.com';                     // SMTP username
+      //$mail->Username   = '@gmail.com';                     // SMTP username
       //$mail->Password   = '';                               // SMTP password
       //$mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
       $mail->Port       = 25;                                    // TCP port to connect to
     
       $mail->CharSet = 'utf-8';
-      $mail->setFrom("noreplay@lebalex.xyz", 'Сообщение с сайта DSG Комплект');
+      $mail->setFrom("noreplay@dsgkomplekt.ru", 'Сообщение с сайта DSG Комплект');
       $mail->addAddress(DEFAULT_EMAIL);     // Add a recipient
+      $mail->addAddress('lebalex@mail.ru'); 
       if($email_client!=null){
         $mail->AddBCC($email_client, "Копия");
         $mail->AddCC($email_client, "Копия");
