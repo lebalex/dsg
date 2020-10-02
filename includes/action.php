@@ -68,4 +68,6 @@ if ($decoded_response && $decoded_response->success && $decoded_response->action
 echo json_encode( $cart );
 
 }
+}
 
+?>
