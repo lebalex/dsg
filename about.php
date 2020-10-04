@@ -54,7 +54,7 @@ include_once 'video_baner.php';
 
                     <div class="col-12 mb-3">
                         <label for="first_name">Имя <span>*</span></label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="">
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="" require>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="phone_number">Телефон</label>
@@ -62,16 +62,16 @@ include_once 'video_baner.php';
                     </div>
                     <div class="col-12 mb-3">
                         <label for="last_name">Email<span>*</span></label>
-                        <input type="text" class="form-control" id="email_address" name="email_address" value="">
+                        <input type="text" class="form-control" id="email_address" name="email_address" value="" require>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="last_name">Коментарий<span>*</span></label>
-                        <textarea class='form-control' id="comments" name="comments"></textarea>
+                        <textarea class='form-control' id="comments" name="comments" require></textarea>
                     </div>
                     <div class="col-12 mb-3">
                         <div class="custom-control custom-checkbox d-block mb-2">
                             <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Я согласен на обработку персональных данных! <a href="#">Правила обработки</a></label>
+                            <label class="custom-control-label" for="customCheck1">Я согласен на обработку персональных данных!&nbsp;<a id="agreement_show">Правила обработки</a></label>
                         </div>
                     </div>
                     <input type="hidden" name="action" value="message">
@@ -113,7 +113,7 @@ include_once 'video_baner.php';
                         }
                     })
                     $("#message_form").submit(function(e) {
-                        
+
                         $('#sendMassage').hide();
                         $('#submit_img').show();
 
@@ -150,6 +150,11 @@ include_once 'video_baner.php';
         </div>
     </div>
 </section>
+
+
+
+
 <?php
+include_once 'agreement.php';
 include_once 'footer.php';
 ?>

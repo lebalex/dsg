@@ -81,7 +81,7 @@ include_once 'header_manager.php';
   })
   }
   del(id) {
-    console.log(id)
+    //console.log(id)
         const formData = new FormData()
             formData.append('x', 'delcateg')
             formData.append('id', id)
@@ -92,7 +92,7 @@ include_once 'header_manager.php';
   .then(response => response.text())
   .then(data => {
       //if(data!=-1)
-            console.log(data)
+            //console.log(data)
     this.loadDate()
   })
   .catch(error => {

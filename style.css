@@ -270,4 +270,149 @@ div.menu-navigation ul.nav>li.on-ic span.text{
 .single-product-wrapper .product-description a:hover h6 {
     color: #02598e;
     text-decoration: none; 
+    
   }
+
+.button_cart 
+{
+    position: relative;
+    top: 15px;
+    width: 100%;
+    padding-bottom: 15px;
+
+}
+
+
+  div.shadow-modal {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: block;
+    position: fixed;
+    z-index: 9999;
+}
+
+div.phoenix-modal{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
+    overflow: auto;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transition: opacity .5s;
+    -o-transition: opacity .5s;
+    transition: opacity .5s;
+}
+div.phoenix-modal.active{
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+div.phoenix-modal div.phoenix-modal-dialog{
+    margin: 30px 15px;
+    position: relative;
+    z-index: 26;
+    text-align: center;
+}
+div.phoenix-modal div.phoenix-modal-dialog .content-in{
+    text-align: left;
+}
+div.phoenix-modal div.phoenix-modal-dialog.pos-absolute{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
+div.phoenix-modal div.phoenix-modal-dialog #wqec-player{
+    text-align: center;
+}
+div.phoenix-modal div.phoenix-modal-dialog div.dialog-content{
+    position: relative;
+    display: inline-block;
+}
+div.phoenix-modal.window-modal div.phoenix-modal-dialog div.dialog-content{
+    background: #fff;
+    padding: 30px 37px 30px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    width: 900px;
+}
+
+div.phoenix-modal.window-modal.map div.phoenix-modal-dialog div.dialog-content{
+    padding: 0;
+}
+/* div.phoenix-modal.window-modal.map div.phoenix-modal-dialog div.dialog-content div.content-in > *{
+    height: 500px !important;
+} */
+div.phoenix-modal.window-modal div.phoenix-modal-dialog div.dialog-content div.content-in>*:first-child{
+    margin-top: 0 !important;
+}
+div.phoenix-modal.video-modal div.phoenix-modal-dialog div.dialog-content{
+    width: 1050px;
+}
+div.phoenix-modal.video-modal div.phoenix-modal-dialog div.dialog-content iframe{
+    width: 100%;
+    height: 590px;
+}
+div.phoenix-modal.window-modal.agreement{
+    position: absolute;
+    left: -99999999px;
+    right: auto;
+    z-index: 99999;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -webkit-transition: opacity .5s;
+    -o-transition: opacity .5s;
+    transition: opacity .5s;
+}
+div.phoenix-modal.window-modal.agreement.active{
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+/*div.phoenix-modal a.close-modal{
+    position: absolute;
+    z-index: 99;
+    display: block;
+    background: url('images/svg/cross_wt.svg') center no-repeat;
+    background-position: center;
+    cursor: pointer;
+    top: 0px;
+    right: -40px;
+    width: 24px;
+    height: 24px;
+    filter: alpha(opacity=80);
+    -moz-opacity: .8;
+    opacity: .8;
+    background-size: 24px;
+    border-bottom: 0;
+}
+div.phoenix-modal a.close-modal:hover{
+    opacity: 1;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+}*/
+/**/
+
+div.modalAreaAgreement div.phoenix-modal.window-modal div.phoenix-modal-dialog div.dialog-content{
+    text-align: left;
+}
+div.modalArea
+{
+    display: none;
+}

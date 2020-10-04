@@ -12,7 +12,6 @@ include_once 'video_baner.php';
 
 <section class="shop_grid_area section-padding-0-80">
     <div class="overlay3 container" id="data_page">
-
     </div>
 </section>
 
@@ -22,6 +21,7 @@ class CategListSimpleLeft extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
+      gocheckout:false,
       error: null,
       isLoadedP: false,
       itemsProduct:[],
@@ -171,9 +171,12 @@ sum()
   //minimumFractionDigits: 0,
   //maximumFractionDigits: 0,
 }).format(s);
+}
 
-
-
+checkout = () => {
+  this.setState({
+        gocheckout:!this.state.gocheckout
+    });
 }
 
 
@@ -182,15 +185,25 @@ sum()
   render() {
     //console.log(this.state.categ_id,this.state.product_id);
     //this.ProductLists(this.state.categ_id,this.state.product_id)
-    const { error, isLoadedP, itemsProduct } = this.state;
+    const { error, isLoadedP, gocheckout, itemsProduct } = this.state;
 
     if (error) {
       return <div>Ошибка: {error.message}</div>;
     } else if (!isLoadedP) {
       return <div className="row">Загрузка...</div>
-    } else {
+    } else if (gocheckout) {
+      return (
+        <CheckOut items={itemsProduct} sum={this.sum()} onBack={this.checkout}/>
+        
+        )
+    }else {
       return (
         <div className="row">
+          <div className="button_cart"><p align="right">
+            <button style={{ display: itemsProduct.length>0 ? 'block' : 'none', marginRight:20 }} className="btn essence-btn"
+            onClick={() => this.checkout()}>оформить</button>
+            </p>
+          </div>
         <table className="table" >
   <thead>
     <tr>
@@ -261,7 +274,9 @@ ReactDOM.render(
 
 </script>
 <script type="text/babel" src="/js/ModalYesNo.js"></script>
+<script type="text/babel" src="/js/CheckOut.js"></script>
 
 <?php
+include_once 'agreement.php';
 include_once 'footer.php';
 ?>

@@ -111,3 +111,37 @@ INSERT INTO `dsg_products` (`id_categ`, `id`, `name`, `oem`, `count`, `coast`, `
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+
+CREATE TABLE `dsg_users` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(200) NOT NULL DEFAULT '0',
+	`phone` VARCHAR(200) NOT NULL DEFAULT '0',
+	`email` VARCHAR(200) NOT NULL DEFAULT '0',
+	`pwd` VARCHAR(200) NULL DEFAULT '0',
+	`registr` BIT NOT NULL DEFAULT b'0',
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `dsg_orders` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`id_user` INT NOT NULL DEFAULT '0',
+	`date_order` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	INDEX `id` (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `dsg_order_details` (
+	`id_order` INT NOT NULL,
+	`id_products` INT NOT NULL,
+	`count` INT NULL,
+	`price` DECIMAL(10,2) NULL
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
