@@ -285,7 +285,7 @@ $error_boolean=false;
 
     $message='Имя: '.$name.' <br/>  Email: '.$email.' <br/> Тел: '.$phone.' <br/>';
     $message.='Заказ №'.$insert_id_order;
-    $message.='<table>';
+    $message.='<table border="1"><tr><td>Наименование</td><td>Кол-во</td><td>Цена</td></tr>';
     $sum=0;
     foreach($arr_items as $item){
         $sum+=($item->count * $item->coast);
@@ -294,7 +294,7 @@ $error_boolean=false;
     $message.='</table>';
     $message.='На сумму '.$sum;
 
-    $r = sendMessage('Заказ с сайта DSG Комплект', $message, $email);
+    $r = sendMessage('Заказ с сайта DSG Комплект', $message, $email, 0);
     if($r!='Message sent!')
         $result = ['code' => -1, 'error' => $r];
     else
@@ -305,7 +305,7 @@ if($registration===1) {
 $message='Имя: '.$name.' <br/>  Email: '.$email.' <br/> Тел: '.$phone.' <br/>'.' <br/> Ваш пароль: '.$password.' <br/>';
 $message.='Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/'.$insert_id_user.'">сменить пароль</a>';
 $message.='<br/><br/>С уважением, сотрудники DSG Комплект';
-    $r = sendMessage('вы зарегистрировались на сайте DSG Комплект', $message, $email);
+    $r = sendMessage('вы зарегистрировались на сайте DSG Комплект', $message, $email, 1);
     if($r!='Message sent!')
         $result = ['code' => -1, 'error' => $r];
 }
