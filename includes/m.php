@@ -7,6 +7,8 @@ require 'phpmailer/Exception.php';
 require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
 
+include_once 'psl-config.php';
+include_once 'psl-config-y.php';
 
 
   $mail = new PHPMailer(true);
@@ -28,7 +30,7 @@ require 'phpmailer/SMTP.php';
 
     $mail->isHTML(true);                                  // Set email format to HTML
 
-    $mail->Subject = 'Test';
+    $mail->Subject = 'Test5';
     $mail->Body = 'Проверка почты';
 
 
