@@ -14,7 +14,7 @@ require 'phpmailer/SMTP.php';
     $mail->isSMTP();
     $mail->SMTPDebug =2;
     $mail->Debugoutput= 'html';                                  // Set mailer to use SMTP
-    $mail->Host       = 'smtp.yandex.ru';  // Specify main and backup SMTP servers
+    $mail->Host       = 'ssl://smtp.yandex.ru';  // Specify main and backup SMTP servers
     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
     $mail->Username   = 'lebalexgr@yandex.ru';                     // SMTP username
     $mail->Password   = 'ySjdy27op';                               // SMTP password
