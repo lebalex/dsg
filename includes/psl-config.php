@@ -23,5 +23,5 @@ define("DEFAULT_SMTP", "ssl://smtp.yandex.ru");
 define("DEFAULT_SMTP_LOGIN", "lebalexgr@yandex.ru");
 define("DEFAULT_SMTP_PWD", "ySjdy27op");
 
-
+v
 ?>
