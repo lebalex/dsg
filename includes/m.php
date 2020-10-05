@@ -14,10 +14,10 @@ require 'phpmailer/SMTP.php';
     $mail->isSMTP();
     $mail->SMTPDebug =2;
     $mail->Debugoutput= 'html';                                  // Set mailer to use SMTP
-    $mail->Host       = 'ssl://smtp.yandex.ru';  // Specify main and backup SMTP servers
+    $mail->Host       = DEFAULT_SMTP;  // Specify main and backup SMTP servers
     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-    $mail->Username   = 'lebalexgr@yandex.ru';                     // SMTP username
-    $mail->Password   = 'ySjdy27op';                               // SMTP password
+    $mail->Username   = DEFAULT_SMTP_LOGIN;                     // SMTP username
+    $mail->Password   = DEFAULT_SMTP_PWD;                               // SMTP password
     $mail->SMTPSecure = 'PHPMailer::ENCRYPTION_SMTPS';                                  // Enable TLS encryption, `ssl` also accepted
     $mail->Port       = 465;                                    // TCP port to connect to
 
