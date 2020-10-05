@@ -19,9 +19,4 @@ define("TARGET_DIR_CATEG_W","D:/Work/dsg/www/img/categ-img/");
 define("TARGET_DIR_PRODUCT_W","D:/Work/dsg/www/img/product-img/");
 
 
-define("DEFAULT_SMTP", "ssl://smtp.yandex.ru");
-define("DEFAULT_SMTP_LOGIN", "lebalexgr@yandex.ru");
-define("DEFAULT_SMTP_PWD", "ySjdy27op");
-
-v
 ?>
