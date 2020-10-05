@@ -115,7 +115,7 @@ if ($obj == 'editcateg') {
             $error = "Не удалось выполнить запрос: (" . $update_stmt->errno . ") " . $update_stmt->error;
         }
     }
-
+    $update_stmt->close();
 
     echo $error;
 }
@@ -129,6 +129,7 @@ if ($obj == 'delcateg') {
     if (!$update_stmt->execute()) {
         $error = "Не удалось выполнить запрос: (" . $update_stmt->errno . ") " . $update_stmt->error;
     }
+    $update_stmt->close();
     echo $error;
 }
 if ($obj == 'delproduct') {
@@ -141,6 +142,7 @@ if ($obj == 'delproduct') {
     if (!$update_stmt->execute()) {
         $error = "Не удалось выполнить запрос: (" . $update_stmt->errno . ") " . $update_stmt->error;
     }
+    $update_stmt->close();
     echo $error;
 }
 if ($obj == 'editproduct') {
@@ -203,9 +205,54 @@ if ($obj == 'editproduct') {
             $error = "Не удалось выполнить запрос: (" . $update_stmt->errno . ") " . $update_stmt->error;
         }
     }
+    $update_stmt->close();
 
 
     echo $error;
+}
+if ($obj == 'setchangepwd') {
+    $name = getParam('id', -1);
+    $p1 = getParam('p1', '');
+    $p2 = getParam('p2', '');
+    $error=null;
+    if(strlen($p1)<100) $p1=hash('sha512', $p1);
+
+    if ($result = $mysqli->query("select * from dsg_users where id=".$name." and pwd='".$p1."'")) {
+        if($result->num_rows==1)
+        {
+            $insert_stmt = $mysqli->prepare("update dsg_users set pwd=? where id=?");
+            $pwd_hash=hash('sha512', $p2);
+            if (!$insert_stmt->bind_param('si', $pwd_hash, $name)) {
+                $error = "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            }
+
+            if (!$insert_stmt->execute()) {
+                $error = "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            }
+            $insert_stmt->close();
+        }else{
+            $error = "Пользователь не найден!";
+        }
+    }else
+    {
+        $error = "Не удалось выполнить запрос: " . $result;
+    }
+
+    if($error!=null)
+        $result = ['code' => -1, 'error' => $error];
+        else
+        $result = ['code' => 0, 'error' => ''];
+    
+    echo json_encode( $result );
+
+}
+if ($obj == 'set_exec_order')
+{
+    $id_order = getParam('id_order', -1);
+    $insert_stmt = $mysqli->prepare("update dsg_orders set exec=1 where id=?");
+    $insert_stmt->bind_param('i', $id_order);
+    $insert_stmt->execute();
+    $insert_stmt->close();
 }
 if ($obj == 'setorder') {
 
@@ -227,7 +274,7 @@ $error_boolean=false;
     $insert_id_user=0;
     $pwd_hash=null;
     if($registration==='true') {
-        $password = generateRandomPassword();
+        $password = rand_passwd();
         $pwd_hash = hash('sha512', $password);
         $registration=1;
     }else $registration=0;
@@ -280,16 +327,17 @@ $error_boolean=false;
             $error_boolean=true;
         }
     }
+    $insert_stmt->close();
 
     /*формируем почту и отправляем */
 
     $message='Имя: '.$name.' <br/>  Email: '.$email.' <br/> Тел: '.$phone.' <br/>';
     $message.='Заказ №'.$insert_id_order;
-    $message.='<table border="1"><tr><td>Наименование</td><td>Кол-во</td><td>Цена</td></tr>';
+    $message.='<table border="1"><tr><td>Наименование</td><td>OEM</td><td>Кол-во</td><td>Цена</td></tr>';
     $sum=0;
     foreach($arr_items as $item){
         $sum+=($item->count * $item->coast);
-        $message.='<tr><td>'.$item->name.'</td><td>'.$item->count.'</td><td>'.$item->coast.'</td></tr>';
+        $message.='<tr><td>'.$item->name.'</td><td>'.$item->oem.'</td><td>'.$item->count.'</td><td>'.$item->coast.'</td></tr>';
     }
     $message.='</table>';
     $message.='На сумму '.$sum;
@@ -302,16 +350,16 @@ $error_boolean=false;
 
 /*вы зарегистрировались, необходимо сменить пароль */
 if($registration===1) {
-$message='Имя: '.$name.' <br/>  Email: '.$email.' <br/> Тел: '.$phone.' <br/>'.' <br/> Ваш пароль: '.$password.' <br/>';
-$message.='Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/'.$insert_id_user.'">сменить пароль</a>';
-$message.='<br/><br/>С уважением, сотрудники DSG Комплект';
-    $r = sendMessage('вы зарегистрировались на сайте DSG Комплект', $message, $email, 1);
-    if($r!='Message sent!')
-        $result = ['code' => -1, 'error' => $r];
-}
+    $message='Имя: '.$name.' <br/>  Email: '.$email.' <br/> Тел: '.$phone.' <br/>'.' <br/> Ваш пароль: '.$password.' <br/>';
+    $message.='Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/'.$insert_id_user.'/'.$pwd_hash.'">сменить пароль</a>';
+    $message.='<br/><br/>С уважением, сотрудники DSG Комплект';
+        $r = sendMessage('вы зарегистрировались на сайте DSG Комплект', $message, $email, 1);
+        if($r!='Message sent!')
+            $result = ['code' => -1, 'error' => $r];
+        }
 
     /*удалим содержимое карзины*/
-        //unset($_SESSION['cart']);
+        unset($_SESSION['cart']);
 
         //$error.=$message;
       

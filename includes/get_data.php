@@ -17,7 +17,7 @@ if ($obj == "get_categ") {
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
         $_SESSION['categories'] = $outp;
-        //echo json_encode($outp);
+        $stmt->close();
     }
     echo  json_encode($_SESSION['categories']);
 }
@@ -27,6 +27,7 @@ else if ($obj == "get_categ_db") {
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
         $_SESSION['categories'] = $outp;
+        $stmt->close();
         echo json_encode($outp);
 
 }
@@ -37,7 +38,7 @@ else if ($obj == "get_keywords") {
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
         $_SESSION['keywords'] = $outp;
-        //echo json_encode($outp);
+        $stmt->close();
     }
     echo  json_encode($_SESSION['keywords']);
 }
@@ -62,6 +63,7 @@ else if($obj =="get_top_products")
             //$log = date('Y-m-d H:i:s') .$value['id_categ'].$value['id'].$value['name'].$value['img'].$value['coast'].$active;
             //file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
         }
+        $stmt->close();
 
 
         echo json_encode($out2);
@@ -93,6 +95,7 @@ else if($obj =="get_all_products")
             
             'active'=>$active);
     }
+    $stmt->close();
         echo json_encode($out2);
 }
 else if($obj =="get_all_products_db")
@@ -126,6 +129,7 @@ else if($obj =="get_all_products_db")
                     $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
         echo json_encode($outp);
 
 }else
@@ -166,6 +170,7 @@ else if($obj =="get_all_products_db")
 
         }
     }
+    $stmt->close();
 
         //$outp = $result->fetch_all(MYSQLI_ASSOC);
         echo json_encode($out2);
@@ -173,20 +178,42 @@ else if($obj =="get_all_products_db")
 }else
     echo json_encode(-1);
 
+}else if($obj =="get_orders")
+{
+    $order_id = getParam('order_id', -1);
+    if($order_id==-1)
+    {
+        $stmt = $mysqli->prepare("select o.id, o.date_order, u.name, u.phone, u.email, sum(d.count*d.price) as coast, o.exec from dsg_orders o inner join dsg_users u on o.id_user=u.id inner join dsg_order_details d on o.id=d.id_order group by o.id, o.date_order, u.name, o.exec, u.phone, u.email order by o.date_order desc");
+    }else{
+
+        $stmt = $mysqli->prepare("select p.name, p.oem, d.count, d.price, d.count*d.price as sum from dsg_products p inner join dsg_order_details d on d.id_products=p.id where d.id_order=".$order_id);
+    }
+    $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        echo json_encode($outp);
+    
+
+}else if($obj =="get_users")
+{
+    $name = getParam('name', '');
+    if($name!='')
+    {
+        $stmt = $mysqli->prepare("select name, phone, email, registr,dt from dsg_users where upper(name) like '%".$name."%'");
+    }
+    else{
+        $stmt = $mysqli->prepare("select name, phone, email, registr,dt from dsg_users");
+    }
+    $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        echo json_encode($outp);
 }
 
 
-    //$age = array("Peter"=>35, "Ben"=>37, "Joe"=>43);
-
-//echo json_encode($age);
 
 
 
-/*
-$stmt = $mysqli->prepare("SELECT name FROM customers LIMIT ?");
-$stmt->bind_param("s", $obj->limit);
-$stmt->execute();
-$result = $stmt->get_result();
-$outp = $result->fetch_all(MYSQLI_ASSOC);
 
-echo json_encode($outp);*/

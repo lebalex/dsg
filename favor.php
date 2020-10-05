@@ -1,9 +1,6 @@
 <?php
 
 include_once 'header.php';
-$categ_id = getParam('categ_id', -1);
-$product_id= getParam('product', -1);
-
 
 $title_page="Избранное";
 $video_file="vag2";

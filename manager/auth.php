@@ -2,7 +2,7 @@
 $realm = 'Запретная зона';
 
 //user => password
-$users = array('admin' => 'dsg-komplekt', 'guest' => 'jdhf74uwfsyf73');
+$users = array('admin' => 'dsg-komplekt', 'guest' => '123');
 
 
 if (empty($_SERVER['PHP_AUTH_DIGEST'])) {

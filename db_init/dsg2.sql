@@ -145,3 +145,7 @@ CREATE TABLE `dsg_order_details` (
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 ;
+
+ALTER TABLE `dsg_orders` ADD COLUMN `exec` BIT NOT NULL DEFAULT b'0' AFTER `date_order`;
+
+ALTER TABLE `dsg_users`	ADD COLUMN `dt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `registr`;
