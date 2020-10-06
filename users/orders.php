@@ -1,5 +1,5 @@
 <?php
-include_once 'header_manager.php';
+include_once 'header_users.php';
 ?>
 
 <section class="new_arrivals_area section-padding-80-0 clearfix">
@@ -10,6 +10,8 @@ include_once 'header_manager.php';
             </div>
         </div>
     </div>
+
+
 </section>
 
 <script type="text/babel">
@@ -31,7 +33,7 @@ include_once 'header_manager.php';
     };
   }
     componentDidMount() {
-    fetch("/includes/get_data.php?x=get_orders")
+    fetch("/includes/get_data.php?x=get_orders&users=1")
       .then(res => res.json())
       .then(
         (result) => {
@@ -84,38 +86,14 @@ include_once 'header_manager.php';
 
 
   }
-  setExec()
-  {
-    //console.log(this.state.order_id)
-    const formData = new FormData()
-            formData.append('x', 'set_exec_order')
-            formData.append('id_order', this.state.order_id)
-  fetch('/includes/set_data.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.text())
-  .catch(error => {
-    console.error(error)
-  })
-  }
+
 
   execute(exec)
   {
     if(exec==0) return '';
     else return <i className="icon-ok"/>
   }
-  executeText(exec)
-  {
-    let list=[];
-    if(exec==0) {
-        list.push(<div key="1" className="custom-control custom-checkbox d-block mb-2">
-                                <input type="checkbox" className="custom-control-input" id="customCheck2" onClick={() => this.setExec()} />
-                                <label className="custom-control-label" htmlFor="customCheck2">Выполнить</label>
-                            </div>);
-    }else list.push(<b key='2'>Заказ выполнен</b>);
-    return list;
-  }
+
   AllSum()
 {
     let s=0;
@@ -229,15 +207,7 @@ changeSearch(e)
 <div className="row">
     Полная стоимость заказа {this.AllSum()}
 </div>
-<div className="row">
 
-
-{this.executeText(this.state.itemExec)}
-
-
-
-
-</div>
 </div>
 );
     }
@@ -257,5 +227,4 @@ changeSearch(e)
   
   </script>
 
-
-<?php include_once 'footer_manager.php'; ?>
+<?php include_once '../footer.php'; ?>

@@ -16,16 +16,11 @@ setcookie(session_name(),
         $params["secure"], 
         $params["httponly"]);
  
-
-    unset($_COOKIE[session_name()]);
-
-
-// Destroy session 
+        unset($_COOKIE[session_name()]);
 session_destroy();
-
 //header('HTTP/1.1 401 Unauthorized');
-header("Status:401 Logout");
-header("WWW-Authenticate: Invalidate, Basic realm=logout")
-//header('Location: /index');
-
+//header("Status:401 Logout");
+//header("WWW-Authenticate: Invalidate, Basic realm=logout");
+header('Location: /index');
 ?>
+

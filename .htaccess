@@ -16,6 +16,8 @@ RewriteRule ^about/?$ about.php [L,QSA]
 RewriteRule ^favor/?$ favor.php [L,QSA]
 RewriteRule ^cart/?$ cart.php [L,QSA]
 
+RewriteRule ^restore_password/?$ restore_password.php [L,QSA]
+
 RewriteRule ^manager/?$ manager/categs.php [L,QSA]
 RewriteRule ^manager/orders/?$ manager/orders.php [L,QSA]
 RewriteRule ^manager/products/?$ manager/products.php [L,QSA]
@@ -23,6 +25,10 @@ RewriteRule ^manager/categs/?$ manager/categs.php [L,QSA]
 RewriteRule ^manager/users/?$ manager/users.php [L,QSA]
 
 RewriteRule ^change_pwd/([0-9]+)/([0-9a-zA-Z]+)/?$ change_pwd.php?id=$1&pwd=$2 [L,QSA]
+RewriteRule ^users/account/?$ users/account.php [L,QSA]
+RewriteRule ^users/orders/?$ users/orders.php [L,QSA]
+RewriteRule ^users/favor/?$ users/favor.php [L,QSA]
+RewriteRule ^users/change_pwd/?$ users/change_pwd.php [L,QSA]
 
 
 
@@ -30,20 +36,11 @@ RewriteRule ^change_pwd/([0-9]+)/([0-9a-zA-Z]+)/?$ change_pwd.php?id=$1&pwd=$2 [
 RewriteRule ^logout/?$ manager/logout.php [L,QSA]
 
 
-RewriteRule ^admin/?$ admin/index.php [L,QSA]
-RewriteRule ^admin/groups/?$ admin/groups.php [L,QSA]
-RewriteRule ^admin/managers/?$ admin/managers.php [L,QSA]
+
 
 
 RewriteRule ^search/?$ search.php [L,QSA]
 
 
 RewriteRule ^error/([0-9]+)/?$ error.php?error=$1 [L,QSA]
-
-RewriteRule ^admin/([0-9]+)/?$ admin/index.php?categ_id=$1 [L,QSA]
-RewriteRule ^admin/([0-9]+)/([0-9]+)/?$ admin/index.php?categ_id=$1&product=$2 [L,QSA]
-
-
-
-RewriteRule ^admin/groups/([0-9]+)/?$ admin/groups.php?categ_id=$1 [L,QSA]
 

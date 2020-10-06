@@ -35,9 +35,6 @@ class ChangePwd extends React.Component {
 
     };
   }
-  changeP1(e) {
-        this.setState({ value_p1: e.target.value })
-    }
     changeP2(e) {
         this.setState({ value_p2: e.target.value })
     }
@@ -65,9 +62,6 @@ class ChangePwd extends React.Component {
             })
                 .then(response => response.json())
                 .then(data => {
-                    /*console.log(data)
-                    console.log(data.code)
-                    console.log(data.error)*/
                     if (data.code !=-1) {
                         this.setState({
                             changeOk: true
@@ -149,10 +143,6 @@ class ChangePwd extends React.Component {
                         </div>
 
 
-                    <div className="col-12 mb-3" style={{ display: (this.state.value_p1).length<100 ? 'block' : 'none'}}>
-                            <label htmlFor="first_password">Старый пароль</label>
-                            <input type="password" style={{width:'200px'}} className="form-control" value={this.state.value_p1} id="first_password" name="first_password" require="true" onChange={(e) => this.changeP1(e)} />
-                        </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="second_password">Новый пароль</label>
                             <input type="password" style={{width:'200px'}} className="form-control" id="second_password" name="second_password"  require="true" onChange={(e) => this.changeP2(e)} />

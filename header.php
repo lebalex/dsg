@@ -27,13 +27,13 @@ sec_session_start();
     <link rel="stylesheet" href="/css/fontello.css">
 
 
-        <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="/js/jquery/jquery-2.2.4.min.js"></script>
     <script src="/js/jquery/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/js/jquery/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
 
-        <script src="/js/react/react.development.js" crossorigin></script>
+    <script src="/js/react/react.development.js" crossorigin></script>
     <script src="/js/react/react-dom.development.js" crossorigin></script>
     <!--script src="/js/react/react.production.min.js" crossorigin></script>
 <script src="/js/react/react-dom.production.min.js" crossorigin></script-->
@@ -49,7 +49,7 @@ sec_session_start();
 
     <!--script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script-->
 
-    
+
 
     <script lang="JavaScript">
         $.getJSON('/includes/get_data.php?x=get_keywords', function(data) {
@@ -59,6 +59,7 @@ sec_session_start();
             });
             document.querySelector('meta[name="news_keywords"]').setAttribute("content", txt);
         });
+        
     </script>
 </head>
 
@@ -109,51 +110,56 @@ sec_session_start();
                 </div>
                 <!-- Favourite Area -->
                 <div class="favourite-area">
-                    <a href="/favor"><img src="/img/core-img/heart.svg" alt=""><span id="count_in_favouritet"><?=getFavouritetDataCount()?></span></a>
+                    <a href="/favor"><img src="/img/core-img/heart.svg" alt=""><span id="count_in_favouritet"><?= getFavouritetDataCount() ?></span></a>
                 </div>
-                <!-- User Login Info -->
-                <div class="user-login-info">
-                    <a href="#"><img src="/img/core-img/user.svg" alt=""></a>
-                </div>
-                <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="/cart" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span id="count_in_chart"><?=getCartDataCount()?></span></a>
+                    <a href="/cart" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span id="count_in_chart"><?= getCartDataCount() ?></span></a>
                 </div>
+
+                
+                <!-- User Login Info -->
+                <?= getUserLoginOrForm() ?>
+
+
             </div>
 
         </div>
 
     </header>
 
+    <div class="manager_login">
+        <div class="modal fade" id="myLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <form action="/includes/process_login.php" method="POST">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Вход</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group" style="padding:10px 0"><input type="login" name="login" class="form-control" id="exampleInputEmail1" placeholder="Логин"></div>
+                            <div class="form-group" style="padding:10px 0"><input type="password" name="p" class="form-control" id="exampleInputPassword1" placeholder="Пароль"></div>
+                        </div>
+                        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button><button type="submit" class="btn btn-primary">Войти</button></div>
+                        <div class="modal-footer"><a href="/restore_password">Забыли пароль?</a></div>
+
+                        <input type="hidden" name="action" value="login">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-    <!--script lang="JavaScript">
-        $(document).ready(function() {
-            $.getJSON('/includes/get_data.php?x=get_categ', function(data) {
-                /*var txt = '';
-                data.forEach(function(obj) {
-                    txt += '<li><a href="/catalog/' + obj.id + '">' + obj.name + '</a></li>';
-                });
-                $('#menu_categ').html(txt);*/
-
-                /*var m = '<li><a href="/catalog/${id}">${name}</a></li>';
-                $.template("movieTemplate", m);
-                data.forEach(function(obj) {
-                    $.tmpl("movieTemplate", obj).appendTo("#menu_categ");
-                });*/
-
-            });
-        });
-    </script-->
 
 
-  
+
 
 
 
 
     <script type="text/babel">
-class CategListSimple extends React.Component {
+        class CategListSimple extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -211,3 +217,4 @@ ReactDOM.render(
 
 
     </script>
+

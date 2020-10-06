@@ -111,7 +111,6 @@ else if($obj =="get_all_products_db")
         echo json_encode($outp);
 }else if($obj =="get_favor_products")
 {
-    $user_id = getParam('user_id', -1);
 
     if (!empty($_SESSION['favouritet'])) {
         $id_array = array();
@@ -181,9 +180,18 @@ else if($obj =="get_all_products_db")
 }else if($obj =="get_orders")
 {
     $order_id = getParam('order_id', -1);
+    $users_account = getParam('users', -1);
+    $predicat_user='';
+    if($users_account!=-1){
+        if (isset($_SESSION['user_id'])){
+            $predicat_user='where u.id='.$_SESSION['user_id'];
+        }else{
+            logout();
+        }
+    }
     if($order_id==-1)
     {
-        $stmt = $mysqli->prepare("select o.id, o.date_order, u.name, u.phone, u.email, sum(d.count*d.price) as coast, o.exec from dsg_orders o inner join dsg_users u on o.id_user=u.id inner join dsg_order_details d on o.id=d.id_order group by o.id, o.date_order, u.name, o.exec, u.phone, u.email order by o.date_order desc");
+        $stmt = $mysqli->prepare("select o.id, o.date_order, u.name, u.phone, u.email, o.description, sum(d.count*d.price) as coast, o.exec from dsg_orders o inner join dsg_users u on o.id_user=u.id inner join dsg_order_details d on o.id=d.id_order ".$predicat_user." group by o.id, o.date_order, u.name, o.exec, u.phone, u.email, o.description order by o.date_order desc");
     }else{
 
         $stmt = $mysqli->prepare("select p.name, p.oem, d.count, d.price, d.count*d.price as sum from dsg_products p inner join dsg_order_details d on d.id_products=p.id where d.id_order=".$order_id);
@@ -210,6 +218,29 @@ else if($obj =="get_all_products_db")
         $outp = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
         echo json_encode($outp);
+}else if($obj == 'user_login_name')
+{
+    if (!isset($_SESSION['name']))
+        $result = ['code' => 0, 'name' => 'Вход для зарегистрированных пользователей'];
+    else
+        $result = ['code' => 1, 'name' => htmlentities($_SESSION['name'])];
+    
+    echo json_encode($result);
+}
+else if($obj == 'get_user_account')
+{
+    if (isset($_SESSION['user_id'])){
+        $stmt = $mysqli->prepare("select id, name, phone, email from dsg_users where registr=1 and id=".$_SESSION['user_id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        echo json_encode($outp);
+    }
+    else
+    {
+        logout();
+    }
 }
 
 

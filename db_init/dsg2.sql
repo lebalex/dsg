@@ -149,3 +149,13 @@ ENGINE=InnoDB
 ALTER TABLE `dsg_orders` ADD COLUMN `exec` BIT NOT NULL DEFAULT b'0' AFTER `date_order`;
 
 ALTER TABLE `dsg_users`	ADD COLUMN `dt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `registr`;
+
+ALTER TABLE `dsg_orders` ADD COLUMN `description` VARCHAR(250) NULL AFTER `date_order`;
+
+CREATE TABLE `dsg_favouritet` (
+	`id_user` INT NOT NULL,
+	`id_product` INT NOT NULL
+)
+COLLATE='utf8_general_ci'
+;
+

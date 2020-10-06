@@ -196,7 +196,7 @@ class CheckOut extends React.Component {
                             <input type="text" className="form-control" id="email_address" name="email_address" require="true" onChange={(e) => this.changeEmail(e)} />
                         </div>
                         <div className="col-12 mb-3">
-                            <label htmlFor="description">Коментарий</label>
+                            <label htmlFor="description">Комvентарий к заказу</label>
                             <textarea className='form-control' id="description" name="description" onChange={(e) => this.changeDescription(e)} ></textarea>
                         </div>
                         <div className="col-12 mb-3">

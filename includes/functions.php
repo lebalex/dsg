@@ -36,18 +36,19 @@ function sec_session_start() {
     session_regenerate_id();    // regenerated the session, delete the old one. 
 }
 
-function login($login, $password, $mysqli) {
+function login($login, $password) {
     // Using prepared statements means that SQL injection is not possible. 
-    if ($stmt = $mysqli->prepare("SELECT user_id, login, pwd, fio, role 
-        FROM users
-       WHERE login = ?
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT id, name, email, pwd
+        FROM dsg_users
+       WHERE registr=1 and email = ?
         LIMIT 1")) {
         $stmt->bind_param('s', $login);  // Bind "$login" to parameter.
         $stmt->execute();    // Execute the prepared query.
         $stmt->store_result();
  
         // get variables from result.
-        $stmt->bind_result($user_id, $login, $db_password, $fio, $role);
+        $stmt->bind_result($user_id, $name, $login, $db_password);
         $stmt->fetch();
         
         $password = hash('sha512', $password);
@@ -69,11 +70,12 @@ function login($login, $password, $mysqli) {
                                                                 "", 
                                                                 $login);
                     $_SESSION['login'] = $login;
-					$_SESSION['fio'] = $fio;
-					$_SESSION['role'] = $role;
+					$_SESSION['name'] = $name;
+					//$_SESSION['role'] = $role;
                     $_SESSION['login_string'] = hash('sha512', 
                               $password . $user_browser);
                     // Login successful.
+                    getFavouritet();
                     return true;
                 } else {
                     // Password is not correct
@@ -90,52 +92,21 @@ function login($login, $password, $mysqli) {
         }
     }
 }
-function login_check($mysqli) {
-    // Check if all session variables are set 
-    if (isset($_SESSION['user_id'], 
-                        $_SESSION['login'], 
-                        $_SESSION['login_string'])) {
- 
-        $user_id = $_SESSION['user_id'];
-        $login_string = $_SESSION['login_string'];
-        $login = $_SESSION['login'];
- 
-        // Get the user-agent string of the user.
-        $user_browser = $_SERVER['HTTP_USER_AGENT'];
- 
-        if ($stmt = $mysqli->prepare("SELECT pwd 
-                                      FROM users 
-                                      WHERE user_id = ? LIMIT 1")) {
-            // Bind "$user_id" to parameter. 
-            $stmt->bind_param('i', $user_id);
-            $stmt->execute();   // Execute the prepared query.
-            $stmt->store_result();
- 
-            if ($stmt->num_rows == 1) {
-                // If the user exists get variables from result.
-                $stmt->bind_result($password);
-                $stmt->fetch();
-                $login_check = hash('sha512', $password . $user_browser);
- 
-                if ($login_check == $login_string) {
-                    // Logged In!!!! 
-                    return true;
-                } else {
-                    // Not logged in 
-                    return false;
-                }
-            } else {
-                // Not logged in 
-                return false;
-            }
-        } else {
-            // Not logged in 
-            return false;
-        }
-    } else {
-        // Not logged in 
-        return false;
+/*function login_check() {
+  
+}*/
+function getFavouritet()
+{
+    global $mysqli;
+    $stmt = $mysqli->prepare("select id_product from dsg_favouritet where id_user = ".$_SESSION['user_id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($value = $result->fetch_row()) {
+                    $_SESSION['favouritet'][$value[0]] = 1;
     }
+
+    
+    $stmt->close();
 }
 
 function translit($str) 
@@ -183,6 +154,39 @@ function  getFavouritetDataCount() {
 
   function rand_passwd( $length = 8, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' ) {
     return substr( str_shuffle( $chars ), 0, $length );
+}
+function getUserLoginOrForm()
+{
+    if (!isset($_SESSION['name']))
+    $result = '<div class="user-login-info"><a href="#1" style="color:#18479f;font-size:13px" data-toggle="modal" data-target="#myLogin"><img src="/img/core-img/user.svg" alt="" \
+    title="Вход для зарегистрированных пользователей"></a></div>';
+else
+    $result = '<div class="user-login-info"><a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="'.htmlentities($_SESSION['name']).'"></a> \
+    </div><div class="cart-area" id="exit-area"><a href="/logout" id="essenceCartBtn"><img src="/img/core-img/door-exit.svg" alt=""></a></div>';
+
+return $result;
+}
+function logout()
+{
+    $_SESSION = array();
+ 
+// get session parameters 
+$params = session_get_cookie_params();
+ 
+// Delete the actual cookie. 
+setcookie(session_name(),
+        '', time() - 42000, 
+        $params["path"], 
+        $params["domain"], 
+        $params["secure"], 
+        $params["httponly"]);
+ 
+        unset($_COOKIE[session_name()]);
+session_destroy();
+//header('HTTP/1.1 401 Unauthorized');
+//header("Status:401 Logout");
+//header("WWW-Authenticate: Invalidate, Basic realm=logout");
+header('Location: /index');
 }
 
 

@@ -52,8 +52,24 @@ if ($obj == 'addFavouritet') {
     $add = 1;
     if (!isset($_SESSION['favouritet'][$product])) {
         $_SESSION['favouritet'][$product] = 1;
+        /*вставим в БД */
+        if (isset($_SESSION['user_id'])){
+            try{
+                $stmt = $mysqli->prepare("insert into dsg_favouritet values (".$_SESSION['user_id'].",".$product.")");
+                $stmt->execute();
+                $stmt->close();
+            }catch (Exception $e){}
+        }
     } else {
         unset($_SESSION['favouritet'][$product]);
+        /*удалим из БД */
+        if (isset($_SESSION['user_id'])){
+            try{
+                $stmt = $mysqli->prepare("delete from dsg_favouritet where id_user=".$_SESSION['user_id']." and id_product=".$product);
+                $stmt->execute();
+                $stmt->close();
+            }catch (Exception $e){}
+        }
         $add = -1;
     }
 
@@ -214,14 +230,13 @@ if ($obj == 'setchangepwd') {
     $name = getParam('id', -1);
     $p1 = getParam('p1', '');
     $p2 = getParam('p2', '');
-    $error=null;
-    if(strlen($p1)<100) $p1=hash('sha512', $p1);
+    $error = null;
+    if (strlen($p1) < 100) $p1 = hash('sha512', $p1);
 
-    if ($result = $mysqli->query("select * from dsg_users where id=".$name." and pwd='".$p1."'")) {
-        if($result->num_rows==1)
-        {
+    if ($result = $mysqli->query("select * from dsg_users where id=" . $name . " and pwd='" . $p1 . "'")) {
+        if ($result->num_rows == 1) {
             $insert_stmt = $mysqli->prepare("update dsg_users set pwd=? where id=?");
-            $pwd_hash=hash('sha512', $p2);
+            $pwd_hash = hash('sha512', $p2);
             if (!$insert_stmt->bind_param('si', $pwd_hash, $name)) {
                 $error = "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
             }
@@ -230,24 +245,21 @@ if ($obj == 'setchangepwd') {
                 $error = "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
             }
             $insert_stmt->close();
-        }else{
+        } else {
             $error = "Пользователь не найден!";
         }
-    }else
-    {
+    } else {
         $error = "Не удалось выполнить запрос: " . $result;
     }
 
-    if($error!=null)
+    if ($error != null)
         $result = ['code' => -1, 'error' => $error];
-        else
+    else
         $result = ['code' => 0, 'error' => ''];
-    
-    echo json_encode( $result );
 
+    echo json_encode($result);
 }
-if ($obj == 'set_exec_order')
-{
+if ($obj == 'set_exec_order') {
     $id_order = getParam('id_order', -1);
     $insert_stmt = $mysqli->prepare("update dsg_orders set exec=1 where id=?");
     $insert_stmt->bind_param('i', $id_order);
@@ -269,54 +281,52 @@ if ($obj == 'setorder') {
     //    file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
 
 
-$error_boolean=false;
+    $error_boolean = false;
     /*регистрируем покупателя либо присваиваем пароль, либо нет*/
-    $insert_id_user=0;
-    $pwd_hash=null;
-    if($registration==='true') {
+    $insert_id_user = 0;
+    $pwd_hash = null;
+    if ($registration === 'true') {
         $password = rand_passwd();
         $pwd_hash = hash('sha512', $password);
-        $registration=1;
-    }else $registration=0;
+        $registration = 1;
+    } else $registration = 0;
 
     $insert_stmt = $mysqli->prepare("insert into dsg_users (name, phone, email, pwd, registr) values (?,?,?,?,?)");
-        if (!$insert_stmt->bind_param('ssssi', $name, $phone, $email, $pwd_hash, $registration)) {
-            $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-            $result = ['code' => -1, 'error' => $error];
-            $error_boolean=true;
-        }
-        if (!$insert_stmt->execute()) {
-            $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-            $result = ['code' => -1, 'error' => $error];
-            $error_boolean=true;
-        }else
-        {
-            //$mysqli->insert_id
-            $insert_id_user = $insert_stmt->insert_id;
-        }
+    if (!$insert_stmt->bind_param('ssssi', $name, $phone, $email, $pwd_hash, $registration)) {
+        $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+        $result = ['code' => -1, 'error' => $error];
+        $error_boolean = true;
+    }
+    if (!$insert_stmt->execute()) {
+        $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+        $result = ['code' => -1, 'error' => $error];
+        $error_boolean = true;
+    } else {
+        //$mysqli->insert_id
+        $insert_id_user = $insert_stmt->insert_id;
+    }
 
 
     /*заносим заказ в БД*/
-    $insert_id_order=0;
-    $insert_stmt = $mysqli->prepare("insert into dsg_orders (id_user) values (?)");
-        if (!$insert_stmt->bind_param('i', $insert_id_user)) {
-            $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-            $result = ['code' => -1, 'error' => $error];
-            $error_boolean=true;
-        }
-        if (!$insert_stmt->execute()) {
-            $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-            $result = ['code' => -1, 'error' => $error];
-            $error_boolean=true;
-        }else
-        {
-            //$mysqli->insert_id
-            $insert_id_order = $insert_stmt->insert_id;
-        }
+    $insert_id_order = 0;
+    $insert_stmt = $mysqli->prepare("insert into dsg_orders (id_user, description) values (?,?)");
+    if (!$insert_stmt->bind_param('is', $insert_id_user, $description)) {
+        $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+        $result = ['code' => -1, 'error' => $error];
+        $error_boolean = true;
+    }
+    if (!$insert_stmt->execute()) {
+        $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+        $result = ['code' => -1, 'error' => $error];
+        $error_boolean = true;
+    } else {
+        //$mysqli->insert_id
+        $insert_id_order = $insert_stmt->insert_id;
+    }
 
     $arr_items = json_decode($items);
     $insert_stmt = $mysqli->prepare("insert into dsg_order_details (id_order, id_products, count, price) values (?,?,?,?)");
-    foreach($arr_items as $item){
+    foreach ($arr_items as $item) {
         if (!$insert_stmt->bind_param('iiid', $insert_id_order, $item->id, $item->count, $item->coast)) {
             $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
             $result = ['code' => -1, 'error' => $error];
@@ -324,46 +334,119 @@ $error_boolean=false;
         if (!$insert_stmt->execute()) {
             $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
             $result = ['code' => -1, 'error' => $error];
-            $error_boolean=true;
+            $error_boolean = true;
         }
     }
     $insert_stmt->close();
 
     /*формируем почту и отправляем */
 
-    $message='Имя: '.$name.' <br/>  Email: '.$email.' <br/> Тел: '.$phone.' <br/>';
-    $message.='Заказ №'.$insert_id_order;
-    $message.='<table border="1"><tr><td>Наименование</td><td>OEM</td><td>Кол-во</td><td>Цена</td></tr>';
-    $sum=0;
-    foreach($arr_items as $item){
-        $sum+=($item->count * $item->coast);
-        $message.='<tr><td>'.$item->name.'</td><td>'.$item->oem.'</td><td>'.$item->count.'</td><td>'.$item->coast.'</td></tr>';
+    $message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/> Комvентарий к заказу: ' . $description . ' <br/>';
+    $message .= 'Заказ №' . $insert_id_order;
+    $message .= '<table border="1"><tr><td>Наименование</td><td>OEM</td><td>Кол-во</td><td>Цена</td></tr>';
+    $sum = 0;
+    foreach ($arr_items as $item) {
+        $sum += ($item->count * $item->coast);
+        $message .= '<tr><td>' . $item->name . '</td><td>' . $item->oem . '</td><td>' . $item->count . '</td><td>' . $item->coast . '</td></tr>';
     }
-    $message.='</table>';
-    $message.='На сумму '.$sum;
+    $message .= '</table>';
+    $message .= 'На сумму ' . $sum;
 
     $r = sendMessage('Заказ с сайта DSG Комплект', $message, $email, 0);
-    if($r!='Message sent!')
+    if ($r != 'Message sent!')
         $result = ['code' => -1, 'error' => $r];
     else
         $result = ['code' => $insert_id_order, 'error' => $r];
 
-/*вы зарегистрировались, необходимо сменить пароль */
-if($registration===1) {
-    $message='Имя: '.$name.' <br/>  Email: '.$email.' <br/> Тел: '.$phone.' <br/>'.' <br/> Ваш пароль: '.$password.' <br/>';
-    $message.='Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/'.$insert_id_user.'/'.$pwd_hash.'">сменить пароль</a>';
-    $message.='<br/><br/>С уважением, сотрудники DSG Комплект';
+    /*вы зарегистрировались, необходимо сменить пароль */
+    if ($registration === 1) {
+        $message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $password . ' <br/>';
+        $message .= 'Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/' . $insert_id_user . '/' . $pwd_hash . '">сменить пароль</a>';
+        $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';
         $r = sendMessage('вы зарегистрировались на сайте DSG Комплект', $message, $email, 1);
-        if($r!='Message sent!')
+        if ($r != 'Message sent!')
             $result = ['code' => -1, 'error' => $r];
-        }
+    }
 
     /*удалим содержимое карзины*/
-        unset($_SESSION['cart']);
+    unset($_SESSION['cart']);
 
-        //$error.=$message;
-      
+    //$error.=$message;
 
-  echo json_encode( $result );
-  //echo $error;
+
+    echo json_encode($result);
+    //echo $error;
+}
+if ($obj == 'save_account') {
+
+    $result = ['code' => 0, 'error' => ''];
+    if (isset($_SESSION['user_id'])) {
+
+        $id = getParam('id', -1);
+        $name = getParam('name', '');
+        $phone = getParam('phone', '');
+        $email = getParam('email', '');
+        //$log = date('Y-m-d H:i:s') . ' ' . $name . ' ' . $phone . ' ' . $email . ' ' . $id . ' ' . $_SESSION['user_id'];
+        //file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
+        if ($email != '') {
+            $insert_stmt = $mysqli->prepare("update dsg_users set name=?, phone=?, email=? where id=?");
+            if (!$insert_stmt->bind_param('sssi', $name, $phone, $email, $id)) {
+                $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+                $result = ['code' => -1, 'error' => $error];
+            }
+            if (!$insert_stmt->execute()) {
+                $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+                $result = ['code' => -1, 'error' => $error];
+            }
+            $insert_stmt->close();
+        }
+    } else {
+        logout();
+    }
+    echo json_encode($result);
+}
+if ($obj == 'restore_pwd') {
+    $email = getParam('email', '');
+    $result = ['code' => 0, 'error' => 'Поьлователь с таким email не найден!'];
+
+
+    if ($stmt = $mysqli->prepare("SELECT id, name, phone FROM dsg_users WHERE registr=1 and email = ? LIMIT 1")) {
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($user_id, $name, $phone);
+        $stmt->fetch();
+        $stmt->close();
+
+
+        $password = rand_passwd();
+        $pwd_hash = hash('sha512', $password);
+        $update_user = 0;
+
+
+        $insert_stmt = $mysqli->prepare("update dsg_users set pwd=? where email=? and id=?");
+        if (!$insert_stmt->bind_param('ssi', $pwd_hash, $email, $user_id)) {
+            $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            $result = ['code' => -1, 'error' => $error];
+        }
+        if (!$insert_stmt->execute()) {
+            $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            $result = ['code' => -1, 'error' => $error];
+        } else {
+            $update_user = $mysqli->affected_rows;
+            if ($update_user != 0) {
+                $result = ['code' => $update_user, 'error' => $pwd_hash];
+
+                $message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $password . ' <br/>';
+                $message .= 'Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/' . $user_id . '/' . $pwd_hash . '">сменить пароль</a>';
+                $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';
+                $r = sendMessage('восстановление пароля на сайте DSG Комплект', $message, $email, 1);
+                if ($r != 'Message sent!')
+                    $result = ['code' => -1, 'error' => $r];
+            }
+        }
+        $insert_stmt->close();
+    }
+
+    echo json_encode($result);
 }
