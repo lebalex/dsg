@@ -9,7 +9,7 @@ include_once 'video_baner.php';
 ?>
 
 
-<section class="shop_grid_area section-padding-0-80">
+<section class="shop_grid_area section-padding-0-80 wrapper">
     <div class="overlay3 container">
         <div class="row">
 
@@ -27,7 +27,7 @@ include_once 'video_baner.php';
         </div>
 
     </div>
-
+    </section>
     <?php
     include_once 'footer.php';
     ?>

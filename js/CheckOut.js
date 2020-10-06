@@ -155,38 +155,30 @@ class CheckOut extends React.Component {
         else {
             return (
                 <div className="row">
-                    <div className="col-12 col-sm-6 col-md-6">
-                        <div className="col-12 mb-3">
 
-                            <div className="row">
-                                <div className="col-5">
-                                    <a onClick={this.props.onBack}>назад в корзину</a>
-                                </div>
-                            </div>
+<div class="col-12 col-md-12 col-lg-12">
+<div class="col-12 mb-3">
+    <a onClick={this.props.onBack}>назад в корзину</a>
+</div>
+</div>
 
 
-                            <div className="row">
-                                <div className="col-5">
-                                    <h4>Ваш заказ</h4>
-                                </div>
-                                <div className="col-5">
-                                    <h6>{this.countProd()} {this.tovar()}</h6>
-                                </div>
-                            </div>
+<div class="col-12 col-md-6 col-lg-5 ml-lg-3">
 
-                            <div className="row">
-                                <div className="col-5">
-                                    <h5>Итого</h5>
-                                </div>
-                                <div className="col-5">
-                                    <h6>{sumprod}</h6>
-                                </div>
-                            </div>
+                    <div class="order-details-confirmation">
 
+                        <div class="cart-page-heading">
+                            <h5>Ваш заказ</h5>
+    
                         </div>
 
+                        <ul class="order-details-form mb-4">
+                            <li><span>{this.countProd()}</span> <span>{this.tovar()}</span></li>
+                            <li><span>Итого</span> <span>{sumprod}</span></li>
+                        </ul>
+</div></div>
 
-                    </div>
+                    
                     <div className="col-12 col-sm-6 col-md-6">
                         <h6>Оформление заказа</h6>
                         <div className="messages">

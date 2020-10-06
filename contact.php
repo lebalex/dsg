@@ -46,7 +46,7 @@ include_once 'video_baner.php';
                 </div>
                 </div>
             </div>
-
+            </section>
             <?php
             include_once 'footer.php';
             ?>

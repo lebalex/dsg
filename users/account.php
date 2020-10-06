@@ -2,7 +2,7 @@
 include_once 'header_users.php';
 ?>
 
-<section class="new_arrivals_area section-padding-80-40 clearfix">
+<section class="section-padding-80-40 wrapper">
     <div class="container">
         <div class="row">
             <div class="col-12" id="editableField">
