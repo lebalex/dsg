@@ -207,6 +207,9 @@ changeSearch(e)
 <div className="row">
     Полная стоимость заказа {this.AllSum()}
 </div>
+<div className="row">
+<b style={{display:(this.state.itemExec)?'block':'none'}}>Заказ выполнен</b>
+</div>
 
 </div>
 );

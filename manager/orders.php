@@ -230,12 +230,8 @@ changeSearch(e)
     Полная стоимость заказа {this.AllSum()}
 </div>
 <div className="row">
-
-
-{this.executeText(this.state.itemExec)}
-
-
-
+  
+  {this.executeText(this.state.itemExec)}
 
 </div>
 </div>
