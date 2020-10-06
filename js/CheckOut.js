@@ -14,7 +14,8 @@ class CheckOut extends React.Component {
             itemsProduct: this.props.items,
             orderSend: false,
             orderSendData: '',
-            user_sin_in:false
+            user_sin_in:false,
+            order_id:0
         };
     }
     componentDidMount() {
@@ -22,7 +23,7 @@ class CheckOut extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-            console.log(result)
+            //console.log(result)
           this.setState({
             isLoaded: true,
             value_id: result[0].id,
@@ -58,7 +59,7 @@ class CheckOut extends React.Component {
         return result;
     }
     setEnableSendBtn() {
-        console.log('setEnableSendBtn')
+        //console.log('setEnableSendBtn')
         this.setState({
             enableSendBtn: !this.state.enableSendBtn
         });
@@ -117,6 +118,7 @@ class CheckOut extends React.Component {
                     console.log(data.error)*/
                     if (data.code !=-1) {
                         this.setState({
+                            order_id:data.code,
                             orderSend: true,
                             orderSendData: data.code,
                         });
@@ -131,6 +133,10 @@ class CheckOut extends React.Component {
                     console.error(error)
                 })
         }
+    }
+    agreement_show()
+    {
+        $('.modalArea').show();
     }
 
     render() {
@@ -156,23 +162,23 @@ class CheckOut extends React.Component {
             return (
                 <div className="row">
 
-<div class="col-12 col-md-12 col-lg-12">
-<div class="col-12 mb-3">
+<div className="col-12 col-md-12 col-lg-12">
+<div className="col-12 mb-3">
     <a onClick={this.props.onBack}>назад в корзину</a>
 </div>
 </div>
 
 
-<div class="col-12 col-md-6 col-lg-5 ml-lg-3">
+<div className="col-12 col-md-6 col-lg-5 ml-lg-3">
 
-                    <div class="order-details-confirmation">
+                    <div className="order-details-confirmation">
 
-                        <div class="cart-page-heading">
+                        <div className="cart-page-heading">
                             <h5>Ваш заказ</h5>
     
                         </div>
 
-                        <ul class="order-details-form mb-4">
+                        <ul className="order-details-form mb-4">
                             <li><span>{this.countProd()}</span> <span>{this.tovar()}</span></li>
                             <li><span>Итого</span> <span>{sumprod}</span></li>
                         </ul>
@@ -183,7 +189,10 @@ class CheckOut extends React.Component {
                         <h6>Оформление заказа</h6>
                         <div className="messages">
                             <div style={{ display: 'none' }} className="thanks_form">
-                                <h4>Спасибо, ваш заказ отправлен.</h4>
+                                <h4>Спасибо, ваш заказ №{this.state.order_id} отправлен.</h4>
+                                <p>
+                                    Проверте свою электронную почту
+                                </p>
                             </div>
                         </div>
                         <div className="messages">
@@ -213,20 +222,20 @@ class CheckOut extends React.Component {
                             <input type="text" readOnly={this.state.value_id!=-1?true:false} className="form-control" id="email_address" name="email_address" require="true" value={this.state.value_email} onChange={(e) => this.changeEmail(e)} />
                         </div>
                         <div className="col-12 mb-3">
-                            <label htmlFor="description">Комvентарий к заказу</label>
+                            <label htmlFor="description">Комментарий к заказу</label>
                             <textarea className='form-control' id="description" name="description" onChange={(e) => this.changeDescription(e)} ></textarea>
                         </div>
                         <div className="col-12 mb-3">
                             <div className="custom-control custom-checkbox d-block mb-2">
                                 <input type="checkbox" className="custom-control-input" id="customCheck1" onClick={() => this.setEnableSendBtn()} />
                                 <label className="custom-control-label" htmlFor="customCheck1">Я согласен на обработку персональных данных!&nbsp;
-                            <a id="agreement_show">Правила обработки</a></label>
+                            <a id="agreement_show" onClick={() => this.agreement_show()}>Правила обработки</a></label>
                             </div>
                         </div>
                         <div className="col-12 mb-3" style={{display:this.state.value_id==-1?'block':'none'}}>
                             <div className="custom-control custom-checkbox d-block mb-2">
                                 <input type="checkbox" className="custom-control-input" id="customCheck2" onClick={() => this.setRegistration()} />
-                                <label className="custom-control-label" htmlFor="customCheck2">Зарегистрироваться на сайте</label>
+                                <label className="custom-control-label" htmlFor="customCheck2">Зарегистрироваться на сайте (пароль будет отправлен по электронной почте)</label>
                             </div>
                         </div>
                         <input type="hidden" name="action" value="checkout" />

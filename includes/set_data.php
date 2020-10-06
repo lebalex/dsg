@@ -327,6 +327,7 @@ if ($obj == 'setorder') {
     } else {
         //$mysqli->insert_id
         $insert_id_order = $insert_stmt->insert_id;
+        $result = ['code' => $insert_id_order, 'error' => ''];
     }
 
     $arr_items = json_decode($items);
