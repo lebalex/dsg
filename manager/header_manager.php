@@ -71,20 +71,7 @@ include_once 'auth.php';
             </nav>
             <div class="header-meta d-flex clearfix justify-content-end">
                 <div class="cart-area">
-                    <a class="exit_btn"><img src="/img/core-img/exit-svgrepo-com.svg" alt="Выход" title="Выход"></a>
-                    <script>
-                        $('.exit_btn').click(function(e) {
-                            $.ajax({
-                                url: "/logout",
-                                //context: document.body,
-                                statusCode: {
-                                    401: function() {
-                                        window.location.href = "/index";
-                                    }
-                                }
-                            });
-                        })
-                    </script>
+                    <a href="/logout" id="essenceCartBtn"><img src="/img/core-img/door-exit.svg" alt=""></a>
                 </div>
             </div>
 
