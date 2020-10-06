@@ -53,22 +53,24 @@ if ($obj == 'addFavouritet') {
     if (!isset($_SESSION['favouritet'][$product])) {
         $_SESSION['favouritet'][$product] = 1;
         /*вставим в БД */
-        if (isset($_SESSION['user_id'])){
-            try{
-                $stmt = $mysqli->prepare("insert into dsg_favouritet values (".$_SESSION['user_id'].",".$product.")");
+        if (isset($_SESSION['user_id'])) {
+            try {
+                $stmt = $mysqli->prepare("insert into dsg_favouritet values (" . $_SESSION['user_id'] . "," . $product . ")");
                 $stmt->execute();
                 $stmt->close();
-            }catch (Exception $e){}
+            } catch (Exception $e) {
+            }
         }
     } else {
         unset($_SESSION['favouritet'][$product]);
         /*удалим из БД */
-        if (isset($_SESSION['user_id'])){
-            try{
-                $stmt = $mysqli->prepare("delete from dsg_favouritet where id_user=".$_SESSION['user_id']." and id_product=".$product);
+        if (isset($_SESSION['user_id'])) {
+            try {
+                $stmt = $mysqli->prepare("delete from dsg_favouritet where id_user=" . $_SESSION['user_id'] . " and id_product=" . $product);
                 $stmt->execute();
                 $stmt->close();
-            }catch (Exception $e){}
+            } catch (Exception $e) {
+            }
         }
         $add = -1;
     }
@@ -270,6 +272,7 @@ if ($obj == 'setorder') {
 
     $result = ['code' => 0, 'error' => ''];
 
+    $insert_id_user = getParam('id', -1);
     $name = getParam('name', '');
     $phone = getParam('phone', '');
     $email = getParam('email', '');
@@ -283,7 +286,7 @@ if ($obj == 'setorder') {
 
     $error_boolean = false;
     /*регистрируем покупателя либо присваиваем пароль, либо нет*/
-    $insert_id_user = 0;
+
     $pwd_hash = null;
     if ($registration === 'true') {
         $password = rand_passwd();
@@ -291,19 +294,21 @@ if ($obj == 'setorder') {
         $registration = 1;
     } else $registration = 0;
 
-    $insert_stmt = $mysqli->prepare("insert into dsg_users (name, phone, email, pwd, registr) values (?,?,?,?,?)");
-    if (!$insert_stmt->bind_param('ssssi', $name, $phone, $email, $pwd_hash, $registration)) {
-        $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-        $result = ['code' => -1, 'error' => $error];
-        $error_boolean = true;
-    }
-    if (!$insert_stmt->execute()) {
-        $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-        $result = ['code' => -1, 'error' => $error];
-        $error_boolean = true;
-    } else {
-        //$mysqli->insert_id
-        $insert_id_user = $insert_stmt->insert_id;
+    if ($insert_id_user == -1) {
+        $insert_stmt = $mysqli->prepare("insert into dsg_users (name, phone, email, pwd, registr) values (?,?,?,?,?)");
+        if (!$insert_stmt->bind_param('ssssi', $name, $phone, $email, $pwd_hash, $registration)) {
+            $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            $result = ['code' => -1, 'error' => $error];
+            $error_boolean = true;
+        }
+        if (!$insert_stmt->execute()) {
+            $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            $result = ['code' => -1, 'error' => $error];
+            $error_boolean = true;
+        } else {
+            //$mysqli->insert_id
+            $insert_id_user = $insert_stmt->insert_id;
+        }
     }
 
 

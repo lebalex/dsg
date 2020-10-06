@@ -6,14 +6,38 @@ class CheckOut extends React.Component {
             enableSendBtn: false,
             registration: false,
             emptyInputVisible: false,
+            value_id:-1,
             value_name: '',
             value_phone: '',
             value_email: '',
             value_description: '',
             itemsProduct: this.props.items,
             orderSend: false,
-            orderSendData: ''
+            orderSendData: '',
+            user_sin_in:false
         };
+    }
+    componentDidMount() {
+        fetch("/includes/get_data.php?x=get_user_info")
+      .then(res => res.json())
+      .then(
+        (result) => {
+            console.log(result)
+          this.setState({
+            isLoaded: true,
+            value_id: result[0].id,
+            value_name: result[0].name,
+            value_phone: result[0].phone,
+            value_email: result[0].email,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
     }
 
 
@@ -74,6 +98,7 @@ class CheckOut extends React.Component {
         if (!emptyInputVisible) {
             const formData = new FormData()
             formData.append('x', 'setorder')
+            formData.append('id', this.state.value_id)
             formData.append('name', this.state.value_name)
             formData.append('phone', this.state.value_phone)
             formData.append('email', this.state.value_email)
@@ -185,15 +210,15 @@ class CheckOut extends React.Component {
 
                         <div className="col-12 mb-3">
                             <label htmlFor="first_name">Имя <span>*</span></label>
-                            <input type="text" className="form-control" id="first_name" name="first_name" require="true" onChange={(e) => this.changeName(e)} />
+                            <input type="text" readOnly={this.state.value_id!=-1?true:false} className="form-control" id="first_name" name="first_name" require="true" value={this.state.value_name} onChange={(e) => this.changeName(e)} />
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="phone_number">Телефон <span>*</span></label>
-                            <input type="number" className="form-control" id="phone_number" name="phone_number" min="0" require="true" onChange={(e) => this.changePhone(e)} />
+                            <input type="number" readOnly={this.state.value_id!=-1?true:false} className="form-control" id="phone_number" name="phone_number" min="0" require="true" value={this.state.value_phone} onChange={(e) => this.changePhone(e)} />
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="email_address">Email <span>*</span></label>
-                            <input type="text" className="form-control" id="email_address" name="email_address" require="true" onChange={(e) => this.changeEmail(e)} />
+                            <input type="text" readOnly={this.state.value_id!=-1?true:false} className="form-control" id="email_address" name="email_address" require="true" value={this.state.value_email} onChange={(e) => this.changeEmail(e)} />
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="description">Комvентарий к заказу</label>
@@ -206,13 +231,15 @@ class CheckOut extends React.Component {
                             <a id="agreement_show">Правила обработки</a></label>
                             </div>
                         </div>
-                        <div className="col-12 mb-3">
+                        <div className="col-12 mb-3" style={{display:this.state.value_id==-1?'block':'none'}}>
                             <div className="custom-control custom-checkbox d-block mb-2">
                                 <input type="checkbox" className="custom-control-input" id="customCheck2" onClick={() => this.setRegistration()} />
                                 <label className="custom-control-label" htmlFor="customCheck2">Зарегистрироваться на сайте</label>
                             </div>
                         </div>
                         <input type="hidden" name="action" value="checkout" />
+                        <input type="hidden" name="action" value={this.state.value_id} />
+
 
 
 

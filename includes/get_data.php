@@ -242,6 +242,22 @@ else if($obj == 'get_user_account')
         logout();
     }
 }
+else if($obj == 'get_user_info')
+{
+    if (isset($_SESSION['user_id'])){
+        $stmt = $mysqli->prepare("select id, name, phone, email from dsg_users where registr=1 and id=".$_SESSION['user_id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        echo json_encode($outp);
+    }
+    else
+    {
+        $out2[] = array('id' => -1, 'name'=>'', 'phone'=>'', 'email'=>'');
+        echo json_encode($out2);
+    }
+}
 
 
 
