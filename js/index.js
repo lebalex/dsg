@@ -55,7 +55,7 @@ function createDivTopProduct(name, id, img, coast, id_categ, active) {
 
 $(document).ready(function() {
 
-    if ($(window).width() > 514) {
+    if ($(window).width() > 800) {
         $.getJSON('/includes/get_data.php?x=get_top_products', function(data) {
             var context = '';
             //console.log(data);
