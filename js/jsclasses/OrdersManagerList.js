@@ -275,7 +275,7 @@ changeSearch(e)
                             </div>
 
                         </div>
-<div className="col-12 mb-1" style={{display:(this.state.date_manager==='0000-00-00 00:00:00')?'none':'block'}}>
+<div className="col-12 mb-1" style={{display:(this.state.date_manager===null)?'none':'block'}}>
   <p>Время обновления заказа {this.date_parse(this.state.date_manager)}</p>
   </div>
 

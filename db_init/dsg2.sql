@@ -163,5 +163,5 @@ COLLATE='utf8_general_ci'
 ALTER TABLE `dsg_orders`
 	CHANGE COLUMN `exec` `exec` SMALLINT NOT NULL DEFAULT 0 AFTER `description`,
 	ADD COLUMN `descript_manager` VARCHAR(250) NULL AFTER `exec`,
-	ADD COLUMN `date_manager` TIMESTAMP NOT NULL AFTER `descript_manager`;
-SELECT `DEFAULT_COLLATION_NAME` FROM `information_schema`.`SCHEMATA` WHERE `SCHEMA_NAME`='dsg_db';
+	ADD COLUMN `date_manager` TIMESTAMP NULL AFTER `descript_manager`;
+
