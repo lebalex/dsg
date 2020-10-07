@@ -39,7 +39,7 @@ function sec_session_start() {
 function login($login, $password) {
     // Using prepared statements means that SQL injection is not possible. 
     global $mysqli;
-    if ($stmt = $mysqli->prepare("SELECT id, name, email, pwd
+    if ($stmt = $mysqli->prepare("SELECT id, name, email, pwd, discont
         FROM dsg_users
        WHERE registr=1 and email = ?
         LIMIT 1")) {
@@ -48,7 +48,7 @@ function login($login, $password) {
         $stmt->store_result();
  
         // get variables from result.
-        $stmt->bind_result($user_id, $name, $login, $db_password);
+        $stmt->bind_result($user_id, $name, $login, $db_password, $discont);
         $stmt->fetch();
         
         $password = hash('sha512', $password);
@@ -71,7 +71,7 @@ function login($login, $password) {
                                                                 $login);
                     $_SESSION['login'] = $login;
 					$_SESSION['name'] = $name;
-					//$_SESSION['role'] = $role;
+					$_SESSION['discont'] = $discont;
                     $_SESSION['login_string'] = hash('sha512', 
                               $password . $user_browser);
                     // Login successful.

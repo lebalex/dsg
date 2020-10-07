@@ -159,9 +159,10 @@ CREATE TABLE `dsg_favouritet` (
 COLLATE='utf8_general_ci'
 ;
 
-/**/
 ALTER TABLE `dsg_orders`
 	CHANGE COLUMN `exec` `exec` SMALLINT NOT NULL DEFAULT 0 AFTER `description`,
 	ADD COLUMN `descript_manager` VARCHAR(250) NULL AFTER `exec`,
 	ADD COLUMN `date_manager` TIMESTAMP NULL AFTER `descript_manager`;
 
+/**/
+ALTER TABLE `dsg_users`	ADD COLUMN `discont` INT NOT NULL DEFAULT '0' AFTER `dt`;

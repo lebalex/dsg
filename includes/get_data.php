@@ -45,7 +45,9 @@ else if ($obj == "get_keywords") {
 else if($obj =="get_top_products")
 {
     $out2 = array();
-    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast from dsg_products where active=1 ORDER BY RAND() LIMIT 5");
+    $discont=0;
+    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast-coast*".$discont." as coast from dsg_products where active=1 ORDER BY RAND() LIMIT 5");
         $stmt->execute();
         $result = $stmt->get_result();
         //$outp = $result->fetch_all(MYSQLI_ASSOC);
@@ -75,7 +77,9 @@ else if($obj =="get_all_products")
     $product_predicat="";
     if($product!='-1') $product_predicat=" and id=".$product;
     $out2 = array();
-    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem, description from dsg_products where active=1 ".$categ_predicat.$product_predicat);
+    $discont=0;
+    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast - coast*".$discont." as coast, count, oem, description from dsg_products where active=1 ".$categ_predicat.$product_predicat);
     
         $stmt->execute();
         $result = $stmt->get_result();
@@ -124,7 +128,9 @@ else if($obj =="get_all_products_db")
             }
 
                     $array = implode("','",$id_array);
-                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem, 'active' as active from dsg_products where active=1 and id IN ('".$array."') ");
+                    $discont=0;
+                    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast - coast*".$discont." as coast, count, oem, 'active' as active from dsg_products where active=1 and id IN ('".$array."') ");
                     $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
@@ -152,7 +158,9 @@ else if($obj =="get_all_products_db")
             }
             
                     $array = implode("','",$id_array);
-                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem from dsg_products where active=1 and id IN ('".$array."') ");
+                    $discont=0;
+                    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+                    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast - coast*".$discont." as coast, count, oem from dsg_products where active=1 and id IN ('".$array."') ");
                     $stmt->execute();
         $result = $stmt->get_result();
         while ($value = $result->fetch_row()) {
@@ -223,10 +231,10 @@ else if($obj =="get_all_products_db")
     $name = getParam('name', '');
     if($name!='')
     {
-        $stmt = $mysqli->prepare("select name, phone, email, registr,dt from dsg_users where upper(name) like '%".mb_strtoupper($name)."%'");
+        $stmt = $mysqli->prepare("select id, name, phone, email, registr,dt, discont from dsg_users where upper(name) like '%".mb_strtoupper($name)."%' or upper(email) like '%".mb_strtoupper($name)."%'");
     }
     else{
-        $stmt = $mysqli->prepare("select name, phone, email, registr,dt from dsg_users");
+        $stmt = $mysqli->prepare("select id, name, phone, email, registr,dt, discont from dsg_users");
     }
     $stmt->execute();
         $result = $stmt->get_result();

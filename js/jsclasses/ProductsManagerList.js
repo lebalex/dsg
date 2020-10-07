@@ -269,11 +269,11 @@ export class ProductsManagerList extends React.Component {
                 </div>
                 <div className="form-group">
                 <label>Цена</label>
-                <input type="text" className="textField" value={this.state.value_select.coast} onChange={(e) => this.changeCoast(e)} 
+                <input type="text" className="textField" value={(this.state.value_select.coast===null)?0:this.state.value_select.coast} onChange={(e) => this.changeCoast(e)} 
                     placeholder="цена" />
                 </div>
                 <label>Описание</label>
-                <textarea rows="10" cols="90"  className="textField" onChange={(e) => this.changeDescription(e)} value={this.state.value_select.description} ></textarea>
+                <textarea rows="10" cols="90"  className="textField" onChange={(e) => this.changeDescription(e)} defaultValue={this.state.value_select.description} ></textarea>
                 <div className="form-group"><label>Изображение</label><input type="file" className="textField"  onChange={(e) => this.changeImg(e)} 
                 placeholder="Изображение"/></div>
 				<div className="form-group">
@@ -308,5 +308,6 @@ class Product{
         this.count=0;
         this.coast=0;
   }
+
 }
 ReactDOM.render(<ProductsManagerList />,   document.getElementById('editableField') );

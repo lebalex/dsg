@@ -200,7 +200,7 @@ if ($obj == 'editproduct') {
     if ($fileName != null) {
         if ($id > -1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=?, img=?, description=? where id=?");
         else {
-            $update_stmt = $mysqli->prepare("insert into dsg_categ (name, oem, count, coast, img, description, id_categ) values (?,?,?,?,?,?,?)");
+            $update_stmt = $mysqli->prepare("insert into dsg_products (name, oem, count, coast, img, description, id_categ) values (?,?,?,?,?,?,?)");
             $id = $id_categ;
         }
 
@@ -457,4 +457,20 @@ if ($obj == 'restore_pwd') {
     }
 
     echo json_encode($result);
+}
+if($obj=='edituser_discont')
+{
+    $id = getParam('id', -1);
+    $discont = getParam('discont', 0);
+    $result = ['code' => 0, 'error' => ''];
+    $insert_stmt = $mysqli->prepare("update dsg_users set discont=? where id=?");
+        if (!$insert_stmt->bind_param('ii', $discont, $id)) {
+            $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            $result = ['code' => -1, 'error' => $error];
+        }
+        if (!$insert_stmt->execute()) {
+            $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+            $result = ['code' => -1, 'error' => $error];
+        }
+        echo json_encode($result);
 }
