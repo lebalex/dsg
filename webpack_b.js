@@ -3,7 +3,7 @@ module.exports = {
 
     entry:
     {
-      /*AccountUsers: './js/jsclasses/AccountUsers.js',
+      AccountUsers: './js/jsclasses/AccountUsers.js',
       CartList: './js/jsclasses/CartList.js',
       CategList: './js/jsclasses/CategList.js',
       CatalogList: './js/jsclasses/CatalogList.js',
@@ -12,14 +12,14 @@ module.exports = {
       ChangePwd: './js/jsclasses/ChangePwd.js',
       CheckOut: './js/jsclasses/CheckOut.js',
       FavorList: './js/jsclasses/FavorList.js',
-      ModalYesNo: './js/jsclasses/ModalYesNo.js',*/
+      ModalYesNo: './js/jsclasses/ModalYesNo.js',
       OrdersManagerList: './js/jsclasses/OrdersManagerList.js',
-      /*OrdersUserList: './js/jsclasses/OrdersUserList.js',
+      OrdersUserList: './js/jsclasses/OrdersUserList.js',
       ProductDetail: './js/jsclasses/ProductDetail.js',
       ProductOne: './js/jsclasses/ProductOne.js',
       ProductsManagerList: './js/jsclasses/ProductsManagerList.js',
       RestorePwd: './js/jsclasses/RestorePwd.js',
-      UsersManagerList: './js/jsclasses/UsersManagerList.js'*/
+      UsersManagerList: './js/jsclasses/UsersManagerList.js'
 
 
       },

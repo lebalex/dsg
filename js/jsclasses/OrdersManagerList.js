@@ -178,7 +178,7 @@ changeSearch(e)
 
 
           {items.map((item, index) => (
-            <tr key={index} className={(item.exec==0)?'table-light':'table-primary'} onClick={() => this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager )}>
+            <tr key={index} className={(item.exec==0)?'table-light':(item.exec==1)?'table-success':'table-danger'} onClick={() => this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager )}>
       <td scope="row" className="border-right border-bottom-0">{item.id}</td>
       <td className="border-right border-bottom-0">{item.date_order}</td>
       <td className="border-right border-bottom-0">{item.name}</td>

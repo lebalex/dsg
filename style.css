@@ -441,7 +441,12 @@ html {
 }
 
 
-
+.order_cancel{
+    color:red;
+}
+.order_exec{
+    color:green;
+}
   
   .checkbox-group {
     display: flex;
