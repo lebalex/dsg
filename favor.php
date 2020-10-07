@@ -15,9 +15,9 @@ include_once 'video_baner.php';
     </div>
 </section>
 
-<script type="text/babel" src="/js/FavorList.js"></script>
+<script src="/js/jsmin/FavorList.js"></script>
 
-<script type="text/babel">
+<!--script type="text/babel">
 
 ReactDOM.render(
   <FavorList />,
@@ -27,7 +27,7 @@ ReactDOM.render(
 
 
 </script>
-<script type="text/babel" src="/js/ProductOne.js"></script>
+<script type="text/babel" src="/js/ProductOne.js"></script-->
 
 
 <?php

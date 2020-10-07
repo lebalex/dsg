@@ -1,60 +1,61 @@
-function addChart(product_id)
-    {
-    $.ajax
-    ({ 
+function addChart(product_id) {
+    $.ajax({
         url: '/includes/set_data.php',
-        data: {x:"addchart",product: product_id},
+        data: {
+            x: "addchart",
+            product: product_id
+        },
         type: 'post',
-        success: function(result)
-        {
+        success: function(result) {
             //alert(result)
             $('#count_in_chart').text(result);
-            
+
         }
     });
-    }
-    function addFavouritet(e, product_id)
-    {
-    $.ajax
-    ({ 
+}
+
+function addFavouritet(e, product_id) {
+    $.ajax({
         url: '/includes/set_data.php',
-        data: {x:"addFavouritet",product: product_id},
+        data: {
+            x: "addFavouritet",
+            product: product_id
+        },
         type: 'post',
-        success: function(result)
-        {
+        success: function(result) {
             //alert(result)
             $(e).toggleClass('active');
-            
+
             $('#count_in_favouritet').text(result.count);
-            
+
         }
     });
-    }
-    
-    function createDivTopProduct(name, id, img, coast, id_categ, active) {
-        if (img === null) img = "noPhoto.png";
-        if (coast === null) coast = 0;
-        return `<div class="single-product-wrapper">
-            <div class="product-img">
-            <img src="/img/product-img/${img}" alt="">
-            <div class="product-favourite"><a onclick="addFavouritet(this, ${id})" class="favme ${active} fa fa-heart"></a></div>
-            </div>
-            <div class="product-description">
-            <a href="/catalog/${id_categ}/${id}">
-            <h6>${name}</h6>
-            </a>
-            <p class="product-price">${new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(coast)}</p>
-            <div class="hover-content">
-            <div class="add-to-cart-btn"><button onclick=addChart(${id}) class="btn essence-btn">В корзину</button>
-            </div>
-            </div>
-            </div>
-            </div>`;
-    }
+}
 
-    $(document).ready(function() {
+function createDivTopProduct(name, id, img, coast, id_categ, active) {
+    if (img === null) img = "noPhoto.png";
+    if (coast === null) coast = 0;
+    return `<div class="single-product-wrapper">
+        <div class="product-img">
+        <img src="/img/product-img/${img}" alt="">
+        <div class="product-favourite"><a onclick="addFavouritet(this, ${id})" class="favme ${active} fa fa-heart"></a></div>
+        </div>
+        <div class="product-description">
+        <a href="/catalog/${id_categ}/${id}">
+        <h6>${name}</h6>
+        </a>
+        <p class="product-price">${new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(coast)}</p>
+        <div class="hover-content">
+        <div class="add-to-cart-btn"><button onclick=addChart(${id}) class="btn essence-btn">В корзину</button>
+        </div>
+        </div>
+        </div>
+        </div>`;
+}
 
+$(document).ready(function() {
 
+    if ($(window).width() > 514) {
         $.getJSON('/includes/get_data.php?x=get_top_products', function(data) {
             var context = '';
             //console.log(data);
@@ -92,4 +93,7 @@ function addChart(product_id)
                 }
             });
         });
-    });
+    }else{
+        $('.new_arrivals_area').hide();
+    }
+});

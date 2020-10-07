@@ -1,4 +1,4 @@
-class ModalYesNo extends React.Component {
+export class ModalYesNo extends React.Component {
     render() {
       if(!this.props.show) {
         return null;

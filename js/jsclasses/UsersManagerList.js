@@ -1,4 +1,4 @@
-class UsersManagerList extends React.Component {
+export class UsersManagerList extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -87,3 +87,4 @@ class UsersManagerList extends React.Component {
 }
 
 }
+ReactDOM.render(<UsersManagerList />, document.getElementById('editableField'));

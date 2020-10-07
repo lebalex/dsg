@@ -13,6 +13,6 @@ include_once 'header_manager.php';
 
 
     </section>
-    <script type="text/babel" src="/js/CategManagerList.js"></script>
-    <script type="text/babel">ReactDOM.render(<CategManagerList />,    document.getElementById('editableField'));</script>
+    <script src="/js/jsmin/CategManagerList.js"></script>
+    <!--script type="text/babel">ReactDOM.render(<CategManagerList />,    document.getElementById('editableField'));</script-->
 <?php include_once 'footer_manager.php';?>

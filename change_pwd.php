@@ -18,8 +18,13 @@ include_once 'video_baner.php';
 
     </div>
 </section>
-<script type="text/babel" src="/js/ChangePwd.js"></script>
-<script type="text/babel">ReactDOM.render(<ChangePwd id='<?=$id?>' pwd='<?=$pwd?>'/>, document.getElementById('data_page'));</script>
+<script>
+    var pwd='<?=$pwd?>'
+    var id='<?=$id?>'
+</script>
+
+<script src="/js/jsmin/ChangePwd.js"></script>
+<!--script type="text/babel">ReactDOM.render(<ChangePwd id='<?=$id?>' pwd='<?=$pwd?>'/>, document.getElementById('data_page'));</script-->
 
 
 <?php

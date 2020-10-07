@@ -13,7 +13,7 @@ include_once 'header_users.php';
 
 
 </section>
-<script type="text/babel" src="/js/OrdersUserList.js"></script>
-<script type="text/babel">ReactDOM.render(<OrdersUserList />,    document.getElementById('editableField'));</script>
+<script src="/js/jsmin/OrdersUserList.js"></script>
+<!--script type="text/babel">ReactDOM.render(<OrdersUserList />,    document.getElementById('editableField'));</script-->
 
 <?php include_once '../footer.php'; ?>

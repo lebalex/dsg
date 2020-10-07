@@ -1,10 +1,10 @@
-class ChangePwd extends React.Component {
+export class ChangePwd extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
       error: null,
       user_id:this.props.id,
-      value_p1:this.propspwd,
+      value_p1:this.props.pwd,
       value_p2:'',
       value_p3:'',
       changeOk:false,
@@ -149,3 +149,5 @@ class ChangePwd extends React.Component {
     }
 
 }
+//declare pwd;
+ReactDOM.render(<ChangePwd id={id} pwd={pwd}/>, document.getElementById('data_page'));

@@ -1,4 +1,5 @@
-class FavorList extends React.Component {
+import { ProductOne } from './ProductOne';
+export class FavorList extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -117,3 +118,7 @@ class FavorList extends React.Component {
     }
 }
 }
+ReactDOM.render(
+  <FavorList />,
+  document.getElementById('data_page')
+);

@@ -1,4 +1,4 @@
-class CategList extends React.Component {
+export class CategListSimple extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -12,13 +12,11 @@ class CategList extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-            result.push({"name":"Весь каталог", "id":"", "img":"other.jpg"});
             //console.log(result);
           this.setState({
             isLoaded: true,
             items: result
           });
-          
         },
         // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
         // чтобы не перехватывать исключения из ошибок в самих компонентах.
@@ -40,24 +38,8 @@ class CategList extends React.Component {
       return (
 
           items.map(item => (
-            <div className="col-12 col-sm-6 col-md-4" key={item.id}>
-            <div className="single-product-wrapper">
-            <div className="product-img">
-            <img src={`/img/categ-img/${item.img}`} alt=""/>
-            <img className="hover-img" src="/img/categ-img/black_gr.jpg" alt=""/>
-            <div className="catagory-content">
-            <span>{item.name}</span>
-            </div>
-            </div>
-            <div className="product-description">
-            <div className="hover-content">
-            <div className="add-to-cart-btn">
-            <a href={`/catalog/${item.id}`} className="btn essence-btn">В каталог</a>
-            </div>            
-            </div>            
-            </div>            
-            </div>            
-            </div>
+            <li key={item.id}><a href={`/catalog/${item.id}`}>{item.name}</a>
+            </li>
           ))
 
       );
@@ -65,3 +47,4 @@ class CategList extends React.Component {
 }
 
 }
+ReactDOM.render(  <CategListSimple />,  document.getElementById('menu_categ'));

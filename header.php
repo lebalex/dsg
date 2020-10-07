@@ -23,14 +23,14 @@ sec_session_start();
 
     <link rel="stylesheet" href="/css/core-style.css">
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
     <link rel="stylesheet" href="/css/fontello.css">
 
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="/js/jquery/jquery-2.2.4.min.js"></script>
-    <script src="/js/jquery/jquery.tmpl.js"></script>
-    <script type="text/javascript" src="/js/jquery/jquery.validate.min.js"></script>
+    <!--script src="/js/jquery/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.validate.min.js"></script-->
     <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
 
     <script src="/js/react/react.development.js" crossorigin></script>
@@ -38,7 +38,7 @@ sec_session_start();
     <!--script src="/js/react/react.production.min.js" crossorigin></script>
 <script src="/js/react/react-dom.production.min.js" crossorigin></script-->
 
-    <script src="/js/react/babel.min.js"></script>
+    <!--script src="/js/react/babel.min.js"></script-->
 
 
 
@@ -59,7 +59,6 @@ sec_session_start();
             });
             document.querySelector('meta[name="news_keywords"]').setAttribute("content", txt);
         });
-        
     </script>
 </head>
 
@@ -116,7 +115,7 @@ sec_session_start();
                     <a href="/cart" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span id="count_in_chart"><?= getCartDataCount() ?></span></a>
                 </div>
 
-                
+
                 <!-- User Login Info -->
                 <?= getUserLoginOrForm() ?>
 
@@ -150,71 +149,5 @@ sec_session_start();
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-    <script type="text/babel">
-        class CategListSimple extends React.Component {
-    constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
-    };
-  }
-    componentDidMount() {
-    fetch("/includes/get_data.php?x=get_categ")
-      .then(res => res.json())
-      .then(
-        (result) => {
-            //console.log(result);
-          this.setState({
-            isLoaded: true,
-            items: result
-          });
-        },
-        // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
-        // чтобы не перехватывать исключения из ошибок в самих компонентах.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  }
-  render() {
-    const { error, isLoaded, items } = this.state;
-    if (error) {
-      return <div>Ошибка: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Загрузка...</div>;
-    } else {
-      return (
-
-          items.map(item => (
-            <li key={item.id}><a href={`/catalog/${item.id}`}>{item.name}</a>
-            </li>
-          ))
-
-      );
-    }
-}
-
-}
-
-ReactDOM.render(
-  <CategListSimple toWhat="мир" />,
-  document.getElementById('menu_categ')
-);
-
-
-
-    </script>
-
+    <script  src="/js/jsmin/CategListSimple.js"></script>
+    <!--script type="text/babel">ReactDOM.render(  <CategListSimple toWhat="мир" />,  document.getElementById('menu_categ'));</script-->

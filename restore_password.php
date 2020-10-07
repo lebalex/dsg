@@ -17,8 +17,8 @@ include_once 'video_baner.php';
 
     </div>
 </section>
-<script type="text/babel" src="/js/RestorePwd.js"></script>
-<script type="text/babel">ReactDOM.render(<RestorePwd />, document.getElementById('data_page')  );</script>
+<script src="/js/jsmin/RestorePwd.js"></script>
+<!--script type="text/babel">ReactDOM.render(<RestorePwd />, document.getElementById('data_page')  );</script-->
 
 
 <?php

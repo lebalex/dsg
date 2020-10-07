@@ -1,4 +1,4 @@
-class CheckOut extends React.Component {
+export class CheckOut extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +15,8 @@ class CheckOut extends React.Component {
             orderSend: false,
             orderSendData: '',
             user_sin_in:false,
-            order_id:0
+            order_id:0,
+            emailValid:true
         };
     }
     componentDidMount() {
@@ -90,9 +91,12 @@ class CheckOut extends React.Component {
         {
             emptyInputVisible=true;
         }
+        let emailValid = this.state.value_email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        if(!emailValid) emptyInputVisible=true;
         this.setState({
             visibleSendBtn: emptyInputVisible,
-            emptyInputVisible: emptyInputVisible
+            emptyInputVisible: emptyInputVisible,
+            emailValid:emailValid
         });
         var json_arr = JSON.stringify(this.state.itemsProduct);
         //console.log(json_arr)
@@ -219,7 +223,7 @@ class CheckOut extends React.Component {
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="email_address">Email <span>*</span></label>
-                            <input type="text" readOnly={this.state.value_id!=-1?true:false} className="form-control" id="email_address" name="email_address" require="true" value={this.state.value_email} onChange={(e) => this.changeEmail(e)} />
+                            <input type="text" readOnly={this.state.value_id!=-1?true:false} className={(this.state.emailValid)?"form-control":"form-control is-invalid"} id="email_address" name="email_address" require="true" value={this.state.value_email} onChange={(e) => this.changeEmail(e)} />
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="description">Комментарий к заказу</label>

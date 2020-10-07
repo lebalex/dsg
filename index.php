@@ -47,6 +47,7 @@ include_once 'header.php';
             <div class="col-12">
                 <div class="popular-products-slides owl-carousel">
 
+
                 </div>
             </div>
         </div>
@@ -83,10 +84,7 @@ include_once 'header.php';
     </script>
     <noscript style="color:#c00;font-size:16px;font-weight:bold;">Виджет карты использует JavaScript. Включите его в настройках вашего браузера.</noscript>
 </div>
-<script type="text/babel" src="/js/CategList.js"></script>
-<script type="text/babel">
-    ReactDOM.render(<CategList />,document.getElementById('catagory_area'));
-</script>
+<script src="/js/jsmin/CategList.js"></script>
 
 
 <script lang="JavaScript" src="/js/index.js"></script>

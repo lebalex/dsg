@@ -1,4 +1,4 @@
-class OrdersUserList extends React.Component {
+export class OrdersManagerList extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +16,7 @@ class OrdersUserList extends React.Component {
     };
   }
     componentDidMount() {
-    fetch("/includes/get_data.php?x=get_orders&users=1")
+    fetch("/includes/get_data.php?x=get_orders")
       .then(res => res.json())
       .then(
         (result) => {
@@ -34,7 +34,11 @@ class OrdersUserList extends React.Component {
       )
   }
   loadDataS(){
-    this.loadData(this.state.order_id_search)
+    //this.loadData(this.state.order_id_search)
+    var item = this.state.items.find(item => item.id === parseInt(this.state.order_id_search));
+    if(item!=undefined)
+      this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description );
+
   }
   loadData(c){
     fetch(`/includes/get_data.php?x=get_orders&order_id=${c}`)
@@ -69,14 +73,38 @@ class OrdersUserList extends React.Component {
 
 
   }
-
+  setExec()
+  {
+    //console.log(this.state.order_id)
+    const formData = new FormData()
+            formData.append('x', 'set_exec_order')
+            formData.append('id_order', this.state.order_id)
+  fetch('/includes/set_data.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.text())
+  .catch(error => {
+    console.error(error)
+  })
+  }
 
   execute(exec)
   {
     if(exec==0) return '';
     else return <i className="icon-ok"/>
   }
-
+  executeText(exec)
+  {
+    let list=[];
+    if(exec==0) {
+        list.push(<div key="1" className="custom-control custom-checkbox d-block mb-2">
+                                <input type="checkbox" className="custom-control-input" id="customCheck2" onClick={() => this.setExec()} />
+                                <label className="custom-control-label" htmlFor="customCheck2">Выполнить</label>
+                            </div>);
+    }else list.push(<b key='2'>Заказ выполнен</b>);
+    return list;
+  }
   AllSum()
 {
     let s=0;
@@ -191,12 +219,14 @@ changeSearch(e)
     Полная стоимость заказа {this.AllSum()}
 </div>
 <div className="row">
-<b style={{display:(this.state.itemExec)?'block':'none'}}>Заказ выполнен</b>
-</div>
+  
+  {this.executeText(this.state.itemExec)}
 
+</div>
 </div>
 );
     }
 }
 
 }
+ReactDOM.render(<OrdersManagerList />, document.getElementById('editableField'));

@@ -1,4 +1,5 @@
-class CategManagerList extends React.Component {
+import { ModalYesNo } from './ModalYesNo';
+export class CategManagerList extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +12,8 @@ class CategManagerList extends React.Component {
       value_file:null,
       isOpen: false
     };
+    this.toggleModalYes = this.toggleModalYes.bind(this);
+    this.toggleModalNo = this.toggleModalNo.bind(this);
   }
     componentDidMount() {
         this.loadDate()
@@ -97,18 +100,18 @@ class CategManagerList extends React.Component {
 
   /**/
   }
-  toggleModalDel = (id) => {
+  toggleModalDel(id){
     this.setState({
       isOpen: !this.state.isOpen,
       value_id:id
     });
   }
-  toggleModalNo = () => {
+  toggleModalNo(){
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-  toggleModalYes = () => {
+  toggleModalYes(){
       this.del(this.state.value_id);
     this.setState({
       isOpen: !this.state.isOpen
@@ -191,3 +194,4 @@ class CategManagerList extends React.Component {
 }
 
 }
+ReactDOM.render(<CategManagerList />,    document.getElementById('editableField'));

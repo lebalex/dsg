@@ -1,4 +1,5 @@
-class ProductsManagerList extends React.Component {
+import { ModalYesNo } from './ModalYesNo';
+export class ProductsManagerList extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -7,16 +8,14 @@ class ProductsManagerList extends React.Component {
       items: [],
       itemsProduct: [],
       edit:false,
-      /*value_name:'',*/
       value_id:-1,
       value_file:null,
-      /*value_oem:'',
-      value_count:0,
-      value_coast:0,*/
       isOpen: false,
       categ_id:0,
       value_select:Product,
     };
+    this.toggleModalYes = this.toggleModalYes.bind(this);
+    this.toggleModalNo = this.toggleModalNo.bind(this);
   }
     componentDidMount() {
     fetch("/includes/get_data.php?x=get_categ_db")
@@ -165,18 +164,18 @@ class ProductsManagerList extends React.Component {
 
   /**/
   }
-  toggleModalDel = (id) => {
+  toggleModalDel(id){
     this.setState({
       isOpen: !this.state.isOpen,
       value_id:id
     });
   }
-  toggleModalNo = () => {
+  toggleModalNo(){
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-  toggleModalYes = () => {
+  toggleModalYes(){
       this.del(this.state.value_id);
     this.setState({
       isOpen: !this.state.isOpen
@@ -292,6 +291,7 @@ class ProductsManagerList extends React.Component {
 }
 
 }
+
 class Product{
     static id;
     static name;
@@ -309,3 +309,4 @@ class Product{
         this.coast=0;
   }
 }
+ReactDOM.render(<ProductsManagerList />,   document.getElementById('editableField') );

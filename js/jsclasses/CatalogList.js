@@ -1,4 +1,6 @@
-class CatalogList extends React.Component {
+import { ProductDetail } from './ProductDetail';
+import { ProductOne } from './ProductOne';
+export class CatalogList extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -7,7 +9,7 @@ class CatalogList extends React.Component {
       items: [],
       itemsProduct:[],
       categ_id:this.props.categ_id,
-      product_id:this.props.product_id
+      product_id:this.props.product_id,
     };
   }
     componentDidMount() {
@@ -64,7 +66,8 @@ class CatalogList extends React.Component {
     this.ProductLists(c,-1)
   }
 
-  clickProduct = (p) => {
+  //clickProduct = (p) => {
+    clickProduct(p){
     //console.log(p);
     this.ProductLists(this.state.categ_id, p)
   }
@@ -147,3 +150,4 @@ class CatalogList extends React.Component {
     }
 }
 }
+ReactDOM.render(<CatalogList  categ_id={categ_id} product_id={product_id}/>, document.getElementById('data_page'));

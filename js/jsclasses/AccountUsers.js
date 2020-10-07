@@ -1,4 +1,4 @@
-class AccountUsers extends React.Component {
+export class AccountUsers extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -113,7 +113,8 @@ class AccountUsers extends React.Component {
     {
         if (this.state.value_p2===this.state.value_p3 && this.state.value_p2!='') {
             this.setState({
-                visibleSendBtn2: !this.state.visibleSendBtn2
+                visibleSendBtn2: !this.state.visibleSendBtn2,
+                errorSendPwd:''
         });
 
             const formData = new FormData()
@@ -214,8 +215,8 @@ class AccountUsers extends React.Component {
                         <div className="messages">
                             <div style={{ display: (this.state.errorSendPwd === '') ? 'none' : 'block' }} className="error_form2">
                                 {this.state.errorSendPwd}
-                                <br/>
-                                Мы отправили сообщение администратору сайта.
+                                {/*<br/>
+                                Мы отправили сообщение администратору сайта.*/}
                             </div>
                         </div>
                         <div className="col-12 mb-3">
@@ -247,3 +248,4 @@ class AccountUsers extends React.Component {
     }
 }
     }
+    ReactDOM.render(<AccountUsers />,    document.getElementById('editableField'));

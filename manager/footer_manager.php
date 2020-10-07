@@ -1,4 +1,4 @@
-<script type="text/babel" src="/js/ModalYesNo.js"></script>
+<!--script type="text/babel" src="/js/ModalYesNo.js"></script-->
         <!-- Popper js -->
         <script src="/js/popper.min.js"></script>
     <!-- Bootstrap js -->

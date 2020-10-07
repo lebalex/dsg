@@ -1,4 +1,6 @@
-class CartList extends React.Component {
+import {ModalYesNo} from './ModalYesNo';
+import { CheckOut } from './CheckOut';
+export class CartList extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
@@ -9,6 +11,9 @@ class CartList extends React.Component {
       value_id:-1,
       user_id:-1
     };
+    this.toggleModalYes = this.toggleModalYes.bind(this);
+    this.toggleModalNo = this.toggleModalNo.bind(this);
+
   }
     componentDidMount() {
       this.ProductLists(this.state.user_id)
@@ -48,18 +53,18 @@ class CartList extends React.Component {
             <div><p>У Вас пока пусто</p></div>
         );
   }
-  toggleModalDel = (id) => {
+  toggleModalDel(id) {
     this.setState({
       isOpen: !this.state.isOpen,
       value_id:id
     });
   }
-  toggleModalNo = () => {
+  toggleModalNo(){
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-  toggleModalYes = () => {
+  toggleModalYes(){
       this.delCartProduct(this.state.value_id);
     this.setState({
       isOpen: !this.state.isOpen
@@ -117,7 +122,8 @@ return response.json();
   $('#count_in_chart').text(data);
 });
 }
-minusCount = (idx) => {
+//minusCount = (idx) => {
+  minusCount(idx){
     let tmp = this.state.itemsProduct;
     if(tmp[idx].count>0){
     tmp[idx].count= tmp[idx].count-1;
@@ -127,7 +133,8 @@ minusCount = (idx) => {
     this.delCart(tmp[idx].id);
 }
   }
-  plusCount = (idx) => {
+  //plusCount = (idx) => {
+    plusCount(idx){
     let tmp = this.state.itemsProduct;
     if(tmp[idx].count<tmp[idx].balance){
     tmp[idx].count= tmp[idx].count+1;
@@ -154,7 +161,7 @@ sum()
 }).format(s);
 }
 
-checkout = () => {
+  checkout(){
   this.setState({
         gocheckout:!this.state.gocheckout
     });
@@ -246,3 +253,4 @@ checkout = () => {
     }
 }
 }
+ReactDOM.render(<CartList />,document.getElementById('data_page'));

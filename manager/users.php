@@ -11,8 +11,8 @@ include_once 'header_manager.php';
         </div>
     </div>
 </section>
-<script type="text/babel" src="/js/UsersManagerList.js"></script>
-<script type="text/babel">ReactDOM.render(<UsersManagerList />, document.getElementById('editableField'));</script>
+<script src="/js/jsmin/UsersManagerList.js"></script>
+<!--script type="text/babel">ReactDOM.render(<UsersManagerList />, document.getElementById('editableField'));</script-->
 
 
 <?php include_once 'footer_manager.php'; ?>

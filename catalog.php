@@ -19,12 +19,16 @@ include_once 'video_baner.php';
 
     </div>
 </section>
-<script type="text/babel" src="/js/CatalogList.js"></script>
-<script type="text/babel">
-  ReactDOM.render(<CatalogList categ_id='<?=$categ_id?>' product_id='<?=$product_id?>' />, document.getElementById('data_page'));
+<script>
+    var categ_id='<?=$categ_id?>'
+    var product_id='<?=$product_id?>'
 </script>
-<script type="text/babel" src="/js/ProductOne.js"></script>
-<script type="text/babel" src="/js/ProductDetail.js"></script>
+<script  src="/js/jsmin/CatalogList.js"></script>
+<!--script type="text/babel">
+  ReactDOM.render(<CatalogList categ_id='<?=$categ_id?>' product_id='<?=$product_id?>' />, document.getElementById('data_page'));
+</script-->
+<!--script  src="/js/jsmin/ProductOne.js"></script>
+<script  src="/js/jsmin/ProductDetail.js"></script-->
 <?php
 include_once 'footer.php';
 ?>
