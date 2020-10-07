@@ -26,6 +26,9 @@ sec_session_start();
     <link rel="stylesheet" href="/css/owl.carousel.css">
     <link rel="stylesheet" href="/css/fontello.css">
 
+    <!--link rel="stylesheet" href="/react-bootstrap-table-all.min.css">
+</link-->
+
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
     <script src="/js/jquery/jquery-2.2.4.min.js"></script>
@@ -102,7 +105,7 @@ sec_session_start();
             <div class="header-meta d-flex clearfix justify-content-end">
                 <!-- Search Area -->
                 <div class="search-area">
-                    <form action="#" method="post">
+                    <form action="/search" method="post">
                         <input type="search" name="search" id="headerSearch" placeholder="поиск">
                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>

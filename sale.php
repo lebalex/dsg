@@ -2,8 +2,8 @@
 include_once 'header.php';
 
 
-$title_page="Оплата и доставка";
-$video_file="vag3";
+$title_page = "Оплата и доставка";
+$video_file = "vag3";
 include_once 'video_baner.php';
 
 ?>
@@ -17,7 +17,11 @@ include_once 'video_baner.php';
             <div class="col-12 col-sm-6 col-md-12">
                 <h6>Оплата и доставка</h6>
 
-                <p></p>
+                <p>Оплатить заказ возможно в пункте выдачи товара, либо при получении наличными курьеру.
+                    Для оплаты иногородним клиентам, просьба связаться с менеджером, для уточнения деталей.</p>
+                <p>Бесплатная доставка осуществляется при наличии договора, если вы автомагазин или автосервис. </p>
+                <p>Для клиентов с других городов организуем доставку до любой ТК, которая есть в нашем городе.</p>
+
             </div>
 
 
@@ -27,7 +31,7 @@ include_once 'video_baner.php';
         </div>
 
     </div>
-    </section>
-    <?php
-    include_once 'footer.php';
-    ?>
+</section>
+<?php
+include_once 'footer.php';
+?>

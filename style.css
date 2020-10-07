@@ -467,3 +467,7 @@ html {
   .label {
     cursor: pointer;
   }
+/*для react-bootstrap-table
+  .table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #eeeeea;
+}*/

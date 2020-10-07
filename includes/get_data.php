@@ -223,7 +223,7 @@ else if($obj =="get_all_products_db")
     $name = getParam('name', '');
     if($name!='')
     {
-        $stmt = $mysqli->prepare("select name, phone, email, registr,dt from dsg_users where upper(name) like '%".$name."%'");
+        $stmt = $mysqli->prepare("select name, phone, email, registr,dt from dsg_users where upper(name) like '%".mb_strtoupper($name)."%'");
     }
     else{
         $stmt = $mysqli->prepare("select name, phone, email, registr,dt from dsg_users");
@@ -272,6 +272,18 @@ else if($obj == 'get_user_info')
         $out2[] = array('id' => -1, 'name'=>'', 'phone'=>'', 'email'=>'');
         echo json_encode($out2);
     }
+}else if($obj=='get_search')
+{
+    $search_string = getParam('search_string', '');
+    $convertedText = mb_convert_encoding($search_string, 'utf-8', mb_detect_encoding($search_string));
+    $sql="select * from dsg_products where UPPER(NAME) LIKE '%".mb_strtoupper($convertedText)."%' OR UPPER(oem) LIKE '%".mb_strtoupper($convertedText)."%' AND active=1";
+
+    $stmt = $mysqli->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $outp = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    echo json_encode($outp);
 }
 
 

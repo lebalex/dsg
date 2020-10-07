@@ -16,11 +16,11 @@ include_once 'video_baner.php';
             <div class="col-12 col-sm-6 col-md-12">
             <h6>Вы можете нас найти по этому адресу</h6>
 
-                            <p>Иркутск, ул. Монтажная, 5а</p>
+                            <p>г. Иркутск, ул. Монтажная, 5а</p>
 
-                            <p>+7телефон</p>
-                            <p>+7телефон</p>
-                            <p>почта</p>
+                            <p>+7(3952)768-765</p>
+                            <p>+7(901)65 88 765</p>
+                            <p><a href="mailto:dsgkomplekt@mail.ru">dsgkomplekt@mail.ru</a></p>
                         </div>
 
 

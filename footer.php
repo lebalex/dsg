@@ -30,9 +30,9 @@
                 <div class="col-12 col-md-6">
                     <div class="single_widget_area">
                         <div class="footer_heading">
-                            <h6>+7 телефон</h6>
-                            <h6>+7 телефон</h6>
-                            <h6>почта</h6>
+                            <h6>+7(3952)768-765</h6>
+                            <h6>+7(901)65 88 765</h6>
+                            <h6><a href="mailto:dsgkomplekt@mail.ru">dsgkomplekt@mail.ru</a></h6>
                         </div>
                     </div>
                 </div>

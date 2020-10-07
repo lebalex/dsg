@@ -19,7 +19,9 @@ module.exports = {
       ProductOne: './js/jsclasses/ProductOne.js',
       ProductsManagerList: './js/jsclasses/ProductsManagerList.js',
       RestorePwd: './js/jsclasses/RestorePwd.js',
-      UsersManagerList: './js/jsclasses/UsersManagerList.js'
+      UsersManagerList: './js/jsclasses/UsersManagerList.js',
+      SearchProduct: './js/jsclasses/SearchProduct.js',
+      Test: './js/jsclasses/Test.js',
 
 
       },

@@ -5,7 +5,7 @@ define("USER", "dsg");    // The database username.
 define("PASSWORD", "jysb87td");    // The database password. 
 define("DATABASE", "dsg_db");    // The database name.
  
-define("DEFAULT_EMAIL", "avtopoisk.zakaz@mail.ru");
+define("DEFAULT_EMAIL", "dsgkomplekt@mail.ru");
 
 define("CAN_REGISTER", "any");
 define("DEFAULT_ROLE", "member");
