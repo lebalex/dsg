@@ -192,15 +192,30 @@ else if($obj =="get_all_products_db")
     if($order_id==-1)
     {
         $stmt = $mysqli->prepare("select o.id, o.date_order, u.name, u.phone, u.email, o.description, sum(d.count*d.price) as coast, o.exec, o.descript_manager, o.date_manager from dsg_orders o inner join dsg_users u on o.id_user=u.id inner join dsg_order_details d on o.id=d.id_order ".$predicat_user." group by o.id, o.date_order, u.name, o.exec, u.phone, u.email, o.description, o.descript_manager, o.date_manager order by o.date_order desc");
-    }else{
-
-        $stmt = $mysqli->prepare("select p.name, p.oem, d.count, d.price, d.count*d.price as sum from dsg_products p inner join dsg_order_details d on d.id_products=p.id where d.id_order=".$order_id);
-    }
-    $stmt->execute();
+        $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
+    }else{
+
+        $stmt = $mysqli->prepare("select o.id, o.date_order, u.name, u.phone, u.email, o.description, sum(d.count*d.price) as coast, o.exec, o.descript_manager, o.date_manager from dsg_orders o inner join dsg_users u on o.id_user=u.id inner join dsg_order_details d on o.id=d.id_order where o.id=".$order_id." group by o.id, o.date_order, u.name, o.exec, u.phone, u.email, o.description, o.descript_manager, o.date_manager order by o.date_order desc");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        $stmt = $mysqli->prepare("select p.name, p.oem, d.count, d.price, d.count*d.price as sum from dsg_products p inner join dsg_order_details d on d.id_products=p.id where d.id_order=".$order_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $outp_one_order = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        array_push($outp, $outp_one_order);
+    }
+
+
+
         echo json_encode($outp);
+       
     
 
 }else if($obj =="get_users")

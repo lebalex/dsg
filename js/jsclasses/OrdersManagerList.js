@@ -37,10 +37,10 @@ export class OrdersManagerList extends React.Component {
       )
   }
   loadDataS(){
-    //this.loadData(this.state.order_id_search)
-    var item = this.state.items.find(item => item.id === parseInt(this.state.order_id_search));
+    this.loadData(this.state.order_id_search)
+    /*var item = this.state.items.find(item => item.id === parseInt(this.state.order_id_search));
     if(item!=undefined)
-      this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager );
+      this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager );*/
 
   }
   loadData(c){
@@ -51,7 +51,16 @@ export class OrdersManagerList extends React.Component {
             //console.log(result);
           this.setState({
             isLoaded: true,
-            itemOrder: result,
+            order_id:result[0].id,
+            o_name:result[0].name,
+            o_phone:result[0].phone,
+            o_email:result[0].email,
+            o_description:result[0].description,
+            description_manager:result[0].descript_manager,
+            date_manager:result[0].date_manager,
+            itemExec:result[0].exec,
+            itemOrder: result[1],
+            itemOrder: result[1],
             order_id:c
           });
         },
@@ -263,7 +272,7 @@ changeSearch(e)
 </div>
 <div className="col-12 mb-1">
 <label>Комментарий менеджера </label>
-  <textarea rows="3" cols="90"  className="textField" onChange={(e) => this.changeDescriptionManager(e)} >{this.state.description_manager}</textarea>
+  <textarea rows="3" cols="90"  className="textField" onChange={(e) => this.changeDescriptionManager(e)} defaultValue={(this.state.description_manager===null)?'':this.state.description_manager}></textarea>
 </div>
 
 

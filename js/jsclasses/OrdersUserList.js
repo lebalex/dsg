@@ -22,6 +22,7 @@ export class OrdersUserList extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
+          //console.log(result);
           this.setState({
             isLoaded: true,
             items: result
@@ -36,10 +37,10 @@ export class OrdersUserList extends React.Component {
       )
   }
   loadDataS(){
-    //this.loadData(this.state.order_id_search)
-    var item = this.state.items.find(item => item.id === parseInt(this.state.order_id_search));
+    this.loadData(this.state.order_id_search)
+    /*var item = this.state.items.find(item => item.id === parseInt(this.state.order_id_search));
     if(item!=undefined)
-      this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager );
+      this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager );*/
   }
   loadData(c){
     fetch(`/includes/get_data.php?x=get_orders&order_id=${c}`)
@@ -49,7 +50,15 @@ export class OrdersUserList extends React.Component {
             //console.log(result);
           this.setState({
             isLoaded: true,
-            itemOrder: result,
+            order_id:result[0].id,
+            o_name:result[0].name,
+            o_phone:result[0].phone,
+            o_email:result[0].email,
+            o_description:result[0].description,
+            description_manager:result[0].descript_manager,
+            date_manager:result[0].date_manager,
+            itemExec:result[0].exec,
+            itemOrder: result[1],
             order_id:c
           });
         },
@@ -61,6 +70,7 @@ export class OrdersUserList extends React.Component {
         }
       )
   }
+
   openOrder(id_order,exec, n,p,e,d,dm,ddm) {
     this.setState({
             isLoaded: false,
@@ -221,7 +231,7 @@ changeSearch(e)
 </div>
 <div className="col-12 mb-1" style={{display:(this.state.description_manager===null || this.state.description_manager==='')?'none':'block'}}>
 <label>Комментарий менеджера </label>
-  <textarea rows="3" cols="90"  className="textField" readonly="true" >{this.state.description_manager}</textarea>
+  <textarea rows="3" cols="90"  className="textField" readOnly defaultValue={(this.state.description_manager===null)?'':this.state.description_manager}></textarea>
 </div>
 <div className="col-12 mb-1" style={{display:(this.state.date_manager===null)?'none':'block'}}>
   <p>Время обновления заказа {this.date_parse(this.state.date_manager)}</p>
