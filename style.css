@@ -441,3 +441,24 @@ html {
 }
 
 
+
+  
+  .checkbox-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  .checkbox-group:not(:last-of-type) {
+    margin-bottom: 10px;
+  }
+  
+  .checkbox {
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .label {
+    cursor: pointer;
+  }
