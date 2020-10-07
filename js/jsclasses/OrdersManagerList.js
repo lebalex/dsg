@@ -269,7 +269,7 @@ changeSearch(e)
 
 <div className="col-12 mb-1">
                             <button id="sendOrder" onClick={() => this.setExec()} className="btn essence-btn"
-                                style={{ display: this.state.visibleSendBtn ? 'block' : 'none' }}>Отправить</button>
+                                style={{ display: this.state.visibleSendBtn ? 'block' : 'none' }}>Сохранить</button>
                             <div id="submit_img" style={{ display: this.state.visibleSendBtn ? 'none' : 'block' }}>
                                 <img src="/img/core-img/loading.gif" width="70" height="70" />
                             </div>

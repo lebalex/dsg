@@ -265,7 +265,7 @@ if ($obj == 'set_exec_order') {
     $id_order = getParam('id_order', -1);
     $description_manager = getParam('description_manager', '');
     $itemExec = getParam('itemExec', 0);
-    $insert_stmt = $mysqli->prepare("update dsg_orders set exec=?, descript_manager=?, date_manager=CURRENT_TIMESTAMP where id=?");
+    $insert_stmt = $mysqli->prepare("update dsg_orders set exec=?, descript_manager=?, date_manager=NOW() + INTERVAL 12 HOUR where id=?");
     $insert_stmt->bind_param('isi', $itemExec, $description_manager, $id_order);
     $insert_stmt->execute();
     $insert_stmt->close();
