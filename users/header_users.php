@@ -14,7 +14,7 @@ include_once 'auth.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="news_keywords" content="">
-    <title>DSG Комплект - Управление</title>
+    <title>DSG Комплект - Личный кабинет</title>
 
 
 
@@ -35,7 +35,7 @@ include_once 'auth.php';
     <!--script src="/js/react/react.production.min.js" crossorigin></script>
     <script src="/js/react/react-dom.production.min.js" crossorigin></script-->
 
-    <script src="/js/react/babel.min.js"></script>
+    <!--script src="/js/react/babel.min.js"--></script>
 
 </head>
 

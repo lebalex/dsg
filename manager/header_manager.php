@@ -34,7 +34,7 @@ include_once 'auth.php';
     <!--script src="/js/react/react.production.min.js" crossorigin></script>
     <script src="/js/react/react-dom.production.min.js" crossorigin></script-->
 
-    <script src="/js/react/babel.min.js"></script>
+    <!--script src="/js/react/babel.min.js"></script-->
 
 </head>
 

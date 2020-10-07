@@ -13,6 +13,7 @@ export class CartList extends React.Component {
     };
     this.toggleModalYes = this.toggleModalYes.bind(this);
     this.toggleModalNo = this.toggleModalNo.bind(this);
+    this.checkout = this.checkout.bind(this);
 
   }
     componentDidMount() {
