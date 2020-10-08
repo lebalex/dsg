@@ -210,7 +210,7 @@ div.menu-navigation ul.nav>li.on-ic span.text{
 }
 .popup_max{
     position: fixed ;
-    top: 40%;
+    top: 50%;
     left: 50%;
     margin: -300px 0 0 -400px;
     z-index:10000;
