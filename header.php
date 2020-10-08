@@ -13,7 +13,7 @@ sec_session_start();
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="news_keywords" content="">
+    <meta name="news_keywords" content="<?=getKeyWords(); ?>">
     <title>DSG Комплект</title>
 
 
@@ -35,6 +35,7 @@ sec_session_start();
     <!--script src="/js/jquery/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/js/jquery/jquery.validate.min.js"></script-->
     <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+    
 
     <script src="/js/react/react.development.js" crossorigin></script>
     <script src="/js/react/react-dom.development.js" crossorigin></script>
@@ -89,8 +90,11 @@ sec_session_start();
                         <ul>
                             <li><a href="/about">О нас</a></li>
                             <li><a href="/catalog">Каталог</a>
-                                <ul class="dropdown" id="menu_categ">
-
+                                <ul class="dropdown" id="menu_categ2">
+                                    <?php $items = getCateg();
+                                    foreach ($items as $item): ?>
+                                        <li><a href="/catalog/<?=$item['id'];?>"><?=$item['name'];?></a></li>
+                                    <?php endforeach; ?>
                                 </ul>
                             </li>
                             <li><a href="/sale">Доставка</a></li>
@@ -102,7 +106,7 @@ sec_session_start();
             </nav>
 
             <!-- Header Meta Data -->
-            <div class="header-meta d-flex clearfix justify-content-end">
+            <div class="header-meta d-flex clearfix justify-content-end" id="right_btn">
                 <!-- Search Area -->
                 <div class="search-area">
                     <form action="/search" method="post">
@@ -120,8 +124,15 @@ sec_session_start();
 
 
                 <!-- User Login Info -->
-                <?= getUserLoginOrForm() ?>
-
+                <?php
+                $user = getUserLoginOrForm();
+                if ($user==null):?>
+                    <div class="user-login-info" id="login_exit_bth"><a href="#1" style="color:#18479f;font-size:13px" data-toggle="modal" data-target="#myLogin">
+                        <img src="/img/core-img/user.svg" alt="" title="Вход для зарегистрированных пользователей"></a></div>
+                <? else: ?>
+                    <div class="user-login-info" id="login_exit_bth"><a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="<?=$user; ?>"></a> \
+                    </div><div class="cart-area" id="exit-area"><a href="/logout" id="essenceCartBtn"><img src="/img/core-img/door-exit.svg" alt=""></a></div>';
+                <? endif; ?>
 
             </div>
 
@@ -133,17 +144,28 @@ sec_session_start();
         <div class="modal fade" id="myLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
-                    <form action="/includes/process_login.php" method="POST">
+                    <!--form id="loginform" action="/includes/process_login.php" method="POST"-->
+                    <form id="loginform" name="loginform" method="post" action="/includes/process_login.php" accept-charset="utf-8" class="form-horizontal" role="form">
                         <div class="modal-header">
                             <h4 class="modal-title" id="myModalLabel">Вход</h4>
                         </div>
 
                         <div class="modal-body">
-                            <div class="form-group" style="padding:10px 0"><input type="login" name="login" class="form-control" id="exampleInputEmail1" placeholder="Логин"></div>
-                            <div class="form-group" style="padding:10px 0"><input type="password" name="p" class="form-control" id="exampleInputPassword1" placeholder="Пароль"></div>
+                            <div class="form-group" style="padding:10px 0"><input required type="login" name="login" class="form-control" id="login" placeholder="Логин"></div>
+                            <div class="form-group" style="padding:10px 0"><input required type="password" name="p" class="form-control" id="p" placeholder="Пароль"></div>
                         </div>
-                        <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button><button type="submit" class="btn btn-primary">Войти</button></div>
-                        <div class="modal-footer"><a href="/restore_password">Забыли пароль?</a></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </div>
+
+                        <div class="modal-footer">
+                        <div class="modal-body">
+                        <a style="text-align: left" href="/registration">Регистрация</a>
+    </div>
+                        
+                        <a href="/restore_password">Забыли пароль?</a>
+                        </div>
 
                         <input type="hidden" name="action" value="login">
                     </form>
@@ -152,5 +174,5 @@ sec_session_start();
         </div>
     </div>
 
-    <script  src="/js/jsmin/CategListSimple.js"></script>
-    <!--script type="text/babel">ReactDOM.render(  <CategListSimple toWhat="мир" />,  document.getElementById('menu_categ'));</script-->
+    
+    <script type="text/javascript" src="/js/jsmin/header.js"></script>

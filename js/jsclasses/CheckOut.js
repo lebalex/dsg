@@ -6,7 +6,7 @@ export class CheckOut extends React.Component {
             enableSendBtn: false,
             registration: false,
             emptyInputVisible: false,
-            value_id:-1,
+            value_id: -1,
             value_name: '',
             value_phone: '',
             value_email: '',
@@ -14,32 +14,33 @@ export class CheckOut extends React.Component {
             itemsProduct: this.props.items,
             orderSend: false,
             orderSendData: '',
-            user_sin_in:false,
-            order_id:0,
-            emailValid:true
+            user_sin_in: false,
+            order_id: 0,
+            emailValid: true
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
         fetch("/includes/get_data.php?x=get_user_info")
-      .then(res => res.json())
-      .then(
-        (result) => {
-            //console.log(result)
-          this.setState({
-            isLoaded: true,
-            value_id: result[0].id,
-            value_name: result[0].name,
-            value_phone: result[0].phone,
-            value_email: result[0].email,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    //console.log(result)
+                    this.setState({
+                        isLoaded: true,
+                        value_id: result[0].id,
+                        value_name: result[0].name,
+                        value_phone: result[0].phone,
+                        value_email: result[0].email,
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
 
@@ -84,19 +85,18 @@ export class CheckOut extends React.Component {
         this.setState({ value_description: e.target.value })
     }
 
-    sendOrderClick() {
+    handleSubmit(event) {
         //console.log('sendOrderClick')
         let emptyInputVisible = false;
-        if(this.state.value_name==='' || this.state.value_phone==='' || this.state.value_email==='')
-        {
-            emptyInputVisible=true;
+        if (this.state.value_name === '' || this.state.value_phone === '' || this.state.value_email === '') {
+            emptyInputVisible = true;
         }
         let emailValid = this.state.value_email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        if(!emailValid) emptyInputVisible=true;
+        if (!emailValid) emptyInputVisible = true;
         this.setState({
             visibleSendBtn: emptyInputVisible,
             emptyInputVisible: emptyInputVisible,
-            emailValid:emailValid
+            emailValid: emailValid
         });
         var json_arr = JSON.stringify(this.state.itemsProduct);
         //console.log(json_arr)
@@ -120,16 +120,16 @@ export class CheckOut extends React.Component {
                     /*console.log(data)
                     console.log(data.code)
                     console.log(data.error)*/
-                    if (data.code !=-1) {
+                    if (data.code != -1) {
                         this.setState({
-                            order_id:data.code,
+                            order_id: data.code,
                             orderSend: true,
                             orderSendData: data.code,
                         });
                     } else {
                         this.setState({
                             orderSendData: data.error,
-                            visibleSendBtn:!this.state.visibleSendBtn
+                            visibleSendBtn: !this.state.visibleSendBtn
                         });
                     }
                 })
@@ -137,11 +137,12 @@ export class CheckOut extends React.Component {
                     console.error(error)
                 })
         }
+        event.preventDefault();
     }
-    agreement_show()
+    /*agreement_show()
     {
         $('.modalArea').show();
-    }
+    }*/
 
     render() {
 
@@ -154,7 +155,10 @@ export class CheckOut extends React.Component {
                         <div className="col-12 mb-3">
                             <div className="row">
                                 <div className="col-10">
-            <h4>Ваш заказ №{this.state.orderSendData} отправлен</h4>
+                                    <h4>Ваш заказ №{this.state.orderSendData} отправлен</h4>
+                                    <p>
+                                        Проверте свою электронную почту
+                                </p>
                                 </div>
                             </div>
                         </div>
@@ -166,39 +170,31 @@ export class CheckOut extends React.Component {
             return (
                 <div className="row">
 
-<div className="col-12 col-md-12 col-lg-12">
-<div className="col-12 mb-3">
-    <a onClick={this.props.onBack}>назад в корзину</a>
-</div>
-</div>
-
-
-<div className="col-12 col-md-6 col-lg-5 ml-lg-3">
-
-                    <div className="order-details-confirmation">
-
-                        <div className="cart-page-heading">
-                            <h5>Ваш заказ</h5>
-    
+                    <div className="col-12 col-md-12 col-lg-12">
+                        <div className="col-12 mb-3">
+                            <a onClick={this.props.onBack}>назад в корзину</a>
                         </div>
+                    </div>
 
-                        <ul className="order-details-form mb-4">
-                            <li><span>{this.countProd()}</span> <span>{this.tovar()}</span></li>
-                            <li><span>Итого</span> <span>{sumprod}</span></li>
-                        </ul>
-</div></div>
 
-                    
+                    <div className="col-12 col-md-6 col-lg-5 ml-lg-3">
+
+                        <div className="order-details-confirmation">
+
+                            <div className="cart-page-heading">
+                                <h5>Ваш заказ</h5>
+
+                            </div>
+
+                            <ul className="order-details-form mb-4">
+                                <li><span>{this.countProd()}</span> <span>{this.tovar()}</span></li>
+                                <li><span>Итого</span> <span>{sumprod}</span></li>
+                            </ul>
+                        </div></div>
+
+
                     <div className="col-12 col-sm-6 col-md-6">
                         <h6>Оформление заказа</h6>
-                        <div className="messages">
-                            <div style={{ display: 'none' }} className="thanks_form">
-                                <h4>Спасибо, ваш заказ №{this.state.order_id} отправлен.</h4>
-                                <p>
-                                    Проверте свою электронную почту
-                                </p>
-                            </div>
-                        </div>
                         <div className="messages">
                             <div style={{ display: this.state.emptyInputVisible ? 'block' : 'none' }} className="error_form">
                                 <h4>Заполните форму!</h4>
@@ -206,24 +202,24 @@ export class CheckOut extends React.Component {
                         </div>
                         <div className="messages">
                             <div style={{ display: (this.state.orderSendData === '') ? 'none' : 'block' }} className="error_form2">
-                                {this.state.orderSendData}
-                                <br/>
-                                Мы отправили сообщение администратору сайта.
+                                <div className="alert alert-danger" role="alert">
+                                    {this.state.orderSendData}
+                                </div>
                             </div>
                         </div>
 
-
+                        <form className="needs-validation"  onSubmit={this.handleSubmit}>
                         <div className="col-12 mb-3">
                             <label htmlFor="first_name">Имя <span>*</span></label>
-                            <input type="text" readOnly={this.state.value_id!=-1?true:false} className="form-control" id="first_name" name="first_name" require="true" value={this.state.value_name} onChange={(e) => this.changeName(e)} />
+                            <input type="text" readOnly={this.state.value_id != -1 ? true : false} className="form-control" id="first_name" name="first_name" required value={this.state.value_name} onChange={(e) => this.changeName(e)} />
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="phone_number">Телефон <span>*</span></label>
-                            <input type="number" readOnly={this.state.value_id!=-1?true:false} className="form-control" id="phone_number" name="phone_number" min="0" require="true" value={this.state.value_phone} onChange={(e) => this.changePhone(e)} />
+                            <input type="tel" readOnly={this.state.value_id != -1 ? true : false} className="form-control" id="phone_number" name="phone_number" required value={this.state.value_phone} onChange={(e) => this.changePhone(e)} />
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="email_address">Email <span>*</span></label>
-                            <input type="text" readOnly={this.state.value_id!=-1?true:false} className={(this.state.emailValid)?"form-control":"form-control is-invalid"} id="email_address" name="email_address" require="true" value={this.state.value_email} onChange={(e) => this.changeEmail(e)} />
+                            <input type="text" readOnly={this.state.value_id != -1 ? true : false} className={(this.state.emailValid) ? "form-control" : "form-control is-invalid"} id="email_address" name="email_address" required value={this.state.value_email} onChange={(e) => this.changeEmail(e)} />
                         </div>
                         <div className="col-12 mb-3">
                             <label htmlFor="description">Комментарий к заказу</label>
@@ -233,10 +229,10 @@ export class CheckOut extends React.Component {
                             <div className="custom-control custom-checkbox d-block mb-2">
                                 <input type="checkbox" className="custom-control-input" id="customCheck1" onClick={() => this.setEnableSendBtn()} />
                                 <label className="custom-control-label" htmlFor="customCheck1">Я согласен на обработку персональных данных!&nbsp;
-                            <a id="agreement_show" onClick={() => this.agreement_show()}>Правила обработки</a></label>
+                            <a data-toggle="modal" data-target="#agreementModalLong">Правила обработки</a></label>
                             </div>
                         </div>
-                        <div className="col-12 mb-3" style={{display:this.state.value_id==-1?'block':'none'}}>
+                        <div className="col-12 mb-3" style={{ display: this.state.value_id == -1 ? 'block' : 'none' }}>
                             <div className="custom-control custom-checkbox d-block mb-2">
                                 <input type="checkbox" className="custom-control-input" id="customCheck2" onClick={() => this.setRegistration()} />
                                 <label className="custom-control-label" htmlFor="customCheck2">Зарегистрироваться на сайте (пароль будет отправлен по электронной почте)</label>
@@ -249,13 +245,14 @@ export class CheckOut extends React.Component {
 
 
                         <div className="col-12 mb-3">
-                            <button id="sendOrder" disabled={!this.state.enableSendBtn} onClick={() => this.sendOrderClick()} className="btn essence-btn"
+                            <button id="sendOrder" disabled={!this.state.enableSendBtn}  type="submit"  className="btn btn-primary"
                                 style={{ display: this.state.visibleSendBtn ? 'block' : 'none' }}>Отправить</button>
                             <div id="submit_img" style={{ display: this.state.visibleSendBtn ? 'none' : 'block' }}>
                                 <img src="/img/core-img/loading.gif" width="70" height="70" />
                             </div>
 
                         </div>
+                        </form>
 
 
 

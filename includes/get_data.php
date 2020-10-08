@@ -31,7 +31,7 @@ else if ($obj == "get_categ_db") {
         echo json_encode($outp);
 
 }
-else if ($obj == "get_keywords") {
+/*else if ($obj == "get_keywords") {
     if (!isset($_SESSION['keywords'])) {
         $stmt = $mysqli->prepare("select name from dsg_products where active=1 order by id");
         $stmt->execute();
@@ -41,7 +41,7 @@ else if ($obj == "get_keywords") {
         $stmt->close();
     }
     echo  json_encode($_SESSION['keywords']);
-}
+}*/
 else if($obj =="get_top_products")
 {
     $out2 = array();

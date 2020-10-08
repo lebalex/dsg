@@ -22,6 +22,7 @@ module.exports = {
       UsersManagerList: './js/jsclasses/UsersManagerList.js',
       SearchProduct: './js/jsclasses/SearchProduct.js',
       Test: './js/jsclasses/Test.js',
+      Registration: './js/jsclasses/Registration.js',
 
 
       },

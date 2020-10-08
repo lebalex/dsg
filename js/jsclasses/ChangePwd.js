@@ -115,7 +115,9 @@ export class ChangePwd extends React.Component {
                     <div className="row">
                     <div className="messages">
                             <div style={{ display: (this.state.error != null) ? 'block' : 'none' }} className="error_form2">
-                                <p style={{color:'red'}}>{this.state.error}</p>
+                            <div className="alert alert-danger" role="alert">
+                                    {this.state.error}
+                                </div>
                             </div>
                         </div>
 

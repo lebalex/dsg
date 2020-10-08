@@ -97,7 +97,7 @@ export class CatalogList extends React.Component {
   {
       let d="Все товары";
       this.state.items.forEach(function(item, i, arr) {
-          if(item.id===categ_id) d = item.name;
+          if(item.id===parseInt(categ_id)) d = item.name;
         });
         return d;
   }

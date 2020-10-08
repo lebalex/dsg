@@ -68,7 +68,9 @@ export class RestorePwd extends React.Component {
                         </div>
                         <div className="messages">
                             <div style={{ display: (this.state.errorSendPwd === '') ? 'none' : 'block' }} className="error_form2">
-                                {this.state.errorSendPwd}
+                            <div className="alert alert-danger" role="alert">
+                                    {this.state.errorSendPwd}
+                                </div>
 
                             </div>
                         </div>

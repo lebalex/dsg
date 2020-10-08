@@ -1,31 +1,16 @@
-<div class="modalArea modalAreaAgreement">
-    <div class="shadow-modal"></div>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="agreementModalLong" tabindex="-1" role="dialog" aria-labelledby="agreementModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Политика конфиденциальности</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <article>
 
-    <div class="phoenix-modal window-modal blur-container active">
-
-        <div class="phoenix-modal-dialog">
-
-            <div class="dialog-content">
-                <!--a class="icon-cancel"></a-->
-                <div class="close_btn" title="Закрыть"><i class="icon-cancel" id="close_agreement"></i></div>
-
-                <div class="content-in">
-                    <main style="width: 800px;">
-                        <article>
-                            <h2></h2>
-                        </article>
-                    </main>
-                    <main style="width: 800px;">
-                        <article>
-                            <h2></h2>
-                        </article>
-                    </main>
-                    <p style="text-align: justify;">
-                    </p>
-                    <main style="width: 800px;">
-                        <article>
-                            <h2><span style="font-size: 8pt;">Политика конфиденциальности</span></h2>
-                            <span style="font-size: 8pt;"> </span><span style="font-size: 8pt;"> </span>
                             <section><span style="font-size: 8pt;"> </span><span style="font-size: 8pt;"> </span>
                                 <p>
                                     <span style="font-size: 8pt;"> </span><span style="font-size: 8pt;">
@@ -193,42 +178,10 @@
                             <span style="font-size: 8pt;"> </span><span style="font-size: 8pt;"> </span><br>
                             <span style="font-size: 8pt;"> </span><span style="font-size: 8pt;"> </span>
                         </article>
-                    </main>
-                    <footer style="width: 1903px;">
-                        <aside>
-                            <section><span style="font-size: 8pt;"> </span><span style="font-size: 8pt;"> </span>
-                                <h3><br>
-                                    <span style="font-size: 8pt;"> </span></h3>
-                                <span style="font-size: 8pt;"> </span><span style="font-size: 8pt;"> </span>
-                            </section>
-                        </aside>
-                    </footer>
-                    <p>
-                    </p>
-                    <footer style="width: 1903px;">
-                        <aside>
-                            <section></section>
-                        </aside>
-                    </footer>
-                    <footer style="width: 1903px;">
-                        <aside><br>
-                        </aside>
-                    </footer>
-                </div>
-
-            </div>
-
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+      </div>
     </div>
-
-
+  </div>
 </div>
-<script lang="JavaScript">
-    
-    $('#agreement_show').click(function() {
-        $('.modalArea').show();
-    })
-    $('#close_agreement').click(function() {
-        $('.modalArea').hide();
-    })
-</script>

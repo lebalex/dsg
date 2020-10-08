@@ -415,7 +415,7 @@ if ($obj == 'save_account') {
 }
 if ($obj == 'restore_pwd') {
     $email = getParam('email', '');
-    $result = ['code' => 0, 'error' => 'Поьлователь с таким email не найден!'];
+    $result = ['code' => 0, 'error' => 'Пользователь с таким email не найден!'];
 
 
     if ($stmt = $mysqli->prepare("SELECT id, name, phone FROM dsg_users WHERE registr=1 and email = ? LIMIT 1")) {
@@ -458,19 +458,91 @@ if ($obj == 'restore_pwd') {
 
     echo json_encode($result);
 }
-if($obj=='edituser_discont')
-{
+if ($obj == 'edituser_discont') {
     $id = getParam('id', -1);
     $discont = getParam('discont', 0);
     $result = ['code' => 0, 'error' => ''];
     $insert_stmt = $mysqli->prepare("update dsg_users set discont=? where id=?");
-        if (!$insert_stmt->bind_param('ii', $discont, $id)) {
-            $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-            $result = ['code' => -1, 'error' => $error];
+    if (!$insert_stmt->bind_param('ii', $discont, $id)) {
+        $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+        $result = ['code' => -1, 'error' => $error];
+    }
+    if (!$insert_stmt->execute()) {
+        $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+        $result = ['code' => -1, 'error' => $error];
+    }
+    echo json_encode($result);
+}
+if ($obj == 'registration') {
+    $name = getParam('name', '');
+    $email = getParam('email', '');
+    $phone = getParam('phone', '');
+    $pwd = getParam('pwd', '');
+    $captcha_token = getParam('token', '');
+    $captcha_action = $action;
+    $result = ['code' => 0, 'error' => ''];
+
+
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    $params = [
+        'secret' => '6LfIitEZAAAAAMx_Ioc_aPqwW3roI6VNtNn42dzS',
+        'response' => $captcha_token,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    $response = curl_exec($ch);
+    if (!empty($response)) $decoded_response = json_decode($response);
+
+    $success = false;
+
+    if ($decoded_response && $decoded_response->success && $decoded_response->action == $captcha_action && $decoded_response->score > 0) {
+
+
+        if ($stmt = $mysqli->prepare("SELECT id FROM dsg_users WHERE registr=1 and email = ? LIMIT 1")) {
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($user_id);
+            $stmt->fetch();
+            $stmt->close();
+
+
+            if ($user_id == null) {
+                $pwd_hash = hash('sha512', $pwd);
+                $update_user = 0;
+
+
+                $insert_stmt = $mysqli->prepare("insert into dsg_users (name, phone, email, pwd, registr) values(?,?,?,?,1)");
+                if (!$insert_stmt->bind_param('ssss', $name, $phone, $email, $pwd_hash)) {
+                    $error .= "Не удалось привязать параметры: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+                    $result = ['code' => -1, 'error' => $error];
+                }
+                if (!$insert_stmt->execute()) {
+                    $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
+                    $result = ['code' => -1, 'error' => $error];
+                } else {
+                    $message = 'Поздравляем, Вы только что зарегистрировались на сайте <a href="https://www.dsgkomplekt.ru">DSG Комплект</a><br/>';
+
+                    $message .= 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $pwd . ' <br/>';
+                    $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';
+                    $r = sendMessage('Регистрация на сайте DSG Комплект', $message, $email, 1);
+                    if ($r != 'Message sent!')
+                        $result = ['code' => -1, 'error' => $r];
+                }
+                $insert_stmt->close();
+            } else {
+                $result = ['code' => -1, 'error' => 'Пользователь с таким email уже зарегистрирован!'];
+            }
         }
-        if (!$insert_stmt->execute()) {
-            $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
-            $result = ['code' => -1, 'error' => $error];
-        }
-        echo json_encode($result);
+    }else{
+        $result = ['code' => -1, 'error' => 'Регистрация ТОЛЬКО для ЛЮДЕЙ! Роботам нельзя регистрироваться!'];
+    }
+    echo json_encode($result);
 }

@@ -52,7 +52,7 @@ include_once 'video_baner.php';
                     </div>
                     <div class="col-12 mb-3">
                         <label for="phone_number">Телефон</label>
-                        <input type="number" class="form-control" id="phone_number" name="phone_number" min="0" value="">
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number"  value="">
                     </div>
                     <div class="col-12 mb-3">
                         <label for="last_name">Email<span>*</span></label>
@@ -65,7 +65,11 @@ include_once 'video_baner.php';
                     <div class="col-12 mb-3">
                         <div class="custom-control custom-checkbox d-block mb-2">
                             <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Я согласен на обработку персональных данных!&nbsp;<a id="agreement_show">Правила обработки</a></label>
+                            <label class="custom-control-label" for="customCheck1">Я согласен на обработку персональных данных!&nbsp;
+                                <a data-toggle="modal" data-target="#agreementModalLong">Правила обработки</a></label>
+
+
+
                         </div>
                     </div>
                     <input type="hidden" name="action" value="message">
@@ -78,14 +82,11 @@ include_once 'video_baner.php';
                                 })
                                 .then(function(token) {
                                     if (token) {
-                                        //console.log(token);
                                         document.getElementById('token').value = token;
                                     }
                                 });
                         });
                     </script>
-
-
                     <div class="col-12 mb-3">
                         <input disabled id="sendMassage" type="submit" value="Отправить" class="btn essence-btn" />
                         <div id="submit_img" style="display:none">
@@ -110,9 +111,7 @@ include_once 'video_baner.php';
 
                         $('#sendMassage').hide();
                         $('#submit_img').show();
-
-                        e.preventDefault(); // avoid to execute the actual submit of the form.
-
+                        e.preventDefault();
                         var form = $(this);
                         var url = form.attr('action');
                         if ($('#first_name').val() != '' && $('#email_address').val() != '' && $('#comments').val() != '') {
@@ -124,12 +123,8 @@ include_once 'video_baner.php';
                                 success: function(data) {
                                     $('#message_form').hide();
                                     $('.thanks_form').css("display", "block");
-                                    //alert(data);
-                                    //alert(data.code);
-                                    //alert(data.error);
                                     $('#submit_img').hide();
                                     if (data.code != 1) {
-                                        //$('.error_form2').html(data.error);
                                         $('.error_form2').css("display", "block");
                                     }
                                 }
@@ -137,7 +132,6 @@ include_once 'video_baner.php';
                         } else {
                             $('.error_form').css("display", "block");
                         }
-
                     });
                 </script>
             </div>

@@ -19,6 +19,8 @@ RewriteRule ^cart/?$ cart.php [L,QSA]
 RewriteRule ^search/?$ search.php [L,QSA]
 
 RewriteRule ^restore_password/?$ restore_password.php [L,QSA]
+RewriteRule ^registration/?$ registration.php [L,QSA]
+
 
 RewriteRule ^manager/?$ manager/categs.php [L,QSA]
 RewriteRule ^manager/orders/?$ manager/orders.php [L,QSA]
