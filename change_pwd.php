@@ -6,7 +6,7 @@ $id = getParam('id', -1);
 $pwd = getParam('pwd', '');
 
 
-$title_page="Смена пароля";
+$title_page="Смена пароля на сайте DSG Комплект";
 $video_file="vag2";
 include_once 'video_baner.php';
 

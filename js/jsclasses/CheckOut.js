@@ -245,7 +245,7 @@ export class CheckOut extends React.Component {
 
 
                         <div className="col-12 mb-3">
-                            <button id="sendOrder" disabled={!this.state.enableSendBtn}  type="submit"  className="btn btn-primary"
+                            <button id="sendOrder" disabled={!this.state.enableSendBtn}  type="submit"  className="btn essence-btn"
                                 style={{ display: this.state.visibleSendBtn ? 'block' : 'none' }}>Отправить</button>
                             <div id="submit_img" style={{ display: this.state.visibleSendBtn ? 'none' : 'block' }}>
                                 <img src="/img/core-img/loading.gif" width="70" height="70" />

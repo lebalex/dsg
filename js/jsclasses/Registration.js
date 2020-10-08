@@ -58,7 +58,7 @@ export class Registration extends React.Component {
 
         if (this.state.value_p1 != this.state.value_p2) {
             emptyInputVisible = true;
-            this.setState({ pwdDiff: true })
+            this.setState({ pwdDiff: true, registrationSendError:'Не правильно повторили пароль!' })
         } else {
             if (this.state.value_p1.length < 8) {
                 emptyInputVisible = true;
@@ -191,7 +191,7 @@ export class Registration extends React.Component {
 
 
                         <div className="col-12 mb-3">
-                            <button id="sendOrder" disabled={!this.state.enableSendBtn}  type="submit"  className="btn btn-primary"
+                            <button id="sendOrder" disabled={!this.state.enableSendBtn}  type="submit"  className="btn essence-btn"
                                 style={{ display: this.state.visibleSendBtn ? 'block' : 'none' }}>Зарегистрироваться</button>
                             <div id="submit_img" style={{ display: this.state.visibleSendBtn ? 'none' : 'block' }}>
                                 <img src="/img/core-img/loading.gif" width="70" height="70" />

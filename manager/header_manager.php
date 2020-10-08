@@ -63,7 +63,7 @@ include_once 'auth.php';
                             <li><a href="/manager/categs">Категории</a></li>
                             <li><a href="/manager/products">Товары</a></li>
                             <li><a href="/manager/orders">Заказы</a></li>
-                            <li><a href="/manager/users">Пользователи</a></li>
+                            <li><a href="/manager/users">Клиенты</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->

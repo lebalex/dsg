@@ -214,7 +214,7 @@ export class UsersManagerList extends React.Component {
 
                 <div className="form-group">
                 <label>Телефон</label>
-                <input type="text" className="textField" value={this.state.u_phone} readOnly
+                <input type="tel" className="textField" value={this.state.u_phone} readOnly
                     placeholder="oem" />
                 </div>
                 <div className="form-group">
