@@ -13,9 +13,9 @@ export class UsersManagerList extends React.Component {
       u_phone:'',
       u_email:'',
       u_discont:0,
-      edit_card_user:false
 
     };
+    this.save = this.save.bind(this);
   }
     componentDidMount() {
     this.loadData();
@@ -29,14 +29,12 @@ export class UsersManagerList extends React.Component {
           this.setState({
             isLoaded: true,
             items: result,
-            edit_card_user:false
           });
         },
         (error) => {
           this.setState({
             isLoaded: true,
             error,
-            edit_card_user:false
           });
         }
       )
@@ -67,13 +65,9 @@ export class UsersManagerList extends React.Component {
   {
     this.setState({ u_discont: e.target.value })
   }
-  close() {
-    this.setState({edit_card_user:false})
-  }
-  save()
+
+  save(event)
   {
-    //console.log(this.state.u_id)
-    //console.log(this.state.u_discont)
     const formData = new FormData()
         formData.append('x', 'edituser_discont')
         formData.append('id', this.state.u_id)
@@ -96,16 +90,15 @@ export class UsersManagerList extends React.Component {
               return o;
             });
 
-            this.setState({items:newList,
-              edit_card_user:false})
+            this.setState({items:newList})
 
-          //this.loadData()
-          //this.setState({edit_card_user:false})
 
     })
     .catch(error => {
       console.error(error)
     })
+    $('.modal').modal('hide');
+    event.preventDefault();
   }
   render() {
     const { error, isLoaded, items } = this.state;
@@ -116,20 +109,8 @@ export class UsersManagerList extends React.Component {
     } else  {
       return (
 
-<div className="row section-heading">
+<div>
 
-{/*<div className="col-12">
-  <div className="product-topbar d-flex align-items-center justify-content-between">
-    <div className="total-products">
-      <input type="search" name="search" id="headerSearch" placeholder="поиск по ФИО и email" onChange={(e) => this.changeSearch(e)}/>
-      <button className="btn edit-btn-icon" onClick={() => this.loadData()}><i className="fa fa-search" aria-hidden="true"></i></button>
-    </div>
-    <div className="product-sorting d-flex">
-      <input type="checkbox"  defaultChecked={this.state.onlyReg} className="custom-control-input" id="customCheckonlyReg"/>
-      <label className="custom-control-label" htmlFor="customCheck2">Только зарегистрированные клиенты</label>
-    </div>
-  </div>
-      </div>*/}
 
                 <div className="col-12">
                     <div className="product-topbar d-flex align-items-center justify-content-between">
@@ -152,10 +133,6 @@ export class UsersManagerList extends React.Component {
                 </div>
 
 
-
-
-
-
 <table className="table table-hover" >
   <thead>
     <tr>
@@ -173,7 +150,7 @@ export class UsersManagerList extends React.Component {
 
           items.map((item, index) => (
             (item.registr===1)?
-             (<tr key={index} onClick={() => this.openUser(index)}>
+             (<tr key={index} onClick={() => this.openUser(index)} data-toggle="modal" data-target=".bd-edit-modal-lg">
       <td scope="row" className="border-right border-bottom-0">{item.name}</td>
       <td className="border-right border-bottom-0">{item.phone}</td>
       <td className="border-right border-bottom-0"><a href={`mailto:${item.email}`}>{item.email}</a></td>
@@ -198,42 +175,51 @@ export class UsersManagerList extends React.Component {
 </table>
 
 
-<div className={`${this.state.edit_card_user?'popup_max':'hidden'} `}>
-        <div className="modal2">
-        <div className="close_btn" title="Закрыть"><i className="icon-cancel" onClick={() => this.close()}></i></div>
-        <div className="form-horizontal form-group">
-        <div className="formCaption">
-				 	Карточка клиента
-                </div></div>
-                <div className="form-group"></div>
-                <div className="form-group">
-                <label>ФИО</label>
-                <input type="text" className="textFieldName" value={this.state.u_name} readOnly
-                    placeholder="Наименование" />
+<div className="modal fade bd-edit-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLongTitle">Карточка клиента</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
+                <form className="needs-validation" onSubmit={this.save}>
+                  <div className="modal-body">
 
-                <div className="form-group">
-                <label>Телефон</label>
-                <input type="tel" className="textField" value={this.state.u_phone} readOnly
-                    placeholder="oem" />
-                </div>
-                <div className="form-group">
-                <label>Email</label>
-                <input type="text" className="textField" value={this.state.u_email} readOnly
-                    placeholder="остаток" />
-                </div>
-                <div className="form-group">
-                <label>Скидка в %</label>
-                <input type="number" className="textField" value={(this.state.u_discont===null)?0:this.state.u_discont} onChange={(e) => this.changeDiscont(e)} 
-                    placeholder="скидка в %" />
-                </div>
+                    <div className="form-group">
+                      <label htmlFor="user_name">ФИО</label>
+                      <input type="text" name="user_name" id="user_name" className="form-control" value={this.state.u_name} readOnly
+                        placeholder="ФИО" />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="user_tel">Телефон</label>
+                      <input type="tel" name="user_tel" id="user_tel" className="form-control" value={this.state.u_phone} readOnly
+                        placeholder="Телефон" />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="user_email">Email</label>
+                      <input type="text" name="user_email" id="user_email" className="form-control" value={this.state.u_email}  readOnly
+                        placeholder="Email" />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="discont">Скидка в %</label>
+                      <input type="number" name="discont" id="discont" className="form-control" value={(this.state.u_discont===null)?0:this.state.u_discont}
+                       onChange={(e) => this.changeDiscont(e)}
+                        placeholder="Скидка в %" />
+                    </div>
 
-				<div className="form-group">
-				<input type="hidden" name="action" value="addCategory"/>
-                <button onClick={() => this.save()} className="btn edit-btn">сохранить</button>
-                </div>
-        </div>
-        </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-primary" type="submit">Сохранить</button>
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
 
 
 </div>

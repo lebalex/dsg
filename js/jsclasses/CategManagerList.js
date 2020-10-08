@@ -1,4 +1,4 @@
-import { ModalYesNo } from './ModalYesNo';
+
 export class CategManagerList extends React.Component {
     constructor(props) {
     super(props);
@@ -6,14 +6,13 @@ export class CategManagerList extends React.Component {
       error: null,
       isLoaded: false,
       items: [],
-      edit:false,
       value_name:'',
       value_id:-1,
-      value_file:null,
-      isOpen: false
+      value_file:null
     };
     this.toggleModalYes = this.toggleModalYes.bind(this);
-    this.toggleModalNo = this.toggleModalNo.bind(this);
+    this.save = this.save.bind(this);
+
   }
     componentDidMount() {
         this.loadDate()
@@ -26,13 +25,11 @@ export class CategManagerList extends React.Component {
           this.setState({
             isLoaded: true,
             items: result,
-            edit:false
           });
         },
         (error) => {
           this.setState({
             isLoaded: true,
-            edit:false,
             error
           });
         }
@@ -42,7 +39,7 @@ export class CategManagerList extends React.Component {
     //console.log(name);
     this.setState({value_name:name, edit:true, value_id:id })
   }
-  save() {
+  save(event) {
       //console.log(this.state.value_name);
       //console.log(this.state.value_id);
       const fileField = this.state.value_file
@@ -65,6 +62,8 @@ export class CategManagerList extends React.Component {
   .catch(error => {
     console.error(error)
   })
+  $('.modal').modal('hide');
+  event.preventDefault();
   }
   del(id) {
     //console.log(id)
@@ -85,9 +84,7 @@ export class CategManagerList extends React.Component {
     console.error(error)
   })
   }
-  close() {
-    this.setState({edit:false})
-  }
+
   changeText(e)
   {
     this.setState({value_name:e.target.value})
@@ -102,20 +99,13 @@ export class CategManagerList extends React.Component {
   }
   toggleModalDel(id){
     this.setState({
-      isOpen: !this.state.isOpen,
       value_id:id
     });
   }
-  toggleModalNo(){
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
+
   toggleModalYes(){
       this.del(this.state.value_id);
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+
   }
 
   render() {
@@ -127,7 +117,8 @@ export class CategManagerList extends React.Component {
     } else {
       return (
 <div>
-<button onClick={() => this.edit( -1, '' )} className="btn edit-btn">добавить</button>
+
+<button onClick={() => this.edit( -1, '' )} className="btn edit-btn" data-toggle="modal" data-target=".bd-edit-modal-lg">добавить</button>
 <table className="table" >
   <thead>
     <tr>
@@ -144,8 +135,8 @@ export class CategManagerList extends React.Component {
       <td scope="row" className="border-right border-bottom-0">{item.name}</td>
       <td className="border-right border-bottom-0"><img width="100px" src={`/img/categ-img/${item.img}`} alt=""/></td>
       <td className="border-right border-bottom-0 border-right-0">
-        <button onClick={() => this.edit( item.id, item.name )} className="btn edit-btn-icon"><i className="icon-pencil"/></button>
-        <button onClick={() => this.toggleModalDel( item.id )} className="btn edit-btn-icon-red"><i className="icon-trash-empty"/></button>
+        <button onClick={() => this.edit( item.id, item.name )} className="btn edit-btn-icon" data-toggle="modal" data-target=".bd-edit-modal-lg"><i className="icon-pencil"/></button>
+        <button onClick={() => this.toggleModalDel( item.id )} className="btn edit-btn-icon-red" data-toggle="modal" data-target="#modalYesNo"><i className="icon-trash-empty"/></button>
 
 
       </td>
@@ -157,34 +148,60 @@ export class CategManagerList extends React.Component {
           </tbody>
 </table>
 
-<ModalYesNo show={this.state.isOpen}
-            onYes={this.toggleModalYes}
-          onNo={this.toggleModalNo}>
-          Вы желаете удалить категорию товаров?
-        </ModalYesNo>
+<div className="modal fade bd-edit-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLongTitle">Добавить (изменить) категорию</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form className="needs-validation" onSubmit={this.save}>
+                  <div className="modal-body">
+
+                    <div className="form-group">
+                      <label htmlFor="name_categ">Наименование</label>
+                      <input type="text" name="name_categ" id="name_categ" className="form-control" value={this.state.value_name} onChange={(e) => this.changeText(e)} required
+                        placeholder="Наименование" />
+                    </div>
+                    <div className="form-group"><label>Изображение</label><input type="file" className="form-control" onChange={(e) => this.changeImg(e)}
+                      placeholder="Изображение" /></div>
+
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-primary" type="submit">Сохранить</button>
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
 
-        <div className={`${this.state.edit?'popup':'hidden'} `}>
-        <div className="modal2">
-        <div className="close_btn" title="Закрыть"><i className="icon-cancel" onClick={() => this.close()}></i></div>
-        <div className="form-horizontal form-group">
-        <div className="formCaption">
-				 	Добавить (изменить) группу
-                </div></div>
-                <div className="form-group"></div>
-                <div className="form-group">
-                <label>Наименование</label>
-                <input type="text" className="textField" value={this.state.value_name} onChange={(e) => this.changeText(e)} 
-                    placeholder="Наименование" />
+<div className="modal fade" id="modalYesNo" tabIndex="-1" role="dialog" aria-labelledby="modalYesNoTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLongTitle">Предупреждение!</h5>
+                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <div className="form-group"><label>Изображение</label><input type="file" className="textField"  onChange={(e) => this.changeImg(e)} 
-                placeholder="Изображение"/></div>
-				<div className="form-group">
-				<input type="hidden" name="action" value="addCategory"/>
-                <button onClick={() => this.save()} className="btn edit-btn">сохранить</button>
+                <div className="modal-body">
+                  Вы желаете удалить категорию?
                 </div>
-        </div>
-        </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => this.toggleModalYes()}>Да</button>
+                  <button type="button" className="btn btn-primary" data-dismiss="modal">Нет</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+      
+
 
 
 
