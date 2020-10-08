@@ -28,7 +28,7 @@ include_once 'video_baner.php';
                     <script>
                         grecaptcha.ready(function() {
                             grecaptcha.execute('6LfIitEZAAAAAJQRx8lSEiZJqeF56fvMlLBv4Exv', {
-                                    action: 'message'
+                                    action: 'registration'
                                 })
                                 .then(function(token) {
                                     if (token) {

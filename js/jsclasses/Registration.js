@@ -183,7 +183,7 @@ export class Registration extends React.Component {
                             </div>
                         </div>
 
-                        <input type="hidden" name="action" value="message"/>
+                        <input type="hidden" name="action" value="registration"/>
                     <input type="hidden" name="token" id="token"/>
 
 

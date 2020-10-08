@@ -479,7 +479,7 @@ if ($obj == 'registration') {
     $phone = getParam('phone', '');
     $pwd = getParam('pwd', '');
     $captcha_token = getParam('token', '');
-    $captcha_action = $action;
+    $captcha_action = getParam('action', '');
     $result = ['code' => 0, 'error' => ''];
 
 
