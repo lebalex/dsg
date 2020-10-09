@@ -12,8 +12,7 @@ date_default_timezone_set('Europe/Moscow');
 $key = "cfqnLkzLheptq";
 $iss = "https://www.dsgkomplekt.ru";
 $aud = "https://www.dsgkomplekt.ru";
-$iat = 1356999524;
-$nbf = 1357000000;
+
 
 include_once 'functions.php';
 header("Content-Type: application/json; charset=UTF-8");
@@ -37,20 +36,23 @@ if (isset($_POST['login'], $_POST['p'])) {
     if($jwt!=null){
     try{
         $decoded = JWT::decode($jwt, $key, array('HS256'));
-        if(check_user_token($decoded->data))
+        /*if(check_user_token($decoded->data))*/
+        if(quick_check_user($decoded->data))
         {
             $jwt = createToken();
             $cart = array("code" => 0,"name" => $_SESSION['name'], "favouritet"=>getFavouritetDataCount(), "jwt" => $jwt);
         }else{
-            logout();
-            $cart = array("code" => -1,"error" => '');
+            logout(false);
+            $cart = array("code" => -3,"error" => 'check_user_token - false');
         }
     }catch (Exception $e) {
-        logout();
-        $cart = array("code" => -1,"error" => $e);
+        logout(false);
+        $cart = array("code" => -2,"error" => $e->getMessage());
     }
-    }else
-    $cart = array("code" => -1,"error" => 'not jwt');
+    }else{
+        logout(false);
+        $cart = array("code" => -1,"error" => 'not jwt');
+    }
     
     echo json_encode( $cart );
 
@@ -64,14 +66,16 @@ function createToken()
     global $key;
     global $iss;
     global $aud;
-    global $iat;
-    global $nbf;
+    $iat = time()+10;
+    $nbf = time()+20;
+    $exp = time() + (60*60*24);//сутки
     try{
     $token = array(
         "iss" => $iss,
         "aud" => $aud,
         "iat" => $iat,
         "nbf" => $nbf,
+        "exp" => $exp,
         "data" => array(
             "id" => $_SESSION['user_id'],
             "name" => $_SESSION['name'],

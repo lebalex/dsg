@@ -134,6 +134,16 @@ function check_user_main($id, $email, $name, $login_string)
             return false;
         }
 }
+function quick_check_user($data)
+{
+    if(isset($_SESSION['login_string']))
+        if($_SESSION['login_string']==$data->login_string) 
+            return true;
+        else
+            return check_user_token($data);
+    else
+        return check_user_token($data);
+}
 
 function getFavouritet()
 {
@@ -234,7 +244,7 @@ function getUserLoginOrForm()
     else
         return htmlentities($_SESSION['name']);
 }
-function logout()
+function logout($location = true)
 {
     $_SESSION = array();
 
@@ -257,5 +267,6 @@ function logout()
     //header('HTTP/1.1 401 Unauthorized');
     //header("Status:401 Logout");
     //header("WWW-Authenticate: Invalidate, Basic realm=logout");
-    header('Location: /index');
+    if($location)
+        header('Location: /index');
 }
