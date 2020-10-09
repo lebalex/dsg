@@ -110,8 +110,6 @@ export class UsersManagerList extends React.Component {
       return (
 
 <div>
-
-
                 <div className="col-12">
                     <div className="product-topbar d-flex align-items-center justify-content-between">
                         <div className="mt-3">

@@ -77,7 +77,7 @@ include_once 'auth.php';
                     <a href="/cart" id="essenceCartBtn"><img src="/img/core-img/bag.svg" alt=""> <span id="count_in_chart"><?= getCartDataCount() ?></span></a>
                 </div>
                 <div class="cart-area">
-                <a href="/logout" id="essenceCartBtn"><img src="/img/core-img/door-exit.svg" alt=""></a>
+                <a href="/logout" id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt=""></a>
                 </div>
             </div>
 
@@ -85,3 +85,5 @@ include_once 'auth.php';
         </div>
 
     </header>
+
+    <script type="text/javascript" src="/js/jsmin/header.js"></script>

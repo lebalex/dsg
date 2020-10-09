@@ -3,6 +3,7 @@
 include_once 'functions.php';
 require 'sendmessage.php';
 sec_session_start();
+date_default_timezone_set('Europe/Moscow');
 header("Content-Type: application/json; charset=UTF-8");
 
 $obj = getParam('x', '-1');

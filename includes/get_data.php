@@ -2,7 +2,6 @@
 include_once 'functions.php';
 sec_session_start();
 header("Content-Type: application/json; charset=UTF-8");
-//$obj = $_GET["x"];
 $obj = getParam('x', '-1');
 $categ_id = getParam('categ_id', '-1');
 $product= getParam('product', '-1');
@@ -11,15 +10,7 @@ $product= getParam('product', '-1');
 
 
 if ($obj == "get_categ") {
-    if (!isset($_SESSION['categories'])) {
-        $stmt = $mysqli->prepare("select id, name, img from dsg_categ where active=1 order by id");
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $outp = $result->fetch_all(MYSQLI_ASSOC);
-        $_SESSION['categories'] = $outp;
-        $stmt->close();
-    }
-    echo  json_encode($_SESSION['categories']);
+    echo json_encode(getCateg());
 }
 else if ($obj == "get_categ_db") {
         $stmt = $mysqli->prepare("select id, name, img from dsg_categ where active=1 order by id");

@@ -1,6 +1,7 @@
 <?php
 include_once 'psl-config.php';
 include_once 'db_connect.php';
+date_default_timezone_set('Europe/Moscow');
 
 function getParam($name, $default)
 {
@@ -42,17 +43,14 @@ function sec_session_start()
 
 function login($login, $password)
 {
-    // Using prepared statements means that SQL injection is not possible. 
     global $mysqli;
     if ($stmt = $mysqli->prepare("SELECT id, name, email, pwd, discont
         FROM dsg_users
        WHERE registr=1 and email = ?
         LIMIT 1")) {
-        $stmt->bind_param('s', $login);  // Bind "$login" to parameter.
-        $stmt->execute();    // Execute the prepared query.
+        $stmt->bind_param('s', $login);
+        $stmt->execute();
         $stmt->store_result();
-
-        // get variables from result.
         $stmt->bind_result($user_id, $name, $login, $db_password, $discont);
         $stmt->fetch();
 
@@ -60,17 +58,10 @@ function login($login, $password)
 
 
         if ($stmt->num_rows == 1) {
-
-            // Check if the password in the database matches
-            // the password the user submitted.
             if ($db_password == $password) {
-                // Password is correct!
-                // Get the user-agent string of the user.
                 $user_browser = $_SERVER['HTTP_USER_AGENT'];
-                // XSS protection as we might print this value
                 $user_id = preg_replace("/[^0-9]+/", "", $user_id);
                 $_SESSION['user_id'] = $user_id;
-                // XSS protection as we might print this value
                 $login = preg_replace(
                     "/[^a-zA-Z0-9_\-]+/",
                     "",
@@ -83,26 +74,67 @@ function login($login, $password)
                     'sha512',
                     $password . $user_browser
                 );
-                // Login successful.
                 getFavouritet();
                 return true;
             } else {
-                // Password is not correct
-                // We record this attempt in the database
-                /*$now = time();
-                    $mysqli->query("INSERT INTO login_attempts(user_id, time)
-                                    VALUES ('$user_id', '$now')");*/
+                // не правильный пароль, можем открыть счетчик и забанить после 10 попыток
+
                 return false;
             }
         } else {
-            // No user exists.
+            // логин не найден
             return false;
         }
     }
 }
-/*function login_check() {
-  
-}*/
+function check_user_session($data)
+{
+    if ($data != null) {
+        return check_user_main($data['id'], $data['email'], $data['name'], $data['login_string']);
+    } else {
+        return false;
+    }
+}
+function check_user_token($data)
+{
+    if ($data != null) {
+        return check_user_main($data->id, $data->email, $data->name, $data->login_string);
+    } else {
+        return false;
+    }
+}
+function check_user_main($id, $email, $name, $login_string)
+{
+        $user_browser = $_SERVER['HTTP_USER_AGENT'];
+        global $mysqli;
+        if ($stmt = $mysqli->prepare("SELECT pwd, discont FROM dsg_users WHERE id = ? LIMIT 1")) {
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $stmt->store_result();
+            if ($stmt->num_rows == 1) {
+                $stmt->bind_result($password, $discont);
+                $stmt->fetch();
+                $login_check = hash('sha512', $password . $user_browser);
+                if ($login_check == $login_string) {
+                    $_SESSION['user_id'] = $id;
+                    $_SESSION['login'] = $email;
+                    $_SESSION['name'] = $name;
+                    $_SESSION['discont'] = $discont;
+                    $_SESSION['login_string'] = $login_check;
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                //записей 0, id Нет вБД 
+                return false;
+            }
+        } else {
+            // ошибка запроса в бд
+            return false;
+        }
+}
+
 function getFavouritet()
 {
     global $mysqli;

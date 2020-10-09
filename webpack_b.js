@@ -1,4 +1,5 @@
 const path = require('path');
+
 module.exports = {
 
     entry:
@@ -60,7 +61,11 @@ module.exports = {
              
             },
           ],
-        }
+        },
+        {
+          test: /\.css$/,
+          loader: 'style-loader!css-loader'
+      }
       ]
     }
   }
