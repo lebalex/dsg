@@ -3,7 +3,7 @@ include_once 'header.php';
 ?>
 
 <!-- ##### Welcome Area Start ##### -->
-<section class="welcome_area bg-img background-overlay" style="background-image: url(/img/bg-img/bg-1a.jpg);">
+<section class="welcome_area_index bg-img background-overlay" style="background-image: url(/img/bg-img/bg-1a.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
             <div class="col-12">
@@ -15,7 +15,7 @@ include_once 'header.php';
         </div>
     </div>
 </section>
-<!-- ##### Welcome Area End ##### -->
+<!-- ##### Welcome Area End ##### btn essence-btn -->
 
 
 <div class="top_catagory_area section-padding-80-0 clearfix">

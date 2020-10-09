@@ -30,10 +30,10 @@ include_once 'auth.php';
     <script src="/js/jquery/jquery-2.2.4.min.js"></script>
 
 
-    <script src="/js/react/react.development.js" crossorigin></script>
-    <script src="/js/react/react-dom.development.js" crossorigin></script>
-    <!--script src="/js/react/react.production.min.js" crossorigin></script>
-    <script src="/js/react/react-dom.production.min.js" crossorigin></script-->
+    <!--script src="/js/react/react.development.js" crossorigin></script>
+    <script src="/js/react/react-dom.development.js" crossorigin></script-->
+    <script src="/js/react/react.production.min.js" crossorigin></script>
+    <script src="/js/react/react-dom.production.min.js" crossorigin></script>
 
     <!--script src="/js/react/babel.min.js"--></script>
 

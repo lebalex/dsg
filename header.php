@@ -37,10 +37,10 @@ sec_session_start();
     <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
     
 
-    <script src="/js/react/react.development.js" crossorigin></script>
-    <script src="/js/react/react-dom.development.js" crossorigin></script>
-    <!--script src="/js/react/react.production.min.js" crossorigin></script>
-<script src="/js/react/react-dom.production.min.js" crossorigin></script-->
+    <!--script src="/js/react/react.development.js" crossorigin></script>
+    <script src="/js/react/react-dom.development.js" crossorigin></script-->
+    <script src="/js/react/react.production.min.js" crossorigin></script>
+    <script src="/js/react/react-dom.production.min.js" crossorigin></script>
 
     <!--script src="/js/react/babel.min.js"></script-->
 
@@ -173,6 +173,5 @@ sec_session_start();
             </div>
         </div>
     </div>
-
-    
+   
     <script type="text/javascript" src="/js/jsmin/header.min.js"></script>
