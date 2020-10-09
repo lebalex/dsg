@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "webpack --config ./webpack_b"
+    "build_w": "webpack --config ./webpack_b",
+    "build_index": "uglifyjs ./js/index.js -c -m -o ./js/jsmin/index.min.js",
+    "build_header": "uglifyjs ./js/header.js -c -m -o ./js/jsmin/header.min.js",
+    "build": "npm run build_w && npm run build_index && npm run build_header"
+
   },
   "dependencies": {
     "babel-preset-react": "^6.24.1",
@@ -30,6 +34,8 @@
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-polyfill": "^6.20.0",
     "babel-preset-minify": "^0.5.1",
+    "terser-webpack-plugin": "^4.2.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"

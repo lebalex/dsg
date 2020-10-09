@@ -86,4 +86,4 @@ include_once 'auth.php';
 
     </header>
 
-    <script type="text/javascript" src="/js/jsmin/header.js"></script>
+    <script type="text/javascript" src="/js/jsmin/header.min.js"></script>

@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+//const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 
@@ -31,9 +33,22 @@ module.exports = {
       path: path.resolve(__dirname, 'js/jsmin'),
         filename: '[name].js',
     },
-    devServer:{
-      overlay:true
-    },
+    /*devtool:'source-map',*/
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': JSON.stringify('production')
+        }
+      })
+    ],
+    /*optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          test: /\.js(\?.*)?$/i,
+        }),
+      ]
+    },*/
     module: {
       rules: [
         {

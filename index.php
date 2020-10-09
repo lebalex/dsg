@@ -87,7 +87,7 @@ include_once 'header.php';
 <script src="/js/jsmin/CategList.js"></script>
 
 
-<script type="text/javascript" src="/js/jsmin/index.js"></script>
+<script type="text/javascript" src="/js/jsmin/index.min.js"></script>
 
 
 <?php

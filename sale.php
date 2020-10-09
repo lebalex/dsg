@@ -2,14 +2,13 @@
 include_once 'header.php';
 
 
-$title_page = "Оплата и доставка";
-$video_file = "vag3";
+$title_page="Оплата и доставка";
+$video_file="vag3";
 include_once 'video_baner.php';
 
 ?>
 
-
-<section class="shop_grid_area section-padding-0-80 wrapper">
+<section class="shop_grid_area section-padding-0-80">
     <div class="overlay3 container">
         <div class="row">
 

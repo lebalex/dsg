@@ -7,7 +7,7 @@ date_default_timezone_set('Europe/Moscow');
 header("Content-Type: application/json; charset=UTF-8");
 
 $obj = getParam('x', '-1');
-$product = getParam('product', '-1');
+$product = htmlspecialchars(strip_tags(getParam('product', '-1')));
 
 
 
@@ -81,8 +81,8 @@ if ($obj == 'addFavouritet') {
     echo json_encode($array);
 }
 if ($obj == 'editcateg') {
-    $id = getParam('id', -1);
-    $name = getParam('name', '-1');
+    $id = htmlspecialchars(strip_tags(getParam('id', -1)));
+    $name = htmlspecialchars(strip_tags(getParam('name', '-1')));
     $target_dir = TARGET_DIR_CATEG;
     if (substr_count(php_uname(), 'Win') > 0) $target_dir = TARGET_DIR_CATEG_W;
     $fileName = null;
@@ -139,7 +139,7 @@ if ($obj == 'editcateg') {
     echo $error;
 }
 if ($obj == 'delcateg') {
-    $id = getParam('id', -1);
+    $id = htmlspecialchars(strip_tags(getParam('id', -1)));
     $error = '-1';
     $update_stmt = $mysqli->prepare("update dsg_categ set active=0 where id=?");
     if (!$update_stmt->bind_param('i', $id)) {
@@ -152,7 +152,7 @@ if ($obj == 'delcateg') {
     echo $error;
 }
 if ($obj == 'delproduct') {
-    $id = getParam('id', -1);
+    $id = htmlspecialchars(strip_tags(getParam('id', -1)));
     $error = '-1';
     $update_stmt = $mysqli->prepare("update dsg_products set active=0 where id=?");
     if (!$update_stmt->bind_param('i', $id)) {
@@ -165,13 +165,13 @@ if ($obj == 'delproduct') {
     echo $error;
 }
 if ($obj == 'editproduct') {
-    $id_categ = getParam('id_categ', -1);
-    $id = getParam('id', -1);
-    $name = getParam('name', '');
-    $oem = getParam('oem', '');
-    $count = getParam('count', '0');
-    $coast = getParam('coast', '0');
-    $description = getParam('description', '');
+    $id_categ = htmlspecialchars(strip_tags(getParam('id_categ', -1)));
+    $id = htmlspecialchars(strip_tags(getParam('id', -1)));
+    $name = htmlspecialchars(strip_tags(getParam('name', '')));
+    $oem = htmlspecialchars(strip_tags(getParam('oem', '')));
+    $count = htmlspecialchars(strip_tags(getParam('count', '0')));
+    $coast = htmlspecialchars(strip_tags(getParam('coast', '0')));
+    $description = htmlspecialchars(strip_tags(getParam('description', '')));
 
     $target_dir = TARGET_DIR_PRODUCT;
     if (substr_count(php_uname(), 'Win') > 0) $target_dir = TARGET_DIR_PRODUCT_W;
@@ -230,9 +230,9 @@ if ($obj == 'editproduct') {
     echo $error;
 }
 if ($obj == 'setchangepwd') {
-    $name = getParam('id', -1);
-    $p1 = getParam('p1', '');
-    $p2 = getParam('p2', '');
+    $name = htmlspecialchars(strip_tags(getParam('id', -1)));
+    $p1 = htmlspecialchars(strip_tags(getParam('p1', '')));
+    $p2 = htmlspecialchars(strip_tags(getParam('p2', '')));
     $error = null;
     if (strlen($p1) < 100) $p1 = hash('sha512', $p1);
 
@@ -263,9 +263,9 @@ if ($obj == 'setchangepwd') {
     echo json_encode($result);
 }
 if ($obj == 'set_exec_order') {
-    $id_order = getParam('id_order', -1);
-    $description_manager = getParam('description_manager', '');
-    $itemExec = getParam('itemExec', 0);
+    $id_order = htmlspecialchars(strip_tags(getParam('id_order', -1)));
+    $description_manager = htmlspecialchars(strip_tags(getParam('description_manager', '')));
+    $itemExec = htmlspecialchars(strip_tags(getParam('itemExec', 0)));
     $insert_stmt = $mysqli->prepare("update dsg_orders set exec=?, descript_manager=?, date_manager=NOW() + INTERVAL 12 HOUR where id=?");
     $insert_stmt->bind_param('isi', $itemExec, $description_manager, $id_order);
     $insert_stmt->execute();
@@ -275,13 +275,13 @@ if ($obj == 'setorder') {
 
     $result = ['code' => 0, 'error' => ''];
 
-    $insert_id_user = getParam('id', -1);
-    $name = getParam('name', '');
-    $phone = getParam('phone', '');
-    $email = getParam('email', '');
-    $description = getParam('description', '');
-    $registration = getParam('registration', 0);
-    $items = getParam('items', '');
+    $insert_id_user = htmlspecialchars(strip_tags(getParam('id', -1)));
+    $name = htmlspecialchars(strip_tags(getParam('name', '')));
+    $phone = htmlspecialchars(strip_tags(getParam('phone', '')));
+    $email = htmlspecialchars(strip_tags(getParam('email', '')));
+    $description = htmlspecialchars(strip_tags(getParam('description', '')));
+    $registration = htmlspecialchars(strip_tags(getParam('registration', 0)));
+    $items = htmlspecialchars(strip_tags(getParam('items', '')));
 
     //$log = date('Y-m-d H:i:s') . ' ' . $name . ' ' . $phone . ' ' . $email . ' ' . $description . ' ' . $registration;
     //    file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
@@ -391,10 +391,10 @@ if ($obj == 'save_account') {
     $result = ['code' => 0, 'error' => ''];
     if (isset($_SESSION['user_id'])) {
 
-        $id = getParam('id', -1);
-        $name = getParam('name', '');
-        $phone = getParam('phone', '');
-        $email = getParam('email', '');
+        $id = htmlspecialchars(strip_tags(getParam('id', -1)));
+        $name = htmlspecialchars(strip_tags(getParam('name', '')));
+        $phone = htmlspecialchars(strip_tags(getParam('phone', '')));
+        $email = htmlspecialchars(strip_tags(getParam('email', '')));
         //$log = date('Y-m-d H:i:s') . ' ' . $name . ' ' . $phone . ' ' . $email . ' ' . $id . ' ' . $_SESSION['user_id'];
         //file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
         if ($email != '') {
@@ -415,7 +415,7 @@ if ($obj == 'save_account') {
     echo json_encode($result);
 }
 if ($obj == 'restore_pwd') {
-    $email = getParam('email', '');
+    $email = htmlspecialchars(strip_tags(getParam('email', '')));
     $result = ['code' => 0, 'error' => 'Пользователь с таким email не найден!'];
 
 
@@ -460,8 +460,8 @@ if ($obj == 'restore_pwd') {
     echo json_encode($result);
 }
 if ($obj == 'edituser_discont') {
-    $id = getParam('id', -1);
-    $discont = getParam('discont', 0);
+    $id = htmlspecialchars(strip_tags(getParam('id', -1)));
+    $discont = htmlspecialchars(strip_tags(getParam('discont', 0)));
     $result = ['code' => 0, 'error' => ''];
     $insert_stmt = $mysqli->prepare("update dsg_users set discont=? where id=?");
     if (!$insert_stmt->bind_param('ii', $discont, $id)) {
@@ -475,12 +475,12 @@ if ($obj == 'edituser_discont') {
     echo json_encode($result);
 }
 if ($obj == 'registration') {
-    $name = getParam('name', '');
-    $email = getParam('email', '');
-    $phone = getParam('phone', '');
-    $pwd = getParam('pwd', '');
-    $captcha_token = getParam('token', '');
-    $captcha_action = getParam('action', '');
+    $name = htmlspecialchars(strip_tags(getParam('name', '')));
+    $email = htmlspecialchars(strip_tags(getParam('email', '')));
+    $phone = htmlspecialchars(strip_tags(getParam('phone', '')));
+    $pwd = htmlspecialchars(strip_tags(getParam('pwd', '')));
+    $captcha_token = htmlspecialchars(strip_tags(getParam('token', '')));
+    $captcha_action = htmlspecialchars(strip_tags(getParam('action', '')));
     $result = ['code' => 0, 'error' => ''];
 
 

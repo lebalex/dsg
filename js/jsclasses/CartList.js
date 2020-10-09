@@ -187,6 +187,7 @@ sum()
         )
     }else {
       return (
+        <div>
         <div className="row">
           <div className="button_cart"><p align="right">
             <button style={{ display: itemsProduct.length>0 ? 'block' : 'none', marginRight:20 }} className="btn essence-btn"
@@ -223,7 +224,7 @@ sum()
       <td className="border-right border-bottom-0">{new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(item.coast)}</td>
       <td className="border-right border-bottom-0">{new Intl.NumberFormat('ru-RU', {style: 'currency',currency: 'RUB',}).format(item.coast*item.count)}</td>
       <td className="border-right border-bottom-0 border-right-0">
-        <button onClick={() => this.toggleModalDel( item.id )} className="btn edit-btn-icon-red"><i className="icon-trash-empty"/></button>
+        <button onClick={() => this.toggleModalDel( item.id )} className="btn edit-btn-icon-red" data-toggle="modal" data-target="#modalYesNo"><i className="icon-trash-empty"/></button>
 
 
       </td>
@@ -241,9 +242,10 @@ sum()
           </tbody>
 </table>
 {this.EmptyFavor()}
-<ModalYesNo show={this.state.isOpen}
+</div>
+<ModalYesNo show={true}
             onYes={this.toggleModalYes}
-          onNo={this.toggleModalNo}>
+          onNo={this.toggleModalNo} title="Предупреждение">
           Вы желаете удалить товар?
         </ModalYesNo>
 

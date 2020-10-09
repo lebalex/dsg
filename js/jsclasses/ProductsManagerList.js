@@ -1,4 +1,4 @@
-
+import {ModalYesNo} from './ModalYesNo';
 export class ProductsManagerList extends React.Component {
   constructor(props) {
     super(props);
@@ -272,27 +272,13 @@ export class ProductsManagerList extends React.Component {
             </div>
           </div>
 
-          <div className="modal fade" id="modalYesNo" tabIndex="-1" role="dialog" aria-labelledby="modalYesNoTitle" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLongTitle">Предупреждение!</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  Вы желаете удалить товар?
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => this.toggleModalYes()}>Да</button>
-                  <button type="button" className="btn btn-primary" data-dismiss="modal">Нет</button>
-                </div>
-              </div>
-            </div>
-          </div>
 
 
+          <ModalYesNo show={true}
+            onYes={this.toggleModalYes}
+          onNo={this.toggleModalNo} title="Предупреждение">
+          Вы желаете удалить товар?
+        </ModalYesNo>
 
           {/*<div className={`${this.state.edit ? 'popup_max' : 'hidden'} `}>
             <div className="modal2">

@@ -21,14 +21,14 @@
                     /*console.log(data.code);
                     console.log('ok')*/
                     $('#count_in_favouritet').text(data.favouritet);
-                    $('#login_exit_bth').html(`<a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="${data.name}"></a>`);
-                    $('#exit-area').html(`<a href="/logout"  id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt="">`);
+                    $('#login_exit_bth').html('<a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="Личный кабинет - ${data.name}"></a>');
+                    $('#exit-area').html('<a href="/logout"  id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt="">');
                 }else
                 {
                     $('#count_in_favouritet').text('');
-                    $('#login_exit_bth').html(`<a href="#1" style="color:#18479f;font-size:13px" data-toggle="modal" data-target="#myLogin">
-                        <img src="/img/core-img/user.svg" alt="" title="Вход для зарегистрированных пользователей"></a>`);
-                        $('#exit-area').html(``);
+                    $('#login_exit_bth').html('<a href="#1" style="color:#18479f;font-size:13px" data-toggle="modal" data-target="#myLogin">\
+                        <img src="/img/core-img/user.svg" alt="" title="Вход для зарегистрированных пользователей"></a>');
+                        $('#exit-area').html('');
 
 
                     localStorage.removeItem('jwt');
@@ -60,8 +60,8 @@
                     sessionStorage.setItem("sid",data.jwt)
                     $('.modal').modal('hide');
                     $('#count_in_favouritet').text(data.favouritet);
-                    $('#login_exit_bth').html(`<a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="${data.name}"></a>`);
-                    $('#exit-area').html(`<a href="/logout"  id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt="">`);
+                    $('#login_exit_bth').html('<a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="Личный кабинет - ${data.name}"></a>');
+                    $('#exit-area').html('<a href="/logout"  id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt="">');
                 } else {
                     $('#login').addClass('is-invalid');
                     $('#p').addClass('is-invalid');

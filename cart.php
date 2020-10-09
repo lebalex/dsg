@@ -1,17 +1,16 @@
 <?php
-
 include_once 'header.php';
 
 
-$title_page="Корзина";
-$video_file="vag2";
+$title_page = "Корзина";
+$video_file = "vag6";
 include_once 'video_baner.php';
 
 ?>
 
 
 <section class="shop_grid_area section-padding-0-80">
-    <div class="overlay3 container" id="data_page">
+    <div class="overlay3 container"  id="data_page">
 
     </div>
 </section>
@@ -21,6 +20,6 @@ include_once 'video_baner.php';
 <script type="text/babel" src="/js/CheckOut.js"></script-->
 
 <?php
-include_once 'agreement.php';
+
 include_once 'footer.php';
 ?>
