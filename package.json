@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build_w": "webpack --config ./webpack_b",
-    "build_index": "uglifyjs ./js/index.js -c -m -o ./js/jsmin/index.min.js",
-    "build_header": "uglifyjs ./js/header.js -c -m -o ./js/jsmin/header.min.js",
+    "build_index": "terser ./js/index.js -c -m -o ./js/jsmin/index.min.js",
+    "build_header": "terser ./js/header.js -c -m -o ./js/jsmin/header.min.js",
     "build": "npm run build_w && npm run build_index && npm run build_header"
 
   },
