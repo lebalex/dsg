@@ -1,4 +1,4 @@
-import {ModalYesNo} from './ModalYesNo';
+import { ModalYesNo } from './ModalYesNo';
 export class ProductsManagerList extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +11,7 @@ export class ProductsManagerList extends React.Component {
       value_file: null,
       categ_id: 0,
       value_select: Product,
+      search_string: ''
     };
     this.toggleModalYes = this.toggleModalYes.bind(this);
     this.save = this.save.bind(this);
@@ -54,6 +55,38 @@ export class ProductsManagerList extends React.Component {
         }
       )
   }
+  search() {
+    //console.log(this.state.search_string);
+    this.setState({
+      isLoaded: false
+    });
+    fetch(`/includes/get_data.php?x=get_search&search_string=${this.state.search_string}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          //console.log(result);
+          this.setState({
+            itemsProduct: result,
+            isLoaded: true,
+          });
+        },
+        (error) => {
+          this.setState({
+            error,
+            isLoaded: true,
+          });
+        }
+      )
+
+  }
+  searchClear()
+  {
+    this.setState({
+      isLoaded: false,
+      search_string: ''
+    });
+    this.loadDate(this.state.categ_id)
+  }
   edit(index) {
     let tmp = new Product();
     if (index != -1)
@@ -88,12 +121,15 @@ export class ProductsManagerList extends React.Component {
         console.log(data)
         if (data != -1)
           console.log(data)
-        this.loadDate(this.state.categ_id)
+          if(this.state.search_string!='')
+            this.search();
+          else
+            this.loadDate(this.state.categ_id)
       })
       .catch(error => {
         console.error(error)
       })
-      $('.modal').modal('hide');
+    $('.modal').modal('hide');
     event.preventDefault();
   }
 
@@ -155,6 +191,18 @@ export class ProductsManagerList extends React.Component {
 
     /**/
   }
+  changeSearch(e)
+  {
+      this.setState({ search_string: e.target.value })
+  }
+  onEnterPress(event)
+  {
+    //console.log(this.state.search_string);
+    //console.log(event.key);
+    if (event.key === 'Enter') {
+      this.search()
+    }
+  }
   toggleModalDel(id) {
     this.setState({
       value_id: id
@@ -174,13 +222,47 @@ export class ProductsManagerList extends React.Component {
     } else {
       return (
         <div>
-          <div className="row section-heading">
-            <label>Категории: </label>
-            <select className="select-categ" id="lang" value={this.state.categ_id} onChange={(e) => this.changeCateg(e)} >
-              {items.map(item => (
-                <option value={item.id} key={item.id}>{item.name}</option>))}
-            </select>
+
+          <div className="col-12">
+            <div className="product-topbar d-flex align-items-center justify-content-between">
+              <div className="mt-3">
+
+                <label>Категории: </label>
+                <select className="select-categ form-control" id="lang" value={this.state.categ_id} onChange={(e) => this.changeCateg(e)} >
+                  {items.map(item => (
+                    <option value={item.id} key={item.id}>{item.name}</option>))}
+                </select>
+
+
+              </div>
+              <div className="mt-5"><label>Поиск: </label>
+              <div className="mt-1 d-flex">
+                            <div className="form-group">
+                                <input className="form-control" type="search" name="search" id="headerSearch"
+                                value={this.state.search_string} style={{width:'300px'}} placeholder="поиск по названиею и OEM" 
+                                onChange={(e) => this.changeSearch(e)}  onKeyPress={event => this.onEnterPress(event)}/>
+    </div>
+                            <div className="form-group">
+    <button className="btn bg-transparent" style={{marginLeft:'-40px', zIndex: '100'}}  onClick={() => this.searchClear()}>
+      <i className="fa fa-times"></i>
+    </button>
+                            </div>
+                            <div className="form-group">
+                                <button className="btn edit-btn-search-icon" onClick={() => this.search()}><i className="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            {/*<div className="form-group">
+                            <button className="btn edit-btn-search-icon" onClick={() => this.searchClear()} title="Очистить поиск"><i className="icon-cancel"></i></button>
+                  </div>*/}
+
+                        </div>
+                        </div>
+
+
+
+            </div>
           </div>
+
+
           <div className="row">
             <button onClick={() => this.edit(-1)} className="btn edit-btn" data-toggle="modal" data-target=".bd-edit-modal-lg"><i className="icon-plus" />добавить</button>
 
@@ -276,8 +358,8 @@ export class ProductsManagerList extends React.Component {
 
           <ModalYesNo show={true}
             onYes={this.toggleModalYes}
-          onNo={this.toggleModalNo} title="Предупреждение">
-          Вы желаете удалить товар?
+            onNo={this.toggleModalNo} title="Предупреждение">
+            Вы желаете удалить товар?
         </ModalYesNo>
 
           {/*<div className={`${this.state.edit ? 'popup_max' : 'hidden'} `}>

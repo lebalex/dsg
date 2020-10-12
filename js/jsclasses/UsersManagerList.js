@@ -18,11 +18,14 @@ export class UsersManagerList extends React.Component {
     this.save = this.save.bind(this);
   }
     componentDidMount() {
-    this.loadData();
+    this.loadData(this.state.search_user);
   }
-  loadData()
+  loadData(c)
   {
-    fetch("/includes/get_data.php?x=get_users&name="+this.state.search_user)
+    this.setState({
+      isLoaded: false
+    });
+    fetch(`/includes/get_data.php?x=get_users&name=${c}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -39,6 +42,13 @@ export class UsersManagerList extends React.Component {
         }
       )
   }
+  searchClear()
+  {
+    this.setState({
+      search_user: ''
+    });
+    this.loadData('')
+  }
 
   registr(exec)
   {
@@ -48,6 +58,14 @@ export class UsersManagerList extends React.Component {
   changeSearch(e)
   {
     this.setState({ search_user: e.target.value })
+  }
+  onEnterPress(event)
+  {
+    //console.log(this.state.search_user);
+    //console.log(event.key);
+    if (event.key === 'Enter') {
+      this.loadData(this.state.search_user)
+    }
   }
   openUser(idx) {
     //console.log(this.state.items[idx].id);
@@ -124,8 +142,14 @@ export class UsersManagerList extends React.Component {
 
                         </div>
                         <div className="product-sorting d-flex">
-                            <input type="search" name="search" id="headerSearch" placeholder="поиск по ФИО и email" onChange={(e)=> this.changeSearch(e)}/>
-                            <button className="btn edit-btn-icon" onClick={()=> this.loadData()}><i className="fa fa-search" aria-hidden="true"></i></button>
+                            <input type="search" name="search" value={this.state.search_user} className="form-control" id="headerSearch" 
+                            style={{width:'300px'}} placeholder="поиск по ФИО и email" onChange={(e)=> this.changeSearch(e)}
+                            onKeyPress={event => this.onEnterPress(event)}/>
+                            <button className="btn bg-transparent" style={{marginLeft:'-40px', zIndex: '100'}}  onClick={() => this.searchClear()}>
+      <i className="fa fa-times"></i>
+    </button>
+                            <button className="btn edit-btn-search-icon" onClick={()=> this.loadData(this.state.search_user)}><i className="fa fa-search" aria-hidden="true"></i></button>
+                            
                         </div>
                     </div>
                 </div>

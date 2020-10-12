@@ -273,9 +273,9 @@ else if($obj == 'get_user_info')
     }
 }else if($obj=='get_search')
 {
-    $search_string = getParam('search_string', '');
+    $search_string = htmlspecialchars(strip_tags(getParam('search_string', '')));
     $convertedText = mb_convert_encoding($search_string, 'utf-8', mb_detect_encoding($search_string));
-    $sql="select * from dsg_products where UPPER(NAME) LIKE '%".mb_strtoupper($convertedText)."%' OR UPPER(oem) LIKE '%".mb_strtoupper($convertedText)."%' AND active=1";
+    $sql="select id_categ, id, name, img, coast, count, oem, description from dsg_products where UPPER(NAME) LIKE '%".mb_strtoupper($convertedText)."%' OR UPPER(oem) LIKE '%".mb_strtoupper($convertedText)."%' AND active=1";
 
     $stmt = $mysqli->prepare($sql);
     $stmt->execute();

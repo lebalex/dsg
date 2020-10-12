@@ -43,12 +43,21 @@ export class OrdersManagerList extends React.Component {
       this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager );*/
 
   }
+  searchClear()
+  {
+    this.setState({
+      order_id_search: ''
+    });
+    this.loadData(this.state.order_id_search)
+  }
   loadData(c){
     fetch(`/includes/get_data.php?x=get_orders&order_id=${c}`)
       .then(res => res.json())
       .then(
         (result) => {
             //console.log(result);
+            //console.log(result.length);
+            if(result.length > 1){
           this.setState({
             isLoaded: true,
             order_id:result[0].id,
@@ -60,9 +69,9 @@ export class OrdersManagerList extends React.Component {
             date_manager:result[0].date_manager,
             itemExec:result[0].exec,
             itemOrder: result[1],
-            itemOrder: result[1],
             order_id:c
           });
+        }
         },
         (error) => {
           this.setState({
@@ -134,6 +143,14 @@ changeSearch(e)
   {
     this.setState({ order_id_search: e.target.value })
   }
+  onEnterPress(event)
+  {
+    //console.log(this.state.order_id_search);
+    //console.log(event.key);
+    if (event.key === 'Enter') {
+      this.loadDataS()
+    }
+  }
   changeDescriptionManager(e)
   {
     this.setState({ description_manager: e.target.value })
@@ -170,8 +187,13 @@ changeSearch(e)
       return (
 
 <div className="row section-heading">
-<input type="search" name="search" id="headerSearch" placeholder="поиск по номеру" onChange={(e) => this.changeSearch(e)}/>
-                        <button className="btn edit-btn-icon" onClick={() => this.loadDataS()}><i className="fa fa-search" aria-hidden="true"></i></button>
+<input type="search" name="search" id="headerSearch" value={this.state.order_id_search} className="col-2 form-control" placeholder="поиск по номеру" 
+onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(event)}/>
+<button className="btn bg-transparent" style={{marginLeft:'-40px', zIndex: '100'}}  onClick={() => this.searchClear()}>
+      <i className="fa fa-times"></i>
+    </button>
+<button className="btn edit-btn-search-icon" onClick={() => this.loadDataS()}><i className="fa fa-search" aria-hidden="true"></i></button>
+                        
 
 <table className="table table-hover" >
   <thead>

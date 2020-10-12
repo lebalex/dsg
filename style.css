@@ -156,7 +156,18 @@ div.menu-navigation ul.nav>li.on-ic span.text{
 
 
 
-
+.edit-btn-search-icon {
+    display: inline-block;
+    min-width: 40px;
+    height: 40px;
+    color: #ffffff;
+    border: none;
+    border-radius: 2;
+    padding: 0 10px;
+    margin-right: 10px;
+    font-size: 12px;
+    background-color: #4685d4;
+    font-weight: 100; }
 
 .edit-btn-icon {
     display: inline-block;
@@ -491,3 +502,7 @@ html {
   .table tbody tr:hover td, .table tbody tr:hover th {
     background-color: #eeeeea;
 }*/
+
+.section-padding-20-0 {
+    padding-top: 20px;
+    padding-bottom: 0; }
