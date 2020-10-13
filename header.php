@@ -129,6 +129,7 @@ sec_session_start();
                 if ($user==null):?>
                     <div class="user-login-info" id="login_exit_bth"><a href="#1" style="color:#18479f;font-size:13px" data-toggle="modal" data-target="#myLogin">
                         <img src="/img/core-img/user.svg" alt="" title="Вход для зарегистрированных пользователей"></a></div>
+                        <div class="cart-area" id="exit-area"></div>
                 <? else: ?>
                     <div class="user-login-info" id="login_exit_bth"><a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="Личный кабинет - <?=$user; ?>"></a>
                     </div><div class="cart-area" id="exit-area"><a href="/logout" id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt=""></a></div>';

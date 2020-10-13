@@ -18,9 +18,13 @@ setcookie(session_name(),
  
         unset($_COOKIE[session_name()]);
 session_destroy();
-header('HTTP/1.1 401 Unauthorized');
+header('HTTP/1.1 402 Unauthorized');
 //header("Status:401 Logout");
 header("WWW-Authenticate: Invalidate, Basic realm=logout");
-header('Location: /index');
-?>
 
+?>
+<html>
+<head>
+<meta http-equiv="refresh" content="0;URL=/index">
+</head>
+</html>
