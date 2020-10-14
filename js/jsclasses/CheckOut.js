@@ -117,8 +117,8 @@ export class CheckOut extends React.Component {
             })
                 .then(response => response.json())
                 .then(data => {
-                    /*console.log(data)
-                    console.log(data.code)
+                    /*console.log(data)*/
+                    /*console.log(data.code)
                     console.log(data.error)*/
                     if (data.code != -1) {
                         this.setState({

@@ -281,7 +281,7 @@ if ($obj == 'setorder') {
     $email = htmlspecialchars(strip_tags(getParam('email', '')));
     $description = htmlspecialchars(strip_tags(getParam('description', '')));
     $registration = htmlspecialchars(strip_tags(getParam('registration', 0)));
-    $items = htmlspecialchars(strip_tags(getParam('items', '')));
+    $items = getParam('items', '');
 
     //$log = date('Y-m-d H:i:s') . ' ' . $name . ' ' . $phone . ' ' . $email . ' ' . $description . ' ' . $registration;
     //    file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
