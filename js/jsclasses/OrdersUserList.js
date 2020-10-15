@@ -92,9 +92,9 @@ export class OrdersUserList extends React.Component {
 
   execute(exec)
   {
-    if(exec==0) return '';
-    else if(exec==1) return <i className="icon-ok"/>
-    else return <i className="icon-cancel"/>
+    if(exec==2) return <i className="icon-ok"/>
+    else if(exec==3) return <i className="icon-cancel"/>
+    else return '';
   }
 
   AllSum()
@@ -140,10 +140,10 @@ changeSearch(e)
   }
   execText(exec)
   {
-    if(exec==0) return '';
-    else if(exec==1) return <b className="order_ready">Готов к выдаче</b>
+    if(exec==1) return <b className="order_ready">Готов к выдаче</b>
     else if(exec==2) return <b className="order_exec">Заказ выполнен</b>
-    else return <b className="order_cancel">Заказ отменен</b>
+    else if(exec==3) return <b className="order_cancel">Заказ отменен</b>
+    else return '';
     
   }
   render() {

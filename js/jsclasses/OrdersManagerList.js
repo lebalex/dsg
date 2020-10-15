@@ -123,9 +123,9 @@ export class OrdersManagerList extends React.Component {
 
   execute(exec)
   {
-    if(exec==0) return '';
-    else if(exec==1) return <i className="icon-ok"/>
-    else return <i className="icon-cancel"/>
+    if(exec==2) return <i className="icon-ok"/>
+    else if(exec==3) return <i className="icon-cancel"/>
+    else return '';
   }
 
   AllSum()
