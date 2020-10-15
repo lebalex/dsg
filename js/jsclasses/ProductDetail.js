@@ -67,7 +67,10 @@ else return '/img/product-img/'+img;
                                 <p>{item.name}</p>
                                 </div>
                                 <div className="product-sorting d-flex">
-                                <a href={`/catalog/${this.props.id_categ}`} className='nav-link scroll'>
+                                <a href='/catalog' className='nav-link-span scroll'>
+                                <span>Каталог</span>
+                                </a><span class="nav-link-span">/</span>
+                                <a href={`/catalog/${this.props.id_categ}`} className='nav-link-span scroll'>
                                 <span>{this.props.categ_name}</span>
                                 </a>
                                 </div>

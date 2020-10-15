@@ -111,6 +111,9 @@ a:active, a:hover, a:focus{
     /*color: inherit;*/
     color:red;
 }
+.nav-link-span{
+    color: #2285c4;
+}
 
 
 div.menu-navigation ul.nav{
