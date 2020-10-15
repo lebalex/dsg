@@ -471,7 +471,9 @@ html {
 	flex: 0 0 auto;
 }
 
-
+.order_ready{
+    color:blue;
+}
 .order_cancel{
     color:red;
 }

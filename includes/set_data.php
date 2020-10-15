@@ -154,7 +154,7 @@ if ($obj == 'delcateg') {
 if ($obj == 'delproduct') {
     $id = htmlspecialchars(strip_tags(getParam('id', -1)));
     $error = '-1';
-    $update_stmt = $mysqli->prepare("update dsg_products set active=0 where id=?");
+    $update_stmt = $mysqli->prepare("update dsg_products set active=NOT active where id=?");
     if (!$update_stmt->bind_param('i', $id)) {
         $error = "Не удалось привязать параметры: (" . $update_stmt->errno . ") " . $update_stmt->error;
     }

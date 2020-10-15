@@ -20,6 +20,6 @@ include_once 'video_baner.php';
 <script type="text/babel" src="/js/CheckOut.js"></script-->
 
 <?php
-
+include_once 'agreement.php';
 include_once 'footer.php';
 ?>

@@ -155,14 +155,20 @@ changeSearch(e)
   {
     this.setState({ description_manager: e.target.value })
   }
-  onExec(e) {
+  onReady
+  (e) {
     this.setState({
       itemExec:1
       });
   }
-  onCancel(e) {
+  onExec(e) {
     this.setState({
       itemExec:2
+      });
+  }
+  onCancel(e) {
+    this.setState({
+      itemExec:3
       });
   }
   date_parse(d)
@@ -209,7 +215,7 @@ onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(ev
 
 
           {items.map((item, index) => (
-            <tr key={index} className={(item.exec==0)?'table-light':(item.exec==1)?'table-success':'table-danger'} onClick={() => this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager )}>
+            <tr key={index} className={(item.exec==0)?'table-light':(item.exec==2)?'table-success':(item.exec==1)?'table-info':'table-danger'} onClick={() => this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager )}>
       <td scope="row" className="border-right border-bottom-0">{item.id}</td>
       <td className="border-right border-bottom-0">{item.date_order}</td>
       <td className="border-right border-bottom-0">{item.name}</td>
@@ -285,8 +291,10 @@ onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(ev
   
 
   <ul className="checkboxes">
-  <li className="checkbox-group"><input type="radio" value="exec" onChange={(e) => this.onExec(e)} checked={this.state.itemExec === 1} id="checkbox-1" className="checkbox"/> <label htmlFor="checkbox-1" className="label">Выполнен</label></li>
-  <li className="checkbox-group"><input type="radio" value="cancel" onChange={(e) => this.onCancel(e)}  checked={this.state.itemExec === 2} id="checkbox-2" className="checkbox"/><label htmlFor="checkbox-2" className="label">Отменен</label></li>
+  <li className="checkbox-group"><input type="radio" value="ready" onChange={(e) => this.onReady(e)} checked={this.state.itemExec === 1} id="checkbox-1" className="checkbox"/> <label htmlFor="checkbox-1" className="label">Готов к выдаче</label></li>
+  <li className="checkbox-group"><input type="radio" value="exec" onChange={(e) => this.onExec(e)} checked={this.state.itemExec === 2} id="checkbox-2" className="checkbox"/> <label htmlFor="checkbox-2" className="label">Выполнен</label></li>
+  <li className="checkbox-group"><input type="radio" value="cancel" onChange={(e) => this.onCancel(e)}  checked={this.state.itemExec === 3} id="checkbox-3" className="checkbox"/><label htmlFor="checkbox-3" className="label">Отменен</label></li>
+  
 
 </ul>
 
@@ -294,7 +302,7 @@ onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(ev
 </div>
 <div className="col-12 mb-1">
 <label>Комментарий менеджера </label>
-  <textarea rows="3" cols="90"  className="textField" onChange={(e) => this.changeDescriptionManager(e)} defaultValue={(this.state.description_manager===null)?'':this.state.description_manager}></textarea>
+  <textarea rows="3" cols="90"  className="textField" onChange={(e) => this.changeDescriptionManager(e)} defaultValue={(this.state.description_manager===null || this.state.description_manager==='null')?'':this.state.description_manager}></textarea>
 </div>
 
 

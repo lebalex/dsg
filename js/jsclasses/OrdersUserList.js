@@ -141,7 +141,8 @@ changeSearch(e)
   execText(exec)
   {
     if(exec==0) return '';
-    else if(exec==1) return <b className="order_exec">Заказ выполнен</b>
+    else if(exec==1) return <b className="order_ready">Готов к выдаче</b>
+    else if(exec==2) return <b className="order_exec">Заказ выполнен</b>
     else return <b className="order_cancel">Заказ отменен</b>
     
   }
@@ -178,7 +179,7 @@ onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(ev
 
 
           {items.map((item, index) => (
-            <tr key={index} className={(item.exec==0)?'table-light':(item.exec==1)?'table-success':'table-danger'} onClick={() => this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager )}>
+            <tr key={index} className={(item.exec==0)?'table-light':(item.exec==2)?'table-success':(item.exec==1)?'table-info':'table-danger'} onClick={() => this.openOrder( item.id, item.exec, item.name, item.phone, item.email, item.description, item.descript_manager, item.date_manager )}>
       <td scope="row" className="border-right border-bottom-0">{item.id}</td>
       <td className="border-right border-bottom-0">{item.date_order}</td>
       <td className="border-right border-bottom-0">{item.name}</td>
@@ -254,7 +255,7 @@ onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(ev
 </div>
 <div className="col-12 mb-1" style={{display:(this.state.description_manager===null || this.state.description_manager==='')?'none':'block'}}>
 <label>Комментарий менеджера </label>
-  <textarea rows="3" cols="90"  className="textField" readOnly defaultValue={(this.state.description_manager===null)?'':this.state.description_manager}></textarea>
+  <textarea rows="3" cols="90"  className="textField" readOnly defaultValue={(this.state.description_manager===null || this.state.description_manager==='null')?'':this.state.description_manager}></textarea>
 </div>
 <div className="col-12 mb-1" style={{display:(this.state.date_manager===null)?'none':'block'}}>
   <p>Время обновления заказа {this.date_parse(this.state.date_manager)}</p>

@@ -98,7 +98,12 @@ else if($obj =="get_all_products_db")
     $categ_predicat="";
     if($categ_id!='-1') $categ_predicat=" and id_categ=".$categ_id;
 
-    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem, description from dsg_products where active=1 ".$categ_predicat);
+    $showDeleted = getParam('deleted', 'false');
+    $active='1';
+    if($showDeleted=='true') $active='0';
+
+
+    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast, count, oem, description from dsg_products where active= ".$active.$categ_predicat);
     
         $stmt->execute();
         $result = $stmt->get_result();
@@ -273,9 +278,12 @@ else if($obj == 'get_user_info')
     }
 }else if($obj=='get_search')
 {
+    $showDeleted = getParam('deleted', 'false');
+    $active='1';
+    if($showDeleted=='true') $active='0';
     $search_string = htmlspecialchars(strip_tags(getParam('search_string', '')));
     $convertedText = mb_convert_encoding($search_string, 'utf-8', mb_detect_encoding($search_string));
-    $sql="select id_categ, id, name, img, coast, count, oem, description from dsg_products where UPPER(NAME) LIKE '%".mb_strtoupper($convertedText)."%' OR UPPER(oem) LIKE '%".mb_strtoupper($convertedText)."%' AND active=1";
+    $sql="select id_categ, id, name, img, coast, count, oem, description from dsg_products where UPPER(NAME) LIKE '%".mb_strtoupper($convertedText)."%' OR UPPER(oem) LIKE '%".mb_strtoupper($convertedText)."%' AND active=".$active;
 
     $stmt = $mysqli->prepare($sql);
     $stmt->execute();

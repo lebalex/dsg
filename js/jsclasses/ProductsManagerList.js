@@ -11,7 +11,8 @@ export class ProductsManagerList extends React.Component {
       value_file: null,
       categ_id: 0,
       value_select: Product,
-      search_string: ''
+      search_string: '',
+      showDeleted:false
     };
     this.toggleModalYes = this.toggleModalYes.bind(this);
     this.save = this.save.bind(this);
@@ -35,8 +36,9 @@ export class ProductsManagerList extends React.Component {
 
 
   }
-  loadDate(c) {
-    fetch(`/includes/get_data.php?x=get_all_products_db&categ_id=${c}`)
+  loadDate(c, deleted=false) {
+    //console.log(deleted);
+    fetch(`/includes/get_data.php?x=get_all_products_db&categ_id=${c}&deleted=${deleted}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -55,12 +57,17 @@ export class ProductsManagerList extends React.Component {
         }
       )
   }
+  onShowDeleted(e)
+  {
+    this.setState({showDeleted:!this.state.showDeleted});
+    this.loadDate(this.state.categ_id, !this.state.showDeleted)
+  }
   search() {
     //console.log(this.state.search_string);
     this.setState({
       isLoaded: false
     });
-    fetch(`/includes/get_data.php?x=get_search&search_string=${this.state.search_string}`)
+    fetch(`/includes/get_data.php?x=get_search&search_string=${this.state.search_string}&deleted=${this.state.showDeleted}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -79,13 +86,12 @@ export class ProductsManagerList extends React.Component {
       )
 
   }
-  searchClear()
-  {
+  searchClear() {
     this.setState({
       isLoaded: false,
       search_string: ''
     });
-    this.loadDate(this.state.categ_id)
+    this.loadDate(this.state.categ_id, this.state.showDeleted)
   }
   edit(index) {
     let tmp = new Product();
@@ -121,10 +127,10 @@ export class ProductsManagerList extends React.Component {
         console.log(data)
         if (data != -1)
           console.log(data)
-          if(this.state.search_string!='')
-            this.search();
-          else
-            this.loadDate(this.state.categ_id)
+        if (this.state.search_string != '')
+          this.search();
+        else
+          this.loadDate(this.state.categ_id)
       })
       .catch(error => {
         console.error(error)
@@ -134,7 +140,7 @@ export class ProductsManagerList extends React.Component {
   }
 
   del(id) {
-    console.log(id)
+    //console.log(id)
     const formData = new FormData()
     formData.append('x', 'delproduct')
     formData.append('id', id)
@@ -144,9 +150,10 @@ export class ProductsManagerList extends React.Component {
     })
       .then(response => response.text())
       .then(data => {
+        //console.log(data)
         if (data != -1)
           console.log(data)
-        this.loadDate(this.state.categ_id)
+        this.loadDate(this.state.categ_id, this.state.showDeleted)
       })
       .catch(error => {
         console.error(error)
@@ -154,7 +161,7 @@ export class ProductsManagerList extends React.Component {
   }
 
   changeCateg(e) {
-    this.loadDate(e.target.value)
+    this.loadDate(e.target.value, this.state.showDeleted)
   }
   changeName(e) {
     let tmp = new Product();
@@ -191,12 +198,10 @@ export class ProductsManagerList extends React.Component {
 
     /**/
   }
-  changeSearch(e)
-  {
-      this.setState({ search_string: e.target.value })
+  changeSearch(e) {
+    this.setState({ search_string: e.target.value })
   }
-  onEnterPress(event)
-  {
+  onEnterPress(event) {
     //console.log(this.state.search_string);
     //console.log(event.key);
     if (event.key === 'Enter') {
@@ -215,6 +220,8 @@ export class ProductsManagerList extends React.Component {
 
   render() {
     const { error, isLoaded, items, itemsProduct } = this.state;
+    let messageText='';
+    (this.state.showDeleted)?messageText = 'Вы желаете восстановить товар?':messageText = 'Вы желаете удалить товар?';
     if (error) {
       return <div>Ошибка: {error.message}</div>;
     } else if (!isLoaded) {
@@ -224,145 +231,152 @@ export class ProductsManagerList extends React.Component {
         <div>
 
           <div className="col-12">
+          <div class="custom-control custom-checkbox">
+                <input type="checkbox" className="custom-control-input" id="customShowDeleted" checked={this.state.showDeleted}
+                                onChange={(e)=> this.onShowDeleted(e)}/>
+                                <label className="custom-control-label" htmlFor="customShowDeleted">Показать удаленный товар</label>
+    </div>
+
             <div className="product-topbar d-flex align-items-center justify-content-between">
               <div className="mt-3">
+                <div class="form-group">
+                  <label>Категории: </label>
+                  <select className="select-categ form-control" id="lang" value={this.state.categ_id} onChange={(e) => this.changeCateg(e)} >
+                    {items.map(item => (
+                      <option value={item.id} key={item.id}>{item.name}</option>))}
+                  </select>
+                </div>
 
-                <label>Категории: </label>
-                <select className="select-categ form-control" id="lang" value={this.state.categ_id} onChange={(e) => this.changeCateg(e)} >
-                  {items.map(item => (
-                    <option value={item.id} key={item.id}>{item.name}</option>))}
-                </select>
 
-
-              </div>
-              <div className="mt-5"><label>Поиск: </label>
-              <div className="mt-1 d-flex">
-                            <div className="form-group">
-                                <input className="form-control" type="search" name="search" id="headerSearch"
-                                value={this.state.search_string} style={{width:'300px'}} placeholder="поиск по названиею и OEM" 
-                                onChange={(e) => this.changeSearch(e)}  onKeyPress={event => this.onEnterPress(event)}/>
-    </div>
-                            <div className="form-group">
-    <button className="btn bg-transparent" style={{marginLeft:'-40px', zIndex: '100'}}  onClick={() => this.searchClear()}>
-      <i className="fa fa-times"></i>
-    </button>
-                            </div>
-                            <div className="form-group">
-                                <button className="btn edit-btn-search-icon" onClick={() => this.search()}><i className="fa fa-search" aria-hidden="true"></i></button>
-                            </div>
-                            {/*<div className="form-group">
+                </div>
+                <div className="mt-5"><label>Поиск: </label>
+                  <div className="mt-1 d-flex">
+                    <div className="form-group">
+                      <input className="form-control" type="search" name="search" id="headerSearch"
+                        value={this.state.search_string} style={{ width: '300px' }} placeholder="поиск по названиею и OEM"
+                        onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(event)} />
+                    </div>
+                    <div className="form-group">
+                      <button className="btn bg-transparent" style={{ marginLeft: '-40px', zIndex: '100' }} onClick={() => this.searchClear()}>
+                        <i className="fa fa-times"></i>
+                      </button>
+                    </div>
+                    <div className="form-group">
+                      <button className="btn edit-btn-search-icon" onClick={() => this.search()}><i className="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                    {/*<div className="form-group">
                             <button className="btn edit-btn-search-icon" onClick={() => this.searchClear()} title="Очистить поиск"><i className="icon-cancel"></i></button>
                   </div>*/}
 
-                        </div>
-                        </div>
-
-
-
-            </div>
-          </div>
-
-
-          <div className="row">
-            <button onClick={() => this.edit(-1)} className="btn edit-btn" data-toggle="modal" data-target=".bd-edit-modal-lg"><i className="icon-plus" />добавить</button>
-
-
-          </div>
-          <table className="table" >
-            <thead>
-              <tr>
-                <th scope="col" className="border-top-0 border-right border-bottom-0">Название</th>
-                <th width="200px" scope="col" className="border-top-0 border-right border-bottom-0">OEM</th>
-                <th width="70px" scope="col" className="border-top-0 border-right border-bottom-0">Остаток</th>
-                <th width="70px" scope="col" className="border-top-0 border-right border-bottom-0">Цена</th>
-                <th width="100px" scope="col" className="border-top-0 border-right border-bottom-0">Изображение</th>
-                <th width="200px" scope="col" className="border-top-0 border-right border-bottom-0 border-right-0"></th>
-              </tr>
-            </thead>
-            <tbody>
-
-
-              {itemsProduct.map((item, index) => (
-                <tr key={index}>
-                  <td scope="row" className="border-right border-bottom-0">{item.name}</td>
-                  <td className="border-right border-bottom-0">{item.oem}</td>
-                  <td className="border-right border-bottom-0">{item.count}</td>
-                  <td className="border-right border-bottom-0">{item.coast}</td>
-                  <td className="border-right border-bottom-0"><img width="100px" src={(item.img != null) ? `/img/product-img/${item.img}` : '/img/product-img/noPhoto.png'} alt="" /></td>
-                  <td className="border-right border-bottom-0 border-right-0">
-                    <button onClick={() => this.edit(index)} data-toggle="modal" data-target=".bd-edit-modal-lg" className="btn edit-btn-icon"><i className="icon-pencil" /></button>
-                    <button onClick={() => this.toggleModalDel(item.id)} className="btn edit-btn-icon-red" data-toggle="modal" data-target="#modalYesNo"><i className="icon-trash-empty" /></button>
-
-
-
-                  </td>
-                </tr>
-
-
-
-              ))}
-            </tbody>
-          </table>
-
-
-
-          <div className="modal fade bd-edit-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-lg">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLongTitle">Добавить (изменить) товар</h5>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                  </div>
                 </div>
-                <form className="needs-validation" onSubmit={this.save}>
-                  <div className="modal-body">
 
-                    <div className="form-group">
-                      <label htmlFor="name_prod">Наименование</label>
-                      <input type="text" name="name_prod" id="name_prod" className="form-control" value={this.state.value_select.name} onChange={(e) => this.changeName(e)} required
-                        placeholder="Наименование" />
-                    </div>
 
-                    <div className="form-group">
-                      <label htmlFor="oem_prod">OEM</label>
-                      <input type="text" name="oem_prod" id="oem_prod" className="form-control" value={this.state.value_select.oem} onChange={(e) => this.changeOem(e)} required
-                        placeholder="oem" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="count_prod">Остаток</label>
-                      <input type="number" name="count_prod" id="count_prod" className="form-control" value={this.state.value_select.count} onChange={(e) => this.changeCount(e)} required
-                        placeholder="остаток" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="coast_prod">Цена</label>
-                      <input type="number" name="coast_prod" id="coast_prod" className="form-control" value={(this.state.value_select.coast === null) ? 0 : this.state.value_select.coast} onChange={(e) => this.changeCoast(e)} required
-                        placeholder="цена" />
-                    </div>
-                    <label htmlFor="email_address">Описание</label>
-                    <textarea rows="5" cols="90" className="form-control" onChange={(e) => this.changeDescription(e)} defaultValue={this.state.value_select.description} ></textarea>
-                    <div className="form-group"><label>Изображение</label><input type="file" className="form-control" onChange={(e) => this.changeImg(e)}
-                      placeholder="Изображение" /></div>
 
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-primary" type="submit">Сохранить</button>
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Отмена</button>
-                  </div>
-                </form>
               </div>
             </div>
-          </div>
+
+
+            <div className="row">
+              <button onClick={() => this.edit(-1)} className="btn edit-btn" data-toggle="modal" data-target=".bd-edit-modal-lg"><i className="icon-plus" />добавить</button>
+
+
+            </div>
+            <table className="table" >
+              <thead>
+                <tr>
+                  <th scope="col" className="border-top-0 border-right border-bottom-0">Название</th>
+                  <th width="200px" scope="col" className="border-top-0 border-right border-bottom-0">OEM</th>
+                  <th width="70px" scope="col" className="border-top-0 border-right border-bottom-0">Остаток</th>
+                  <th width="70px" scope="col" className="border-top-0 border-right border-bottom-0">Цена</th>
+                  <th width="100px" scope="col" className="border-top-0 border-right border-bottom-0">Изображение</th>
+                  <th width="200px" scope="col" className="border-top-0 border-right border-bottom-0 border-right-0"></th>
+                </tr>
+              </thead>
+              <tbody>
+
+
+                {itemsProduct.map((item, index) => (
+                  <tr key={index}>
+                    <td scope="row" className="border-right border-bottom-0">{item.name}</td>
+                    <td className="border-right border-bottom-0">{item.oem}</td>
+                    <td className="border-right border-bottom-0">{item.count}</td>
+                    <td className="border-right border-bottom-0">{item.coast}</td>
+                    <td className="border-right border-bottom-0"><img width="100px" src={(item.img != null) ? `/img/product-img/${item.img}` : '/img/product-img/noPhoto.png'} alt="" /></td>
+                    <td className="border-right border-bottom-0 border-right-0">
+                      <button style={{display:(this.state.showDeleted)?'none':''}} onClick={() => this.edit(index)} data-toggle="modal" data-target=".bd-edit-modal-lg" className="btn edit-btn-icon"><i className="icon-pencil" /></button>
+                      <button onClick={() => this.toggleModalDel(item.id)} className={(this.state.showDeleted)?"btn edit-btn-icon":"btn edit-btn-icon-red"} data-toggle="modal" data-target="#modalYesNo"><i className="icon-trash-empty" /></button>
 
 
 
-          <ModalYesNo show={true}
-            onYes={this.toggleModalYes}
-            onNo={this.toggleModalNo} title="Предупреждение">
-            Вы желаете удалить товар?
+                    </td>
+                  </tr>
+
+
+
+                ))}
+              </tbody>
+            </table>
+
+
+
+            <div className="modal fade bd-edit-modal-lg" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div className="modal-dialog modal-lg">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLongTitle">Добавить (изменить) товар</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form className="needs-validation" onSubmit={this.save}>
+                    <div className="modal-body">
+
+                      <div className="form-group">
+                        <label htmlFor="name_prod">Наименование</label>
+                        <input type="text" name="name_prod" id="name_prod" className="form-control" value={this.state.value_select.name} onChange={(e) => this.changeName(e)} required
+                          placeholder="Наименование" />
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="oem_prod">OEM</label>
+                        <input type="text" name="oem_prod" id="oem_prod" className="form-control" value={this.state.value_select.oem} onChange={(e) => this.changeOem(e)} required
+                          placeholder="oem" />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="count_prod">Остаток</label>
+                        <input type="number" name="count_prod" id="count_prod" className="form-control" value={this.state.value_select.count} onChange={(e) => this.changeCount(e)} required
+                          placeholder="остаток" />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="coast_prod">Цена</label>
+                        <input type="number" name="coast_prod" id="coast_prod" className="form-control" value={(this.state.value_select.coast === null) ? 0 : this.state.value_select.coast} onChange={(e) => this.changeCoast(e)} required
+                          placeholder="цена" />
+                      </div>
+                      <label htmlFor="email_address">Описание</label>
+                      <textarea rows="5" cols="90" className="form-control" onChange={(e) => this.changeDescription(e)} defaultValue={this.state.value_select.description} ></textarea>
+                      <div className="form-group"><label>Изображение</label><input type="file" className="form-control" onChange={(e) => this.changeImg(e)}
+                        placeholder="Изображение" /></div>
+
+                    </div>
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-primary" type="submit">Сохранить</button>
+                      <button type="button" className="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+
+
+            <ModalYesNo show={true}
+              onYes={this.toggleModalYes}
+              onNo={this.toggleModalNo} title="Предупреждение">
+              {messageText}
         </ModalYesNo>
 
-          {/*<div className={`${this.state.edit ? 'popup_max' : 'hidden'} `}>
+            {/*<div className={`${this.state.edit ? 'popup_max' : 'hidden'} `}>
             <div className="modal2">
               <div className="close_btn" title="Закрыть"><i className="icon-cancel" onClick={() => this.close()}></i></div>
               <div className="form-horizontal form-group">
@@ -404,7 +418,7 @@ export class ProductsManagerList extends React.Component {
 
 
 
-        </div>
+          </div>
       );
     }
   }
@@ -412,7 +426,7 @@ export class ProductsManagerList extends React.Component {
 }
 
 class Product {
-  static id;
+            static id;
   static name;
   static oem;
   static count;
@@ -420,7 +434,7 @@ class Product {
   static img;
   static description;
   constructor() {
-    this.id = -1;
+            this.id = -1;
     this.name = '';
     this.oem = '';
     this.description = '';
