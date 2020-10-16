@@ -126,6 +126,7 @@ export class CheckOut extends React.Component {
                             orderSend: true,
                             orderSendData: data.code,
                         });
+                        $('#count_in_favouritet').text('');
                     } else {
                         this.setState({
                             orderSendData: data.error,
