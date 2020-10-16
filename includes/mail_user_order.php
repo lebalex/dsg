@@ -59,7 +59,7 @@
                                     <div>
                                         <h4><?= $order_number ?></h4>
                                     </div>
-                                    <table border="1" cellspacing="10" cellpadding="0">
+                                    <table border="1" cellspacing="0" cellpadding="10">
                                         <tr>
                                             <th style="text-align: left;">Наименование</th>
                                             <th style="text-align: left;">OEM</th>
