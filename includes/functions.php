@@ -270,3 +270,12 @@ function logout($location = true)
     if($location)
         header('Location: /index');
 }
+function renderTemplate($filename, $param = array()) {
+    extract($param);
+    if (is_file($filename)) {
+        ob_start();
+        include $filename;
+        return ob_get_clean();
+    }
+    return false;
+}

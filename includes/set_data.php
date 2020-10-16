@@ -350,7 +350,7 @@ if ($obj == 'setorder') {
 
     /*формируем почту и отправляем */
 
-    $message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/> Комvентарий к заказу: ' . $description . ' <br/>';
+    /*$message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/> Комvентарий к заказу: ' . $description . ' <br/>';
     $message .= 'Заказ №' . $insert_id_order;
     $message .= '<table border="1"><tr><td>Наименование</td><td>OEM</td><td>Кол-во</td><td>Цена</td></tr>';
     $sum = 0;
@@ -359,7 +359,11 @@ if ($obj == 'setorder') {
         $message .= '<tr><td>' . $item->name . '</td><td>' . $item->oem . '</td><td>' . $item->count . '</td><td>' . $item->coast . '</td></tr>';
     }
     $message .= '</table>';
-    $message .= 'На сумму ' . $sum;
+    $message .= 'На сумму ' . $sum;*/
+    $message = renderTemplate('mail_user_order.php', ['name' => $name,'email' => $email,'phone' => $phone,'description' => $description,
+    'order_number' => 'Заказ №' . $insert_id_order,'items' => $arr_items]);
+
+    /*$result = ['code' => -1, 'error' => $message];*/
 
     $r = sendMessage('Заказ с сайта DSG Комплект', $message, $email, 0);
     if ($r != 'Message sent!')
@@ -369,9 +373,12 @@ if ($obj == 'setorder') {
 
     /*вы зарегистрировались, необходимо сменить пароль */
     if ($registration === 1) {
-        $message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $password . ' <br/>';
+        /*$message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $password . ' <br/>';
         $message .= 'Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/' . $insert_id_user . '/' . $pwd_hash . '">сменить пароль</a>';
-        $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';
+        $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';*/
+        $message = renderTemplate('mail_user_reg.php', ['name' => $name,'email' => $email,'phone' => $phone,'password' => $password,
+        'insert_id_user' =>  $insert_id_user,'pwd_hash' => $pwd_hash]);
+
         $r = sendMessage('вы зарегистрировались на сайте DSG Комплект', $message, $email, 1);
         if ($r != 'Message sent!')
             $result = ['code' => -1, 'error' => $r];
@@ -446,9 +453,13 @@ if ($obj == 'restore_pwd') {
             if ($update_user != 0) {
                 $result = ['code' => $update_user, 'error' => $pwd_hash];
 
-                $message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $password . ' <br/>';
+                /*$message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $password . ' <br/>';
                 $message .= 'Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/' . $user_id . '/' . $pwd_hash . '">сменить пароль</a>';
-                $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';
+                $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';*/
+
+                $message = renderTemplate('mail_user_reg.php', ['name' => $name,'email' => $email,'phone' => $phone,'password' => $password,
+                'insert_id_user' =>  $user_id,'pwd_hash' => $pwd_hash]);
+
                 $r = sendMessage('восстановление пароля на сайте DSG Комплект', $message, $email, 1);
                 if ($r != 'Message sent!')
                     $result = ['code' => -1, 'error' => $r];
@@ -529,10 +540,15 @@ if ($obj == 'registration') {
                     $error .= "Не удалось выполнить запрос: (" . $insert_stmt->errno . ") " . $insert_stmt->error;
                     $result = ['code' => -1, 'error' => $error];
                 } else {
-                    $message = 'Поздравляем, Вы только что зарегистрировались на сайте <a href="https://www.dsgkomplekt.ru">DSG Комплект</a><br/>';
+
+                    $insert_id_user = $insert_stmt->insert_id;
+                    
+                    /*$message = 'Поздравляем, Вы только что зарегистрировались на сайте <a href="https://www.dsgkomplekt.ru">DSG Комплект</a><br/>';
 
                     $message .= 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $pwd . ' <br/>';
-                    $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';
+                    $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';*/
+                    $message = renderTemplate('mail_user_reg.php', ['name' => $name,'email' => $email,'phone' => $phone,'password' => $pwd,
+                'insert_id_user' =>  $insert_id_user,'pwd_hash' => $pwd_hash]);
                     $r = sendMessage('Регистрация на сайте DSG Комплект', $message, $email, 1);
                     if ($r != 'Message sent!')
                         $result = ['code' => -1, 'error' => $r];
