@@ -266,10 +266,36 @@ if ($obj == 'set_exec_order') {
     $id_order = htmlspecialchars(strip_tags(getParam('id_order', -1)));
     $description_manager = htmlspecialchars(strip_tags(getParam('description_manager', '')));
     $itemExec = htmlspecialchars(strip_tags(getParam('itemExec', 0)));
+
+
     $insert_stmt = $mysqli->prepare("update dsg_orders set exec=?, descript_manager=?, date_manager=NOW() + INTERVAL 12 HOUR where id=?");
     $insert_stmt->bind_param('isi', $itemExec, $description_manager, $id_order);
     $insert_stmt->execute();
     $insert_stmt->close();
+
+    if ($itemExec == 1) {
+
+        $stmt = $mysqli->prepare("SELECT name, email, phone, description FROM dsg_orders a INNER JOIN dsg_users b ON b.id=a.id_user WHERE a.id= WHERE id_order=" . $id_order);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($name, $email, $phone, $description);
+        $stmt->fetch();
+        $stmt->close();
+
+        $stmt = $mysqli->prepare("SELECT NAME, oem, a.count, a.price FROM dsg_order_details a INNER JOIN dsg_products b ON a.id_products=b.id WHERE id_order=" . $id_order);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $outp = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        $message = renderTemplate('mail_user_order.php', [
+            'titles' => 'Заказ №' . $id_order . ' готов к выдаче', 'name' => $name, 'email' => $email, 'phone' => $phone, 'description' => $description,
+            'order_number' => $id_order, 'items' => $outp
+        ]);
+
+
+        sendMessage('Заказ с сайта DSG Комплект', $message, $email, 1);
+    }
 }
 if ($obj == 'setorder') {
 
@@ -360,8 +386,10 @@ if ($obj == 'setorder') {
     }
     $message .= '</table>';
     $message .= 'На сумму ' . $sum;*/
-    $message = renderTemplate('mail_user_order.php', ['name' => $name,'email' => $email,'phone' => $phone,'description' => $description,
-    'order_number' => 'Заказ №' . $insert_id_order,'items' => $arr_items]);
+    $message = renderTemplate('mail_user_order.php', [
+        'titles' => 'Спасибо за Ваш заказ.', 'name' => $name, 'email' => $email, 'phone' => $phone, 'description' => $description,
+        'order_number' => $insert_id_order, 'items' => $arr_items
+    ]);
 
     /*$result = ['code' => -1, 'error' => $message];*/
 
@@ -376,8 +404,10 @@ if ($obj == 'setorder') {
         /*$message = 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $password . ' <br/>';
         $message .= 'Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/' . $insert_id_user . '/' . $pwd_hash . '">сменить пароль</a>';
         $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';*/
-        $message = renderTemplate('mail_user_reg.php', ['name' => $name,'email' => $email,'phone' => $phone,'password' => $password,
-        'insert_id_user' =>  $insert_id_user,'pwd_hash' => $pwd_hash]);
+        $message = renderTemplate('mail_user_reg.php', [
+            'name' => $name, 'email' => $email, 'phone' => $phone, 'password' => $password,
+            'insert_id_user' =>  $insert_id_user, 'pwd_hash' => $pwd_hash
+        ]);
 
         $r = sendMessage('вы зарегистрировались на сайте DSG Комплект', $message, $email, 1);
         if ($r != 'Message sent!')
@@ -457,8 +487,10 @@ if ($obj == 'restore_pwd') {
                 $message .= 'Вы можете сменить пароль пройдя по этой ссылке <a href="https://www.dsgkomplekt.ru/change_pwd/' . $user_id . '/' . $pwd_hash . '">сменить пароль</a>';
                 $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';*/
 
-                $message = renderTemplate('mail_user_reg.php', ['name' => $name,'email' => $email,'phone' => $phone,'password' => $password,
-                'insert_id_user' =>  $user_id,'pwd_hash' => $pwd_hash]);
+                $message = renderTemplate('mail_user_reg.php', [
+                    'name' => $name, 'email' => $email, 'phone' => $phone, 'password' => $password,
+                    'insert_id_user' =>  $user_id, 'pwd_hash' => $pwd_hash
+                ]);
 
                 $r = sendMessage('восстановление пароля на сайте DSG Комплект', $message, $email, 1);
                 if ($r != 'Message sent!')
@@ -542,13 +574,15 @@ if ($obj == 'registration') {
                 } else {
 
                     $insert_id_user = $insert_stmt->insert_id;
-                    
+
                     /*$message = 'Поздравляем, Вы только что зарегистрировались на сайте <a href="https://www.dsgkomplekt.ru">DSG Комплект</a><br/>';
 
                     $message .= 'Имя: ' . $name . ' <br/>  Email: ' . $email . ' <br/> Тел: ' . $phone . ' <br/>' . ' <br/> Ваш пароль: ' . $pwd . ' <br/>';
                     $message .= '<br/><br/>С уважением, сотрудники DSG Комплект';*/
-                    $message = renderTemplate('mail_user_reg.php', ['name' => $name,'email' => $email,'phone' => $phone,'password' => $pwd,
-                'insert_id_user' =>  $insert_id_user,'pwd_hash' => $pwd_hash]);
+                    $message = renderTemplate('mail_user_reg.php', [
+                        'name' => $name, 'email' => $email, 'phone' => $phone, 'password' => $pwd,
+                        'insert_id_user' =>  $insert_id_user, 'pwd_hash' => $pwd_hash
+                    ]);
                     $r = sendMessage('Регистрация на сайте DSG Комплект', $message, $email, 1);
                     if ($r != 'Message sent!')
                         $result = ['code' => -1, 'error' => $r];
@@ -558,7 +592,7 @@ if ($obj == 'registration') {
                 $result = ['code' => -1, 'error' => 'Пользователь с таким email уже зарегистрирован!'];
             }
         }
-    }else{
+    } else {
         $result = ['code' => -1, 'error' => 'Регистрация ТОЛЬКО для ЛЮДЕЙ! Роботам нельзя регистрироваться!'];
     }
     echo json_encode($result);

@@ -26,7 +26,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <h4>Спасибо за Ваш заказ.</h4>
+                                <h4><?=$titles?></h4>
                             </td>
                         </tr>
                         <tr>
@@ -57,7 +57,7 @@
                             <td>
                                 <div style="padding-top: 10px;">
                                     <div>
-                                        <h4><?= $order_number ?></h4>
+                                        <h4>Заказ №<?= $order_number ?></h4>
                                     </div>
                                     <table border="1" cellspacing="0" cellpadding="10">
                                         <tr>
@@ -80,7 +80,7 @@
                                     </table>
 
                                     <div>
-                                        <h4>Итого:<?= $sum ?></h4>
+                                        <h4>Итого: <?= $sum ?></h4>
                                     </div>
 
                                 </div>
