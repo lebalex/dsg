@@ -275,25 +275,24 @@ if ($obj == 'set_exec_order') {
 
     if ($itemExec == 1) {
 
-        $stmt = $mysqli->prepare("SELECT name, email, phone, description FROM dsg_orders a INNER JOIN dsg_users b ON b.id=a.id_user WHERE a.id= WHERE id_order=" . $id_order);
+        $stmt = $mysqli->prepare("SELECT name, email, phone, description FROM dsg_orders a INNER JOIN dsg_users b ON b.id=a.id_user WHERE a.id= " . $id_order);
         $stmt->execute();
         $stmt->store_result();
         $stmt->bind_result($name, $email, $phone, $description);
         $stmt->fetch();
         $stmt->close();
 
-        $stmt = $mysqli->prepare("SELECT NAME, oem, a.count, a.price FROM dsg_order_details a INNER JOIN dsg_products b ON a.id_products=b.id WHERE id_order=" . $id_order);
+        $stmt = $mysqli->prepare("SELECT name, oem, a.count, a.price as coast FROM dsg_order_details a INNER JOIN dsg_products b ON a.id_products=b.id WHERE id_order=" . $id_order);
         $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
 
+
         $message = renderTemplate('mail_user_order.php', [
             'titles' => 'Заказ №' . $id_order . ' готов к выдаче', 'name' => $name, 'email' => $email, 'phone' => $phone, 'description' => $description,
-            'order_number' => $id_order, 'items' => $outp
+            'order_number' => $id_order, 'items_array' =>$outp, 'items' => array()
         ]);
-
-
         sendMessage('Заказ с сайта DSG Комплект', $message, $email, 1);
     }
 }
@@ -388,8 +387,9 @@ if ($obj == 'setorder') {
     $message .= 'На сумму ' . $sum;*/
     $message = renderTemplate('mail_user_order.php', [
         'titles' => 'Спасибо за Ваш заказ.', 'name' => $name, 'email' => $email, 'phone' => $phone, 'description' => $description,
-        'order_number' => $insert_id_order, 'items' => $arr_items
+        'order_number' => $insert_id_order, 'items' => $arr_items, 'items_array' => array()
     ]);
+
 
     /*$result = ['code' => -1, 'error' => $message];*/
 

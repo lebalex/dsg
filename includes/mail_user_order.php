@@ -77,6 +77,16 @@
                                         <?php
                                             $sum += ($item->count * $item->coast);
                                         endforeach; ?>
+                                        <?php foreach ($items_array as $item) : ?>
+                                            <tr>
+                                                <td><?= $item['name'] ?></td>
+                                                <td><?= $item['oem'] ?></td>
+                                                <td><?= $item['count'] ?></td>
+                                                <td><?= $item['coast'] ?></td>
+                                            </tr>
+                                        <?php
+                                            $sum += ($item['count'] * $item['coast']);
+                                        endforeach; ?>
                                     </table>
 
                                     <div>
