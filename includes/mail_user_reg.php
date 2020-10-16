@@ -60,9 +60,9 @@
                         <tr>
                             <td>
                                 <div style="padding-top: 10px;">
-                                    <h4>+7(3952)768-765</h4>
-                                    <h4>+7(901)65 88 765</h4>
-                                    <h4><a href="mailto:dsgkomplekt@mail.ru">dsgkomplekt@mail.ru</a></h4>
+                                    <h5>+7(3952)768-765</h5>
+                                    <h5>+7(901)65 88 765</h5>
+                                    <h5><a href="mailto:dsgkomplekt@mail.ru">dsgkomplekt@mail.ru</a></h5>
                                 </div>
                             </td>
                         </tr>
