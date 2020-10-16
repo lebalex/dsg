@@ -1,18 +1,10 @@
 
 <html>
     <head>
-<style type="text/css">
-    .wrap {
-    width: 699px;
-    margin: 10px auto 15px auto;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    background-color: snow;
-}
 </style>
     </head>
     <body style="background-color: silver;">
-        <div class="wrap">
+        <div style="width: 699px;background-color: snow;font-size: 12px;font-family: Verdana, Arial, Helvetica, sans-serif;margin: 10px auto 15px auto;">
             <div style="padding: 30px;">
             Ваш заказ в DSG Комплект
             <div>
@@ -30,7 +22,7 @@
 </table>
 <div style="padding-top: 10px;"></div>
 <div><h4><?=$order_number?></h4></div>
-<table border="1"><tr><td>Наименование</td><td>OEM</td><td>Кол-во</td><td>Цена</td></tr>
+<table border="1"><tr><th style="text-align: left;">Наименование</th><th style="text-align: left;">OEM</th><th style="text-align: left;">Кол-во</th><th style="text-align: left;">Цена</th></tr>
 <?php $sum=0;
 foreach ($items as $item): ?>
     <tr><td><?=$item->name?></td><td><?=$item->oem?></td><td><?=$item->count?></td><td><?=$item->coast?></td></tr>
