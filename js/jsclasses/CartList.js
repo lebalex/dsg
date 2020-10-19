@@ -150,7 +150,7 @@ sum()
 {
     let s=0;
     this.state.itemsProduct.forEach(function callback(currentValue, index, array) {
-        s+=currentValue.count*currentValue.coast;
+        s+=parseFloat(currentValue.count)*parseFloat(currentValue.coast);
     });
     return new Intl.NumberFormat('ru-RU', {
   style: 'currency',
