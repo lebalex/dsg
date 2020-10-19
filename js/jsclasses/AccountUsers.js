@@ -11,6 +11,7 @@ export class AccountUsers extends React.Component {
             value_p1: '',
             value_p2: '',
             value_p3: '',
+            value_discont:0,
             visibleSendBtn1: true,
             visibleSendBtn2: true,
             emptyInputVisible1: false,
@@ -37,6 +38,7 @@ export class AccountUsers extends React.Component {
                         value_name: result[0].name,
                         value_phone: result[0].phone,
                         value_email: result[0].email,
+                        value_discont: result[0].discont,
                     });
                 },
                 (error) => {
@@ -203,6 +205,9 @@ export class AccountUsers extends React.Component {
                             <div className="col-12 mb-3">
                                 <label htmlFor="email_address">Email <span>*</span></label>
                                 <input type="text" className={(this.state.emailValid) ? "form-control" : "form-control is-invalid"}  id="email_address" name="email_address" required value={this.state.value_email} onChange={(e) => this.changeEmail(e)} />
+                            </div>
+                            <div className="col-12 mb-3" style={{display:(this.state.value_discont>0)?'block':'none'}}>
+                                <label htmlFor="discont">Ваша скидка: {this.state.value_discont}%</label>
                             </div>
                             <div className="col-12 mb-3">
                                 <button id="saveAccount" type="submit" className="btn essence-btn"

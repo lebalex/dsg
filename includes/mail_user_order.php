@@ -46,7 +46,7 @@
                                         <td><?= $phone ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Комvентарий к заказу:</td>
+                                        <td>Комментарий к заказу:</td>
                                         <td><?= $description ?></td>
                                     </tr>
                                 </table>

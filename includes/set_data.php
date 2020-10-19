@@ -272,8 +272,14 @@ if ($obj == 'set_exec_order') {
     $insert_stmt->bind_param('isi', $itemExec, $description_manager, $id_order);
     $insert_stmt->execute();
     $insert_stmt->close();
+    $titles = null;
+    /*1 готов к выдаче*/
+    if ($itemExec == 1) 
+        $titles = 'Заказ №' . $id_order . ' готов к выдаче';
+    if ($itemExec == 2) 
+        $titles = 'Заказ №' . $id_order . ' отменен';
 
-    if ($itemExec == 1) {
+    if ($titles!=null) {
 
         $stmt = $mysqli->prepare("SELECT name, email, phone, description FROM dsg_orders a INNER JOIN dsg_users b ON b.id=a.id_user WHERE a.id= " . $id_order);
         $stmt->execute();
@@ -290,7 +296,7 @@ if ($obj == 'set_exec_order') {
 
 
         $message = renderTemplate('mail_user_order.php', [
-            'titles' => 'Заказ №' . $id_order . ' готов к выдаче', 'name' => $name, 'email' => $email, 'phone' => $phone, 'description' => $description,
+            'titles' => $titles, 'name' => $name, 'email' => $email, 'phone' => $phone, 'description' => $description,
             'order_number' => $id_order, 'items_array' =>$outp, 'items' => array()
         ]);
         sendMessage('Заказ с сайта DSG Комплект', $message, $email, 1);

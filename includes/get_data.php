@@ -249,7 +249,7 @@ else if($obj =="get_all_products_db")
 else if($obj == 'get_user_account')
 {
     if (isset($_SESSION['user_id'])){
-        $stmt = $mysqli->prepare("select id, name, phone, email from dsg_users where registr=1 and id=".$_SESSION['user_id']);
+        $stmt = $mysqli->prepare("select id, name, phone, email, discont from dsg_users where registr=1 and id=".$_SESSION['user_id']);
         $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
