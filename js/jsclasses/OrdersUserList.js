@@ -101,7 +101,8 @@ export class OrdersUserList extends React.Component {
 {
     let s=0;
     this.state.itemOrder.forEach(function callback(currentValue, index, array) {
-        s+=currentValue.sum;
+      console.log(currentValue.sum)
+        s+=(currentValue.sum===null)?0:currentValue.sum;
     });
     return new Intl.NumberFormat('ru-RU', {
   style: 'currency',
