@@ -38,7 +38,8 @@ else if($obj =="get_top_products")
     $out2 = array();
     $discont=0;
     if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
-    $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast-coast*".$discont." as coast from dsg_products where active=1 ORDER BY RAND() LIMIT 5");
+    //$stmt = $mysqli->prepare("select  id_categ, id, name, img, coast-coast*".$discont." as coast from dsg_products where active=1 ORDER BY RAND() LIMIT 5");
+    $stmt = $mysqli->prepare("SELECT id_categ, id, name, img, coast-coast*".$discont." as coast, COUNT(id_products), id_products FROM dsg_order_details INNER JOIN dsg_products ON id=id_products  where active=1 GROUP BY id_products ORDER BY 6 LIMIT 5");
         $stmt->execute();
         $result = $stmt->get_result();
         //$outp = $result->fetch_all(MYSQLI_ASSOC);
@@ -57,6 +58,23 @@ else if($obj =="get_top_products")
             //file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
         }
         $stmt->close();
+        /*дополним до 5 если меньше */
+        if(count($out2)<5){
+            $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast-coast*".$discont." as coast from dsg_products where active=1 ORDER BY RAND() LIMIT ".(5-count($out2)));
+            $stmt->execute();
+            $result = $stmt->get_result();
+                while ($value = $result->fetch_row()) {
+                    $active='';
+                    if (isset($_SESSION['favouritet'])) {
+                        foreach ($_SESSION['favouritet'] as $id=>$count){
+                            if($value[1]==$id) $active='active';
+                        }
+                    }
+                $out2[] = array('id_categ'=>$value[0], 'id'=>$value[1], 'name'=>$value[2], 'img'=>$value[3], 'coast'=>$value[4], 'active'=>$active);
+            }
+            $stmt->close();
+        }
+
 
 
         echo json_encode($out2);

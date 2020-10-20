@@ -1,7 +1,10 @@
 <?php
 include_once 'psl-config.php';
 include_once 'db_connect.php';
+/*include  'models/categ_model.inc';*/
 date_default_timezone_set('Europe/Moscow');
+
+
 
 function getParam($name, $default)
 {
@@ -218,6 +221,9 @@ function getCateg()
         $_SESSION['categories'] = $outp;
         $stmt->close();
     }
+    /*$categList[] = new Categ_Model(101,"name 101", "img 1010");
+    $categList[] = new Categ_Model(102,"name 102", "img 1020");
+    $_SESSION['categList'] = $categList;*/
     return $_SESSION['categories'];
     //echo  json_encode($_SESSION['categories']);
 }

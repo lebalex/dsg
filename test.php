@@ -1,18 +1,7 @@
 <?php
-include_once 'header.php';
+include  'includes/functions.php';
+sec_session_start();
+var_dump($_SESSION['categList']);
+
+//echo $categ_model->getId() . "\n";
 ?>
-
-<section class="section-padding-80-40 wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col-12" id="editableField">
-
-            </div>
-        </div>
-    </div>
-
-
-</section>
-<script src="/js/jsmin/Test.js"></script>
-
-<?php include_once 'footer.php'; ?>

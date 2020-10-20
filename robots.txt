@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /db_init/
+Disallow: /img/
+Disallow: /includes/
+Disallow: /js/
+Disallow: /manager/
+Disallow: /node_modules/
+Disallow: /users/
