@@ -132,7 +132,7 @@ sec_session_start();
                         <div class="cart-area" id="exit-area"></div>
                 <? else: ?>
                     <div class="user-login-info" id="login_exit_bth"><a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="Личный кабинет - <?=$user; ?>"></a>
-                    </div><div class="cart-area" id="exit-area"><a href="/logout" id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt=""></a></div>';
+                    </div><div class="cart-area" id="exit-area"><a href="/logout" id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt=""></a></div>
                 <? endif; ?>
 
             </div>
