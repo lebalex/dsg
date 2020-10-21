@@ -3,8 +3,11 @@ include_once '../includes/psl-config.php';
 include_once '../includes/db_connect.php';
 include_once '../includes/functions.php';
 
-
-if (!check_user_session(['id' => $_SESSION['user_id'], 'email' => $_SESSION['login'], 'name' => $_SESSION['name'], 'login_string' => $_SESSION['login_string']])) {
+$check = false;
+if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+    $check = check_user_session(['id' => $_SESSION['user']->getUser_id(), 'email' => $_SESSION['user']->getLogin(), 'name' => $_SESSION['user']->getName(),
+    'login_string' => $_SESSION['user']->getLogin_string()]);
+if (!$check) {
     $_SESSION = array();
 
     // get session parameters 

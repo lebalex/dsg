@@ -2,6 +2,7 @@
 include_once 'psl-config.php';
 include_once 'db_connect.php';
 include  'models/categ_model.php';
+include  'models/user_model.php';
 date_default_timezone_set('Europe/Moscow');
 
 
@@ -64,19 +65,21 @@ function login($login, $password)
             if ($db_password == $password) {
                 $user_browser = $_SERVER['HTTP_USER_AGENT'];
                 $user_id = preg_replace("/[^0-9]+/", "", $user_id);
-                $_SESSION['user_id'] = $user_id;
                 $login = preg_replace(
                     "/[^a-zA-Z0-9_\-]+/",
                     "",
                     $login
                 );
+                /*
+                $_SESSION['user_id'] = $user_id;
                 $_SESSION['login'] = $login;
                 $_SESSION['name'] = $name;
                 $_SESSION['discont'] = $discont;
                 $_SESSION['login_string'] = hash(
                     'sha512',
                     $password . $user_browser
-                );
+                );*/
+                $_SESSION['user'] = new User_Model($user_id, $login, $name, $discont, hash('sha512', $password . $user_browser));
                 getFavouritet();
                 return true;
             } else {
@@ -108,39 +111,43 @@ function check_user_token($data)
 }
 function check_user_main($id, $email, $name, $login_string)
 {
-        $user_browser = $_SERVER['HTTP_USER_AGENT'];
-        global $mysqli;
-        if ($stmt = $mysqli->prepare("SELECT pwd, discont FROM dsg_users WHERE id = ? LIMIT 1")) {
-            $stmt->bind_param('i', $id);
-            $stmt->execute();
-            $stmt->store_result();
-            if ($stmt->num_rows == 1) {
-                $stmt->bind_result($password, $discont);
-                $stmt->fetch();
-                $login_check = hash('sha512', $password . $user_browser);
-                if ($login_check == $login_string) {
-                    $_SESSION['user_id'] = $id;
+    $user_browser = $_SERVER['HTTP_USER_AGENT'];
+    global $mysqli;
+    if ($stmt = $mysqli->prepare("SELECT pwd, discont FROM dsg_users WHERE id = ? LIMIT 1")) {
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($password, $discont);
+            $stmt->fetch();
+            $login_check = hash('sha512', $password . $user_browser);
+            if ($login_check == $login_string) {
+                /*$_SESSION['user_id'] = $id;
                     $_SESSION['login'] = $email;
                     $_SESSION['name'] = $name;
                     $_SESSION['discont'] = $discont;
-                    $_SESSION['login_string'] = $login_check;
-                    return true;
-                } else {
-                    return false;
-                }
+                    $_SESSION['login_string'] = $login_check;*/
+                $_SESSION['user'] = new User_Model($id, $email, $name, $discont, $login_check);
+                getFavouritet();
+                return true;
             } else {
-                //записей 0, id Нет вБД 
                 return false;
             }
         } else {
-            // ошибка запроса в бд
+            //записей 0, id Нет вБД 
             return false;
         }
+    } else {
+        // ошибка запроса в бд
+        return false;
+    }
 }
 function quick_check_user($data)
 {
-    if(isset($_SESSION['login_string']))
-        if($_SESSION['login_string']==$data->login_string) 
+    //if(isset($_SESSION['login_string']))
+    //if($_SESSION['login_string']==$data->login_string) 
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+        if ($_SESSION['user']->getLogin_string() == $data->login_string)
             return true;
         else
             return check_user_token($data);
@@ -151,15 +158,15 @@ function quick_check_user($data)
 function getFavouritet()
 {
     global $mysqli;
-    $stmt = $mysqli->prepare("select id_product from dsg_favouritet where id_user = " . $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while ($value = $result->fetch_row()) {
-        $_SESSION['favouritet'][$value[0]] = 1;
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model') {
+        $stmt = $mysqli->prepare("select id_product from dsg_favouritet where id_user = " . $_SESSION['user']->getUser_id());
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($value = $result->fetch_row()) {
+            $_SESSION['favouritet'][$value[0]] = 1;
+        }
+        $stmt->close();
     }
-
-
-    $stmt->close();
 }
 
 function translit($str)
@@ -214,11 +221,11 @@ function getCatalogsName($fromDb)
 {
     $arr = getCateg($fromDb);
     foreach ($arr as $item) {
-        $out2[] = array('name'=>$item->getName(), 'id'=>$item->getId(), 'img'=>$item->getImg());
+        $out2[] = array('name' => $item->getName(), 'id' => $item->getId(), 'img' => $item->getImg());
     }
     return $out2;
 }
-function getCateg($fromDb=false)
+function getCateg($fromDb = false)
 {
     if (!isset($_SESSION['categories']) || $fromDb) {
         global $mysqli;
@@ -226,8 +233,8 @@ function getCateg($fromDb=false)
         $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
-        foreach($outp as $item){
-            $categList[] = new Categ_Model($item['id'],$item['name'], $item['img']);
+        foreach ($outp as $item) {
+            $categList[] = new Categ_Model($item['id'], $item['name'], $item['img']);
         }
         $_SESSION['categories'] = $categList;
         //$_SESSION['categories'] = $outp;
@@ -235,16 +242,17 @@ function getCateg($fromDb=false)
     }
     return $_SESSION['categories'];
 }
-function getKeyWords() {
+function getKeyWords()
+{
     if (!isset($_SESSION['keywords'])) {
         global $mysqli;
         $stmt = $mysqli->prepare("select name from dsg_products where active=1 order by id");
         $stmt->execute();
         $result = $stmt->get_result();
         //$outp = $result->fetch_all(MYSQLI_ASSOC);
-        $keywords='';
+        $keywords = '';
         while ($value = $result->fetch_row()) {
-            $keywords.=$value[0].',';
+            $keywords .= $value[0] . ',';
         }
         $_SESSION['keywords'] = $keywords;
         $stmt->close();
@@ -253,10 +261,10 @@ function getKeyWords() {
 }
 function getUserLoginOrForm()
 {
-    if (!isset($_SESSION['name']))
-        return null;
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+        return htmlentities($_SESSION['user']->getName());
     else
-        return htmlentities($_SESSION['name']);
+        return null;
 }
 function logout($location = true)
 {
@@ -281,10 +289,11 @@ function logout($location = true)
     //header('HTTP/1.1 401 Unauthorized');
     //header("Status:401 Logout");
     //header("WWW-Authenticate: Invalidate, Basic realm=logout");
-    if($location)
+    if ($location)
         header('Location: /index');
 }
-function renderTemplate($filename, $param = array()) {
+function renderTemplate($filename, $param = array())
+{
     extract($param);
     if (is_file($filename)) {
         ob_start();

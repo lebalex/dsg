@@ -54,9 +54,9 @@ if ($obj == 'addFavouritet') {
     if (!isset($_SESSION['favouritet'][$product])) {
         $_SESSION['favouritet'][$product] = 1;
         /*вставим в БД */
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model') {
             try {
-                $stmt = $mysqli->prepare("insert into dsg_favouritet values (" . $_SESSION['user_id'] . "," . $product . ")");
+                $stmt = $mysqli->prepare("insert into dsg_favouritet values (" . $_SESSION['user']->getUser_id() . "," . $product . ")");
                 $stmt->execute();
                 $stmt->close();
             } catch (Exception $e) {
@@ -65,9 +65,9 @@ if ($obj == 'addFavouritet') {
     } else {
         unset($_SESSION['favouritet'][$product]);
         /*удалим из БД */
-        if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model') {
             try {
-                $stmt = $mysqli->prepare("delete from dsg_favouritet where id_user=" . $_SESSION['user_id'] . " and id_product=" . $product);
+                $stmt = $mysqli->prepare("delete from dsg_favouritet where id_user=" . $_SESSION['user']->getUser_id() . " and id_product=" . $product);
                 $stmt->execute();
                 $stmt->close();
             } catch (Exception $e) {
@@ -81,7 +81,7 @@ if ($obj == 'addFavouritet') {
     echo json_encode($array);
 }
 if ($obj == 'editcateg') {
-    $id = htmlspecialchars(strip_tags(getParam('id', -1)));
+    $id = getParam('id', -1);
     $name = htmlspecialchars(strip_tags(getParam('name', '-1')));
     $target_dir = TARGET_DIR_CATEG;
     if (substr_count(php_uname(), 'Win') > 0) $target_dir = TARGET_DIR_CATEG_W;
@@ -432,14 +432,12 @@ if ($obj == 'setorder') {
 if ($obj == 'save_account') {
 
     $result = ['code' => 0, 'error' => ''];
-    if (isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model'){
 
-        $id = htmlspecialchars(strip_tags(getParam('id', -1)));
+        $id = getParam('id', -1);
         $name = htmlspecialchars(strip_tags(getParam('name', '')));
         $phone = htmlspecialchars(strip_tags(getParam('phone', '')));
         $email = htmlspecialchars(strip_tags(getParam('email', '')));
-        //$log = date('Y-m-d H:i:s') . ' ' . $name . ' ' . $phone . ' ' . $email . ' ' . $id . ' ' . $_SESSION['user_id'];
-        //file_put_contents('D:/log.txt', $log . PHP_EOL, FILE_APPEND);
         if ($email != '') {
             $insert_stmt = $mysqli->prepare("update dsg_users set name=?, phone=?, email=? where id=?");
             if (!$insert_stmt->bind_param('sssi', $name, $phone, $email, $id)) {

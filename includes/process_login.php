@@ -25,7 +25,7 @@ if (isset($_POST['login'], $_POST['p'])) {
 
     if (login($login, $password) == true) {
         $jwt = createToken();
-         $cart = array("code" => 0,"name" => $_SESSION['name'], "favouritet"=>getFavouritetDataCount(), "jwt" => $jwt);
+         $cart = array("code" => 0,"name" => $_SESSION['user']->getName(), "favouritet"=>getFavouritetDataCount(), "jwt" => $jwt);
     } else {
         logout();
         $cart = array("code" => -1,"error" => '');
@@ -40,7 +40,7 @@ if (isset($_POST['login'], $_POST['p'])) {
         if(quick_check_user($decoded->data))
         {
             $jwt = createToken();
-            $cart = array("code" => 0,"name" => $_SESSION['name'], "favouritet"=>getFavouritetDataCount(), "jwt" => $jwt);
+            $cart = array("code" => 0,"name" => $_SESSION['user']->getName(), "favouritet"=>getFavouritetDataCount(), "jwt" => $jwt);
         }else{
             logout(false);
             $cart = array("code" => -3,"error" => 'check_user_token - false');
@@ -77,10 +77,10 @@ function createToken()
         "nbf" => $nbf,
         "exp" => $exp,
         "data" => array(
-            "id" => $_SESSION['user_id'],
-            "name" => $_SESSION['name'],
-            "login_string" => $_SESSION['login_string'],
-            "email" => $_SESSION['login']
+            "id" => $_SESSION['user']->getUser_id(),
+            "name" => $_SESSION['user']->getName(),
+            "login_string" => $_SESSION['user']->getLogin_string(),
+            "email" => $_SESSION['user']->getLogin()
         )
      );
      $jwt = JWT::encode($token, $key);

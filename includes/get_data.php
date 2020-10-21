@@ -15,22 +15,14 @@ if ($obj == "get_categ") {
 else if ($obj == "get_categ_db") {
     echo json_encode(getCatalogsName(true));
 }
-/*else if ($obj == "get_keywords") {
-    if (!isset($_SESSION['keywords'])) {
-        $stmt = $mysqli->prepare("select name from dsg_products where active=1 order by id");
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $outp = $result->fetch_all(MYSQLI_ASSOC);
-        $_SESSION['keywords'] = $outp;
-        $stmt->close();
-    }
-    echo  json_encode($_SESSION['keywords']);
-}*/
 else if($obj =="get_top_products")
 {
     $out2 = array();
     $discont=0;
-    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+    //if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+        if ($_SESSION['user']->getDiscont()!=0) $discont=$_SESSION['user']->getDiscont()/100;
+
     //$stmt = $mysqli->prepare("select  id_categ, id, name, img, coast-coast*".$discont." as coast from dsg_products where active=1 ORDER BY RAND() LIMIT 5");
     $stmt = $mysqli->prepare("SELECT id_categ, id, name, img, coast-coast*".$discont." as coast, COUNT(id_products), id_products FROM dsg_order_details INNER JOIN dsg_products ON id=id_products  where active=1 GROUP BY id_products ORDER BY 6 LIMIT 5");
         $stmt->execute();
@@ -80,7 +72,8 @@ else if($obj =="get_all_products")
     if($product!='-1') $product_predicat=" and id=".$product;
     $out2 = array();
     $discont=0;
-    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+        if ($_SESSION['user']->getDiscont()!=0) $discont=$_SESSION['user']->getDiscont()/100;
     $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast - coast*".$discont." as coast, count, oem, description from dsg_products where active=1 ".$categ_predicat.$product_predicat);
     
         $stmt->execute();
@@ -136,7 +129,8 @@ else if($obj =="get_all_products_db")
 
                     $array = implode("','",$id_array);
                     $discont=0;
-                    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+                    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+                        if ($_SESSION['user']->getDiscont()!=0) $discont=$_SESSION['user']->getDiscont()/100;
                     $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast - coast*".$discont." as coast, count, oem, 'active' as active from dsg_products where active=1 and id IN ('".$array."') ");
                     $stmt->execute();
         $result = $stmt->get_result();
@@ -166,7 +160,8 @@ else if($obj =="get_all_products_db")
             
                     $array = implode("','",$id_array);
                     $discont=0;
-                    if (isset($_SESSION['discont']) && $_SESSION['discont']!=0) $discont=$_SESSION['discont']/100;
+                    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+                        if ($_SESSION['user']->getDiscont()!=0) $discont=$_SESSION['user']->getDiscont()/100;
                     $stmt = $mysqli->prepare("select  id_categ, id, name, img, coast - coast*".$discont." as coast, count, oem from dsg_products where active=1 and id IN ('".$array."') ");
                     $stmt->execute();
         $result = $stmt->get_result();
@@ -198,8 +193,9 @@ else if($obj =="get_all_products_db")
     $users_account = getParam('users', -1);
     $predicat_user='';
     if($users_account!=-1){
-        if (isset($_SESSION['user_id'])){
-            $predicat_user='where u.id='.$_SESSION['user_id'];
+        if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+        {
+            $predicat_user='where u.id='.$_SESSION['user']->getUser_id();
         }else{
             logout();
         }
@@ -250,17 +246,17 @@ else if($obj =="get_all_products_db")
         echo json_encode($outp);
 }else if($obj == 'user_login_name')
 {
-    if (!isset($_SESSION['name']))
-        $result = ['code' => 0, 'name' => 'Вход для зарегистрированных пользователей'];
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model')
+        $result = ['code' => 1, 'name' => htmlentities($_SESSION['user']->getName())];
     else
-        $result = ['code' => 1, 'name' => htmlentities($_SESSION['name'])];
+        $result =  ['code' => 0, 'name' => 'Вход для зарегистрированных пользователей'];
     
     echo json_encode($result);
 }
 else if($obj == 'get_user_account')
 {
-    if (isset($_SESSION['user_id'])){
-        $stmt = $mysqli->prepare("select id, name, phone, email, discont from dsg_users where registr=1 and id=".$_SESSION['user_id']);
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model'){
+        $stmt = $mysqli->prepare("select id, name, phone, email, discont from dsg_users where registr=1 and id=".$_SESSION['user']->getUser_id());
         $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
@@ -274,8 +270,8 @@ else if($obj == 'get_user_account')
 }
 else if($obj == 'get_user_info')
 {
-    if (isset($_SESSION['user_id'])){
-        $stmt = $mysqli->prepare("select id, name, phone, email from dsg_users where registr=1 and id=".$_SESSION['user_id']);
+    if (isset($_SESSION['user']) && get_class($_SESSION['user']) == 'User_Model'){
+        $stmt = $mysqli->prepare("select id, name, phone, email from dsg_users where registr=1 and id=".$_SESSION['user']->getUser_id());
         $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
