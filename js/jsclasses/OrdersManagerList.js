@@ -113,8 +113,8 @@ export class OrdersManagerList extends React.Component {
   })
   .then(response => response.text())
   .then(data => {
-    console.log(data)
-    this.setState({ visibleSendBtn: !this.state.visibleSendBtn })
+    /*console.log(data)*/
+    this.setState({ visibleSendBtn: !this.state.visibleSendBtn, date_manager: new Date() })
   })
   .catch(error => {
     console.error(error)

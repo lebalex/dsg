@@ -10,17 +10,10 @@ $product= getParam('product', '-1');
 
 
 if ($obj == "get_categ") {
-    echo json_encode(getCateg());
+    echo json_encode(getCatalogsName(false));
 }
 else if ($obj == "get_categ_db") {
-        $stmt = $mysqli->prepare("select id, name, img from dsg_categ where active=1 order by id");
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $outp = $result->fetch_all(MYSQLI_ASSOC);
-        $_SESSION['categories'] = $outp;
-        $stmt->close();
-        echo json_encode($outp);
-
+    echo json_encode(getCatalogsName(true));
 }
 /*else if ($obj == "get_keywords") {
     if (!isset($_SESSION['keywords'])) {

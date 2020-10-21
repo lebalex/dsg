@@ -2,3 +2,4 @@ node_modules/*
 img/product-img
 img/categ-img
 includes/psl-config-y.php
+js/jsmin/*.map

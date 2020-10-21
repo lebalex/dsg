@@ -1,7 +1,7 @@
 <?php
 include_once 'psl-config.php';
 include_once 'db_connect.php';
-/*include  'models/categ_model.inc';*/
+include  'models/categ_model.php';
 date_default_timezone_set('Europe/Moscow');
 
 
@@ -210,22 +210,30 @@ function rand_passwd($length = 8, $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJ
 {
     return substr(str_shuffle($chars), 0, $length);
 }
-function getCateg()
+function getCatalogsName($fromDb)
 {
-    if (!isset($_SESSION['categories'])) {
+    $arr = getCateg($fromDb);
+    foreach ($arr as $item) {
+        $out2[] = array('name'=>$item->getName(), 'id'=>$item->getId(), 'img'=>$item->getImg());
+    }
+    return $out2;
+}
+function getCateg($fromDb=false)
+{
+    if (!isset($_SESSION['categories']) || $fromDb) {
         global $mysqli;
         $stmt = $mysqli->prepare("select id, name, img from dsg_categ where active=1 order by id");
         $stmt->execute();
         $result = $stmt->get_result();
         $outp = $result->fetch_all(MYSQLI_ASSOC);
-        $_SESSION['categories'] = $outp;
+        foreach($outp as $item){
+            $categList[] = new Categ_Model($item['id'],$item['name'], $item['img']);
+        }
+        $_SESSION['categories'] = $categList;
+        //$_SESSION['categories'] = $outp;
         $stmt->close();
     }
-    /*$categList[] = new Categ_Model(101,"name 101", "img 1010");
-    $categList[] = new Categ_Model(102,"name 102", "img 1020");
-    $_SESSION['categList'] = $categList;*/
     return $_SESSION['categories'];
-    //echo  json_encode($_SESSION['categories']);
 }
 function getKeyWords() {
     if (!isset($_SESSION['keywords'])) {

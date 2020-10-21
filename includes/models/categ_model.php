@@ -1,9 +1,8 @@
 <?php
-/**тест - не используется */
 class Categ_Model {
-    var $_id;
-    var $_name;
-    var $_img;
+    private $_id;
+    private $_name;
+    private $_img;
 
     public function __construct($id, $name, $img){
         $this->_id=$id;

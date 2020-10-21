@@ -13,7 +13,7 @@ export class CategList extends React.Component {
       .then(
         (result) => {
             result.push({"name":"Весь каталог", "id":"", "img":"other.jpg"});
-            //console.log(result);
+            /*console.log(result);*/
           this.setState({
             isLoaded: true,
             items: result

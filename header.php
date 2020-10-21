@@ -93,7 +93,7 @@ sec_session_start();
                                 <ul class="dropdown" id="menu_categ2">
                                     <?php $items = getCateg();
                                     foreach ($items as $item): ?>
-                                        <li><a href="/catalog/<?=$item['id'];?>"><?=$item['name'];?></a></li>
+                                        <li><a href="/catalog/<?=$item->getId();?>"><?=$item->getName();?></a></li>
                                     <?php endforeach; ?>
                                 </ul>
                             </li>
