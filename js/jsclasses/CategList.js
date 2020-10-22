@@ -44,7 +44,7 @@ export class CategList extends React.Component {
             <div className="single-product-wrapper">
             <div className="product-img">
             <img src={`/img/categ-img/${item.img}`} alt=""/>
-            <img className="hover-img" src="/img/categ-img/black_gr.jpg" alt=""/>
+            <img className="hover-img" src="/img/core-img/black_gr2.png" alt=""/>
             <div className="catagory-content">
             <span>{item.name}</span>
             </div>
