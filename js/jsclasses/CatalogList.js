@@ -82,7 +82,8 @@ export class CatalogList extends React.Component {
                                 <div className="row">
                                     <ul className='nav' id="menu_categ_left">
                                    { items.map(item => (
-            <li className='col-12  on-ic' key={item.id}><a href='#' onClick={() => this.ChangCateg(item.id)} className='nav-link scroll'><span className="text">{item.name}</span></a></li>
+            <li className='col-12  on-ic' key={item.id}><a href='#' onClick={() => this.ChangCateg(item.id)} className='nav-link scroll'>
+              <span className={(this.state.categ_id==item.id)?"text active":"text"}>{item.name}</span></a></li>
           ))}
                                     </ul>
                                 </div>
