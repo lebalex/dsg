@@ -492,3 +492,10 @@ html {
 .active {
             font-weight: 900; 
     }
+    .icon-trash-empty-down
+    {
+        vertical-align: bottom;
+    }
+    .border-div{
+        border: solid 1px black;
+    }

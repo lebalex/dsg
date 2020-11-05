@@ -302,7 +302,7 @@ onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(ev
 </div>
 <div className="col-12 mb-1">
 <label>Комментарий менеджера </label>
-  <textarea rows="3" cols="90"  className="textField" onChange={(e) => this.changeDescriptionManager(e)} defaultValue={(this.state.description_manager===null || this.state.description_manager==='null')?'':this.state.description_manager}></textarea>
+  <textarea rows="3" cols="90"  className="textField" onChange={(e) => this.changeDescriptionManager(e)} value={(this.state.description_manager===null || this.state.description_manager==='null')?'':this.state.description_manager}></textarea>
 </div>
 
 

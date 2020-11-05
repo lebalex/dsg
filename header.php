@@ -22,10 +22,11 @@ sec_session_start();
 
 
     <link rel="stylesheet" href="/css/core-style.css">
-    <link rel="stylesheet" href="/style.css">
+    
     <link rel="stylesheet" href="/css/owl.carousel.css">
     <link rel="stylesheet" href="/css/fontello.css">
-
+    <link rel="stylesheet" href="/css/carousel.css">
+    <link rel="stylesheet" href="/style.css">
     <!--link rel="stylesheet" href="/react-bootstrap-table-all.min.css">
 </link-->
 

@@ -63,6 +63,7 @@ export class CategManagerList extends React.Component {
     console.error(error)
   })
   $('.modal').modal('hide');
+  $("#file_val").val('');
   event.preventDefault();
   }
   del(id) {
@@ -165,7 +166,7 @@ export class CategManagerList extends React.Component {
                       <input type="text" name="name_categ" id="name_categ" className="form-control" value={this.state.value_name} onChange={(e) => this.changeText(e)} required
                         placeholder="Наименование" />
                     </div>
-                    <div className="form-group"><label>Изображение</label><input type="file" className="form-control" onChange={(e) => this.changeImg(e)}
+                    <div className="form-group"><label>Изображение</label><input type="file" id="file_val" className="form-control" onChange={(e) => this.changeImg(e)}
                       placeholder="Изображение" /></div>
 
                   </div>

@@ -257,7 +257,7 @@ onChange={(e) => this.changeSearch(e)} onKeyPress={event => this.onEnterPress(ev
 </div>
 <div className="col-12 mb-1" style={{display:(this.state.description_manager===null || this.state.description_manager==='')?'none':'block'}}>
 <label>Комментарий менеджера </label>
-  <textarea rows="3" cols="90"  className="textField" readOnly defaultValue={(this.state.description_manager===null || this.state.description_manager==='null')?'':this.state.description_manager}></textarea>
+  <textarea rows="3" cols="90"  className="textField" readOnly value={(this.state.description_manager===null || this.state.description_manager==='null')?'':this.state.description_manager}></textarea>
 </div>
 <div className="col-12 mb-1" style={{display:(this.state.date_manager===null)?'none':'block'}}>
   <p>Время обновления заказа {this.date_parse(this.state.date_manager)}</p>

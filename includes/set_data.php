@@ -172,6 +172,9 @@ if ($obj == 'editproduct') {
     $count = htmlspecialchars(strip_tags(getParam('count', '0')));
     $coast = htmlspecialchars(strip_tags(getParam('coast', '0')));
     $description = htmlspecialchars(strip_tags(getParam('description', '')));
+    $imgs = htmlspecialchars(strip_tags(getParam('imgs', '')));
+    if($imgs=='null')$imgs='';
+
 
     $target_dir = TARGET_DIR_PRODUCT;
     if (substr_count(php_uname(), 'Win') > 0) $target_dir = TARGET_DIR_PRODUCT_W;
@@ -198,7 +201,9 @@ if ($obj == 'editproduct') {
         }
     }
 
-    if ($fileName != null) {
+    /*if ($fileName != null || $imgs!='') {*/
+        if($fileName != null && $imgs!='') $fileName = $imgs.';'.$fileName;
+        if($fileName == null && $imgs!='') $fileName = $imgs;
         if ($id > -1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=?, img=?, description=? where id=?");
         else {
             $update_stmt = $mysqli->prepare("insert into dsg_products (name, oem, count, coast, img, description, id_categ) values (?,?,?,?,?,?,?)");
@@ -211,10 +216,10 @@ if ($obj == 'editproduct') {
         if (!$update_stmt->execute()) {
             $error = "Не удалось выполнить запрос: (" . $update_stmt->errno . ") " . $update_stmt->error;
         }
-    } else {
-        if ($id > -1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=?, description=? where id=?");
+    /*} else {
+        if ($id > -1) $update_stmt = $mysqli->prepare("update dsg_products set name=?, oem=?, count=?, coast=?, description=?, img=? where id=?");
         else {
-            $update_stmt = $mysqli->prepare("insert into dsg_products (name, oem, count, coast, description, id_categ) values (?,?,?,?,?,?)");
+            $update_stmt = $mysqli->prepare("insert into dsg_products (name, oem, count, coast, description, id_categ, img) values (?,?,?,?,?,?)");
             $id = $id_categ;
         }
         if (!$update_stmt->bind_param('ssidsi', $name, $oem, $count, $coast, $description, $id)) {
@@ -223,7 +228,7 @@ if ($obj == 'editproduct') {
         if (!$update_stmt->execute()) {
             $error = "Не удалось выполнить запрос: (" . $update_stmt->errno . ") " . $update_stmt->error;
         }
-    }
+    }*/
     $update_stmt->close();
 
 

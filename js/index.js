@@ -57,7 +57,13 @@ $(document).ready(function() {
             var context = '';
             //console.log(data);
             data.forEach(function(obj) {
-                context += createDivTopProduct(obj.name, obj.id, obj.img, obj.coast, obj.id_categ, obj.active);
+                //console.log(obj.img);
+                var img = obj.img;
+                if(img!=null)
+                {
+                    img = img.split(';')[0]
+                }
+                context += createDivTopProduct(obj.name, obj.id, img, obj.coast, obj.id_categ, obj.active);
 
             });
             var carousel = $('.owl-carousel')
