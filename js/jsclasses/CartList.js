@@ -168,7 +168,14 @@ sum()
     });
 }
 
-
+getImage(img)
+{
+if(img===null) return '/img/product-img/noPhoto.png';
+else 
+{
+  return '/img/product-img/'+img.split(';')[0];
+}
+}
 
 
   render() {
@@ -212,7 +219,7 @@ sum()
 
           {itemsProduct.map((item, index) => (
             <tr key={index}>
-      <td scope="row" className="border-right border-bottom-0"><img width="100px" src={(item.img!=null)?`/img/product-img/${item.img}`:'/img/product-img/noPhoto.png'}  alt=""/></td>
+      <td scope="row" className="border-right border-bottom-0"><img width="100px" src={this.getImage(item.img)}  alt=""/></td>
       <td className="border-right border-bottom-0"><a href={`/catalog/${item.id_categ}/${item.id}`}>{item.name}</a></td>
       <td className="border-right border-bottom-0">{item.oem}</td>
       <td className="border-right border-bottom-0"><i className="icon-minus plus-minus" onClick={() => this.minusCount( index )}/>

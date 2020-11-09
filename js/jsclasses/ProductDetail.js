@@ -1,4 +1,5 @@
 import { Carousel } from 'react-responsive-carousel';
+import "../../css/carousel.css";
 
 export class ProductDetail extends React.Component {
   constructor(props) {

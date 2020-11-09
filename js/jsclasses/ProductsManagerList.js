@@ -392,7 +392,7 @@ export class ProductsManagerList extends React.Component {
                     </div>
                     <label htmlFor="email_address">Описание</label>
                     <textarea rows="5" cols="90" className="form-control" onChange={(e) => this.changeDescription(e)} value={this.state.value_select.description} ></textarea>
-                    <div className="form-group"><label>Изображение</label><input type="file" id="file_val" className="form-control" onChange={(e) => this.changeImg(e)}
+                    <div className="form-group"><label>Добавить изображение</label><input type="file" id="file_val" className="form-control" onChange={(e) => this.changeImg(e)}
                       placeholder="Изображение" /></div>
 
                   </div>
