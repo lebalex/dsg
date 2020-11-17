@@ -68,7 +68,8 @@ sec_session_start();
 
 <body>
     <!-- ##### Header Area Start ##### -->
-    <header class="header_area">
+    <div class="col-sm-12 underconstr"><h1 style="color: #18479f;">На данный момент сайт в разработке</h1></div>
+    <header class="header_area underconstr2">
         <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
             <!-- Classy Menu -->
             <nav class="classy-navbar" id="essenceNav">
@@ -85,7 +86,7 @@ sec_session_start();
                         <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
                     </div>
                     <!-- Nav Start -->
-
+                    
                     <div class="classynav">
                         <ul>
                             <li><a href="/about">О нас</a></li>
@@ -130,15 +131,15 @@ sec_session_start();
                     <div class="user-login-info" id="login_exit_bth"><a href="#1" style="color:#18479f;font-size:13px" data-toggle="modal" data-target="#myLogin">
                         <img src="/img/core-img/user.svg" alt="" title="Вход для зарегистрированных пользователей"></a></div>
                         <div class="cart-area" id="exit-area"></div>
-                <? else: ?>
+                <?php else: ?>
                     <div class="user-login-info" id="login_exit_bth"><a href="/users/account"><img src="/img/core-img/user_login.svg" alt="" title="Личный кабинет - <?=$user; ?>"></a>
                     </div><div class="cart-area" id="exit-area"><a href="/logout" id="logoutBtn"><img src="/img/core-img/door-exit.svg" alt=""></a></div>
-                <? endif; ?>
+                <?php endif; ?>
 
             </div>
 
         </div>
-
+        
     </header>
 
     <div class="manager_login">

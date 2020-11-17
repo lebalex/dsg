@@ -499,3 +499,18 @@ html {
     .border-div{
         border: solid 1px black;
     }
+.underconstr{
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100px;
+    z-index: 1000;
+    text-align: center;
+}
+.underconstr2{
+    position: relative;
+    top:100;
+    left:0;
+    height: 100px;
+    z-index: 1000;
+}
